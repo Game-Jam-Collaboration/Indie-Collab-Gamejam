@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://dppyc5l3hovsx"]
+
+[ext_resource type="Script" uid="uid://dwy2wfsw1ckf" path="res://scripts/playground.gd" id="1_20f6w"]
+[ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_8w6y2"]
+[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="3_20f6w"]
+[ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_8w6y2"]
+[ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="4_ctmmb"]
+[ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/zoo.VoxelGI_data.res" id="5_20f6w"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kddj0"]
+sky_top_color = Color(0.029538823, 0.044381306, 0.065225236, 1)
+sky_horizon_color = Color(0.27545968, 0.28154975, 0.2937426, 1)
+sky_cover_modulate = Color(0.12591085, 0.12591085, 0.12591082, 1)
+ground_bottom_color = Color(0.18538642, 0.18421221, 0.1740655, 1)
+ground_horizon_color = Color(0.15471098, 0.15870944, 0.16671553, 1)
+
+[sub_resource type="Sky" id="Sky_q8s1k"]
+sky_material = SubResource("ProceduralSkyMaterial_kddj0")
+
+[sub_resource type="Environment" id="Environment_mm0a5"]
+background_mode = 2
+sky = SubResource("Sky_q8s1k")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qchbg"]
+albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q8s1k"]
+material = SubResource("StandardMaterial3D_qchbg")
+size = Vector3(16, 1, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cr7vb"]
+size = Vector3(16, 1, 16)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qchbg"]
+material = ExtResource("2_8w6y2")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_emj6c"]
+size = Vector3(2, 4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mrac1"]
+size = Vector3(2, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
+
+[node name="Playground" type="Node3D" unique_id=1383991437]
+script = ExtResource("1_20f6w")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=929306466]
+environment = SubResource("Environment_mm0a5")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1878826705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=398946337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
+mesh = SubResource("BoxMesh_q8s1k")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=735863756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
+shape = SubResource("BoxShape3D_cr7vb")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1419284204]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=546846108]
+visible = false
+mesh = SubResource("CylinderMesh_qchbg")
+
+[node name="OmniLight3D" type="SpotLight3D" parent="Node3D/MeshInstance3D" unique_id=1869150136]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.0023277998, 1.01751496e-10, 0)
+light_color = Color(0.22195956, 0.19601986, 0.04332816, 1)
+light_size = 1.0
+spot_range = 3.0
+spot_attenuation = -10.0
+spot_angle = 2.0
+spot_angle_attenuation = 0.022097109
+
+[node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_20f6w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 1, 2.4999998)
+
+[node name="AirlockDoor" type="Node3D" parent="." unique_id=1584106529]
+unique_name_in_owner = true
+script = ExtResource("4_8w6y2")
+
+[node name="LeftSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1533642126]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.9, -11.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/LeftSide" unique_id=846247817]
+mesh = SubResource("BoxMesh_emj6c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/LeftSide" unique_id=2034061248]
+shape = SubResource("BoxShape3D_mrac1")
+
+[node name="RightSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1848405555]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.9, -11.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/RightSide" unique_id=1877820158]
+mesh = SubResource("BoxMesh_emj6c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/RightSide" unique_id=1799629018]
+shape = SubResource("BoxShape3D_mrac1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1658217358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92547035, -2.600001)
+size = Vector3(4.5, 4.5, 16)
+material = SubResource("StandardMaterial3D_cr7vb")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D" unique_id=1341332121]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.5999999)
+operation = 2
+radius = 2.0
+height = 15.0
+sides = 24
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=808605897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2000003, 0)
+operation = 2
+size = Vector3(4.5, 4.5, 16)
+
+[node name="ButtonOnPedestal" parent="." unique_id=1244680119 instance=ExtResource("4_ctmmb")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0, -10.2)
+
+[node name="VoxelGI" type="VoxelGI" parent="." unique_id=2082848283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.8183327)
+size = Vector3(30, 20, 30)
+data = ExtResource("5_20f6w")
