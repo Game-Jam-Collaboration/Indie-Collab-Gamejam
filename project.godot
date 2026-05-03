@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="IndieCollabJam"
-run/main_scene="uid://dppyc5l3hovsx"
+run/main_scene="uid://5t7fqsgpcldr"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

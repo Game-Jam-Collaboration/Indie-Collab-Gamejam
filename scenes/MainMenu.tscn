@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://5t7fqsgpcldr"]
+
+[ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/main_menu.gd" id="1_yqorp"]
+
+[node name="MainMenu" type="Node2D" unique_id=1466794680]
+script = ExtResource("1_yqorp")
+button_input_variation = ["res://scenes/playground.tscn", null, "Quit"]
+
+[node name="Control" type="Control" parent="." unique_id=1967807538]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control" unique_id=1700068839]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 171.0
+offset_right = 641.0
+offset_bottom = 219.0
+pivot_offset = Vector2(76.5, 24)
+text = "Start Game"
+
+[node name="Button2" type="Button" parent="Control" unique_id=424456398]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 276.0
+offset_right = 641.0
+offset_bottom = 324.0
+pivot_offset = Vector2(76.5, 24)
+text = "Credits"
+
+[node name="Button3" type="Button" parent="Control" unique_id=1840031564]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 384.0
+offset_right = 641.0
+offset_bottom = 432.0
+pivot_offset = Vector2(76.5, 24)
+text = "Exit"
