@@ -72,7 +72,7 @@ func _execute_input_command(button_index):
 	else:
 		#List of inputs.
 		if button_input_variation[button_index].substr(0,6) == "res://":
-			if button_input_variation[button_index] == "res://scenes/zoo.tscn":
+			if button_input_variation[button_index] == "res://scenes/ship.tscn":
 				PauseMenu.current_scene = "zoo"
 			if script_type == "Pause":
 				hide()

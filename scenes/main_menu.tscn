@@ -6,7 +6,7 @@
 
 [node name="MainMenu" type="Node2D" unique_id=1466794680]
 script = ExtResource("1_yqorp")
-button_input_variation = ["res://scenes/zoo.tscn", null, "Quit"]
+button_input_variation = ["res://scenes/ship.tscn", null, "Quit"]
 script_type = "Main Menu"
 
 [node name="Control" type="Control" parent="." unique_id=1967807538]
