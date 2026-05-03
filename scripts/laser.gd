@@ -14,16 +14,16 @@ func _grow() -> void:
 
 
 func _growth_function(value, tween) -> void:
+	visible = true
 	%RayCast.force_raycast_update()
-	print(%RayCast.is_colliding())
 	if !%RayCast.is_colliding():
 		%Mesh.set_blend_shape_value(0, value)
 		%RayCast.position.y += value * 10
 	else:
 		tween.kill()
-	
 
 
 func _reset() -> void:
-	%RayCast.position.y = -0.1
+	visible = false
+	%RayCast.position.y = -0
 	%Mesh.set_blend_shape_value(0, 0.0)
