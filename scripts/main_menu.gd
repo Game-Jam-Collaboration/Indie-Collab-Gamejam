@@ -7,7 +7,6 @@ var current_scene = ""
 
 func _ready() -> void:
 	
-	
 	if script_type == "Pause":
 		if get_tree().current_scene.name == "MainMenu":
 			hide()
@@ -72,8 +71,10 @@ func _execute_input_command(button_index):
 	else:
 		#List of inputs.
 		if button_input_variation[button_index].substr(0,6) == "res://":
+			
 			if button_input_variation[button_index] == "res://scenes/ship.tscn":
 				PauseMenu.current_scene = "ship"
+			
 			if script_type == "Pause":
 				hide()
 			get_tree().change_scene_to_file(button_input_variation[button_index])
