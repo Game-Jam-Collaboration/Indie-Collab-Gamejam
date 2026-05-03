@@ -10,19 +10,29 @@ config_version=5
 
 [application]
 
-config/name="IndieCollabJam"
+config/name="SOS: Repair Needed"
+config/description="A Indie Game Clinic Collab Game Jam project: https://itch.io/jam/indie-game-clinic-collab-jam-26"
 run/main_scene="uid://5t7fqsgpcldr"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="SOS_RepairNeeded"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/godot_icon.svg"
 
 [autoload]
 
 PauseMenu="*uid://55dmktoqux5o"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [file_customization]
 
 folder_colors={
-"res://scenes/": "red"
+"res://assets/": "blue",
+"res://scenes/": "red",
+"res://scripts/": "purple"
 }
 
 [global_group]
@@ -76,6 +86,7 @@ Jump={
 rendering_device/driver.windows="d3d12"
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
+anti_aliasing/quality/msaa_3d=3
 
 [steam]
 
