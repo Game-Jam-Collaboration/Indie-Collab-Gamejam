@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 @export var mouse_sensitivity:float = 0.002
 @export var move_speed:float = 5.0
 @export var jump_force:float = 10.0
