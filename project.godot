@@ -16,7 +16,7 @@ run/main_scene="uid://5t7fqsgpcldr"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SOS_RepairNeeded"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://assets/godot_icon.svg"
+config/icon="res://assets/textures/godot_icon.svg"
 
 [autoload]
 
@@ -26,6 +26,8 @@ PauseMenu="*uid://55dmktoqux5o"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=1200
+window/size/window_height_override=800
 
 [file_customization]
 

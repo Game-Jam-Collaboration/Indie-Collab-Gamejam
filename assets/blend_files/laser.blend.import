@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bosvh5c7om636"
-path="res://.godot/imported/laser.blend-dee8635de7cba785d54df807baf49f64.scn"
+path="res://.godot/imported/laser.blend-46d44a1a60a5b2f8174edb3e88604aeb.scn"
 
 [deps]
 
-source_file="res://assets/laser.blend"
-dest_files=["res://.godot/imported/laser.blend-dee8635de7cba785d54df807baf49f64.scn"]
+source_file="res://assets/blend_files/laser.blend"
+dest_files=["res://.godot/imported/laser.blend-46d44a1a60a5b2f8174edb3e88604aeb.scn"]
 
 [params]
 
