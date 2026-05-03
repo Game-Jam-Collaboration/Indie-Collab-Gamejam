@@ -2,11 +2,18 @@ extends Node2D
 
 @export var button_input_variation : Array = []
 
+@export var script_type : String
+var current_scene = ""
+
 func _ready() -> void:
+	
+	if script_type == "Pause":
+		if get_tree().current_scene.name == "MainMenu":
+			hide()
 	
 	#Connecting signals for buttons and mouse inputs.
 	
-	#Start
+	#Start or Continue in Pause
 	get_node("Control/Button").mouse_entered.connect(_mouse_entered.bind(""))
 	get_node("Control/Button").mouse_exited.connect(_mouse_exited.bind(""))
 	get_node("Control/Button").pressed.connect(_mouse_pressed.bind(0))
@@ -44,12 +51,32 @@ func _mouse_pressed(button_index):
 		_execute_input_command(button_index)
 	
 
+##Keyboard inputs. Such as escape to show and hide its PauseMenu.
+func _unhandled_input(event):
+	if script_type == "Pause":
+		#print(current_scene)
+		if current_scene == "playground":
+			if event is InputEventKey and event.pressed:
+				if event.keycode == KEY_ESCAPE:
+					visible = !visible
+				
+
+##It makes the input calls.
 func _execute_input_command(button_index):
+	#print(button_input_variation)
 	if button_input_variation[button_index] == "" or button_input_variation[button_index] == null:
 		print("It's button input is empty or null")
 	else:
+		#List of inputs.
 		if button_input_variation[button_index].substr(0,6) == "res://":
+			if button_input_variation[button_index] == "res://scenes/playground.tscn":
+				PauseMenu.current_scene = "playground"
+			if script_type == "Pause":
+				hide()
 			get_tree().change_scene_to_file(button_input_variation[button_index])
-		elif button_input_variation[button_index].substr(0,6) == "Quit":
+		elif button_input_variation[button_index].substr(0,8) == "Continue":
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			hide()
+		elif button_input_variation[button_index].substr(0,4) == "Quit":
 			get_tree().quit()
 		

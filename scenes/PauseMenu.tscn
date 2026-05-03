@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://55dmktoqux5o"]
+
+[ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/main_menu.gd" id="1_jvnd5"]
+
+[node name="PauseMenu" type="Node2D" unique_id=1091664148]
+script = ExtResource("1_jvnd5")
+button_input_variation = ["Continue", null, "res://scenes/MainMenu.tscn"]
+script_type = "Pause"
+
+[node name="Control" type="Control" parent="." unique_id=942911089]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control" unique_id=1516844649]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 171.0
+offset_right = 641.0
+offset_bottom = 219.0
+pivot_offset = Vector2(76.5, 24)
+text = "Continue"
+
+[node name="Button2" type="Button" parent="Control" unique_id=169673902]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 276.0
+offset_right = 641.0
+offset_bottom = 324.0
+pivot_offset = Vector2(76.5, 24)
+text = "Credits"
+
+[node name="Button3" type="Button" parent="Control" unique_id=1660551048]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 384.0
+offset_right = 641.0
+offset_bottom = 432.0
+pivot_offset = Vector2(76.5, 24)
+text = "Leave Game"
