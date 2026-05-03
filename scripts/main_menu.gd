@@ -58,7 +58,7 @@ func _mouse_pressed(button_index):
 func _unhandled_input(event):
 	if script_type == "Pause":
 		#print(current_scene)
-		if current_scene == "zoo":
+		if current_scene == "ship":
 			if event is InputEventKey and event.pressed:
 				if event.keycode == KEY_ESCAPE:
 					visible = !visible
@@ -73,7 +73,7 @@ func _execute_input_command(button_index):
 		#List of inputs.
 		if button_input_variation[button_index].substr(0,6) == "res://":
 			if button_input_variation[button_index] == "res://scenes/ship.tscn":
-				PauseMenu.current_scene = "zoo"
+				PauseMenu.current_scene = "ship"
 			if script_type == "Pause":
 				hide()
 			get_tree().change_scene_to_file(button_input_variation[button_index])

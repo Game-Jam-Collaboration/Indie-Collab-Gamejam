@@ -1,14 +1,9 @@
 [gd_scene format=3 uid="uid://55dmktoqux5o"]
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/main_menu.gd" id="1_jvnd5"]
-<<<<<<< HEAD:scenes/PauseMenu.tscn
 [ext_resource type="Shader" uid="uid://dt52a44k66ppm" path="res://scripts/Effects3.gdshader" id="2_5w6ei"]
-[ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/Main Menu.svg" id="2_g4jo0"]
-[ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/Continue.svg" id="2_komsw"]
-=======
 [ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/textures/main_menu.svg" id="2_g4jo0"]
 [ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/textures/continue.svg" id="2_komsw"]
->>>>>>> 8367e3b5f51d52ebc3acb56cdb6c9ad8f46f8899:scenes/pause_menu.tscn
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jiu6o"]
 shader = ExtResource("2_5w6ei")
