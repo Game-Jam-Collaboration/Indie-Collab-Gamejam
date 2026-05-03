@@ -7,6 +7,7 @@ var current_scene = ""
 
 func _ready() -> void:
 	
+	
 	if script_type == "Pause":
 		if get_tree().current_scene.name == "MainMenu":
 			hide()
@@ -35,11 +36,13 @@ func _mouse_entered(button_index):
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(get_node("Control/Button"+str(button_index)),"scale",Vector2(1.1,1.1),0.1)
+	
 
 func _mouse_exited(button_index):
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(get_node("Control/Button"+str(button_index)),"scale",Vector2(1,1),0.1)
+	
 
 
 func _mouse_pressed(button_index):

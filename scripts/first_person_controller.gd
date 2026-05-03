@@ -43,6 +43,7 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
+	
 	if !focused: return
 	var input_dir := Input.get_vector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward")
 	
