@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dwy2wfsw1ckf" path="res://scripts/playground.gd" id="1_20f6w"]
 [ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_8w6y2"]
-[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/Player.tscn" id="3_20f6w"]
-[ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scenes/airlock_door.gd" id="4_8w6y2"]
+[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="3_20f6w"]
+[ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_8w6y2"]
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="4_ctmmb"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/zoo.VoxelGI_data.res" id="5_20f6w"]
 
