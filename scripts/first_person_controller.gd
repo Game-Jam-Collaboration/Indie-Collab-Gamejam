@@ -8,10 +8,6 @@ extends CharacterBody3D
 @export var vertical_speed:float = 10.0
 @export var camera_pivot:Node3D
 
-@export var debug_laser:VoxelGI = null
-@export var door:Node3D = null
-
-var door_open := false
 
 var yaw := 0.0
 var pitch := 0.0
@@ -31,8 +27,6 @@ func _unhandled_input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if event.keycode == KEY_E:
-			_dev_light()
 
 	if event is InputEventMouseMotion and focused:
 		yaw -= event.relative.x * mouse_sensitivity
@@ -66,15 +60,3 @@ func _physics_process(delta):
 		velocity.y = jump_force
 
 	move_and_slide()
-
-
-func _dev_light() -> void:
-	debug_laser.visible = not debug_laser.visible
-	var tween = create_tween()
-	
-	if !door_open:
-		tween.tween_property(door, "position:y", -2.0, .5)
-		door_open = true
-	else:
-		tween.tween_property(door, "position:y", 1.9, .5)
-		door_open = false

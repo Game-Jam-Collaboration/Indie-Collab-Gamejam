@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dwy2wfsw1ckf" path="res://scripts/playground.gd" id="1_20f6w"]
 [ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_8w6y2"]
 [ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/first_person_controller.gd" id="4_1pju0"]
+[ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="4_ctmmb"]
+[ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/zoo.VoxelGI_data.res" id="5_20f6w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kddj0"]
 sky_top_color = Color(0.029538823, 0.044381306, 0.065225236, 1)
@@ -53,8 +55,6 @@ size = Vector3(4, 4, 1)
 size = Vector3(4, 4, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
-emission_enabled = true
-emission = Color(0.45840502, 0.45840508, 0.45840502, 1)
 
 [node name="Playground" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_20f6w")
@@ -89,11 +89,10 @@ spot_attenuation = -10.0
 spot_angle = 2.0
 spot_angle_attenuation = 0.022097109
 
-[node name="MrPillBody" type="CharacterBody3D" parent="." unique_id=767200988 node_paths=PackedStringArray("camera_pivot", "door")]
+[node name="MrPillBody" type="CharacterBody3D" parent="." unique_id=767200988 node_paths=PackedStringArray("camera_pivot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 1, 2.4999998)
 script = ExtResource("4_1pju0")
 camera_pivot = NodePath("CameraPivot")
-door = NodePath("../Door")
 
 [node name="CameraPivot" type="Node3D" parent="MrPillBody" unique_id=592344755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5999999)
@@ -144,3 +143,11 @@ sides = 24
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2000003, 0)
 operation = 2
 size = Vector3(4.5, 4.5, 16)
+
+[node name="ButtonOnPedestal" parent="." unique_id=1244680119 instance=ExtResource("4_ctmmb")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0, -10.2)
+
+[node name="VoxelGI" type="VoxelGI" parent="." unique_id=2082848283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.8183327)
+size = Vector3(30, 20, 30)
+data = ExtResource("5_20f6w")
