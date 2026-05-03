@@ -6,7 +6,7 @@
 
 [node name="PauseMenu" type="Node2D" unique_id=1091664148]
 script = ExtResource("1_jvnd5")
-button_input_variation = ["Continue", null, "res://scenes/MainMenu.tscn"]
+button_input_variation = ["Continue", null, "res://scenes/main_menu.tscn"]
 script_type = "Pause"
 
 [node name="Control" type="Control" parent="." unique_id=942911089]
