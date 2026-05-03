@@ -1,16 +1,10 @@
 shader_type canvas_item;
 
-// 振動の強さ
 uniform float shake_power = 0.03;
-// 振動率
 uniform float shake_rate : hint_range( 0.0, 1.0 ) = 0.2;
-// 振動速度
 uniform float shake_speed = 5.0;
-// 振動ブロックサイズ
 uniform float shake_block_size = 30.5;
-// 色の分離率
 uniform float shake_color_rate : hint_range( 0.0, 1.0 ) = 0.01;
-// スクリーン
 uniform sampler2D screen_texture : hint_screen_texture;
 
 float random( float seed )

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dppyc5l3hovsx"]
 
-[ext_resource type="Script" uid="uid://dwy2wfsw1ckf" path="res://scripts/playground.gd" id="1_7j21i"]
+[ext_resource type="Script" uid="uid://vhqt8tk4hjhg" path="res://scripts/playground.gd" id="1_7j21i"]
 [ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_3m36u"]
 [ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="3_8qiel"]
 [ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_itrim"]
