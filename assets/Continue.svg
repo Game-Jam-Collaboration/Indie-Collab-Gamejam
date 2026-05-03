@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="43.695126mm"
+   height="33.751205mm"
+   viewBox="0 0 43.695126 33.751205"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2"
+     inkscape:cx="520.25"
+     inkscape:cy="215.75"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:export-bgcolor="#4e4e4e00">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="43.695126"
+       height="33.751205"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-122.21742,-33.880857)">
+    <path
+       style="fill:#e3e2db;stroke-width:2.065;stroke-dasharray:none;paint-order:stroke fill markers"
+       d="m 134.0816,34.542368 c 0,0 -4.55437,1.078423 -8.2165,5.39421 -5.36805,6.326189 -3.3351,14.739083 -2.9556,19.607848 0.55945,7.177438 6.55998,8.073822 6.55998,8.073822 0,0 5.64765,0.171606 6.34372,-7.208768 0.59339,-6.291581 5.40658,-6.055366 5.40658,-6.055366 l 5.98328,10e-7 c 0,0 3.90668,-0.921078 5.40657,5.767013 0.45419,2.025272 -0.9484,7.072899 5.8391,7.497119 4.61362,0.288352 6.33682,-3.943443 7.20877,-12.182819 0.56304,-5.320416 0.81141,-14.156091 -6.19954,-18.310269 -3.41198,-2.021689 -6.53913,-3.22919 -14.56171,-3.243949 -9.85064,-0.01812 -10.81465,0.661158 -10.81465,0.661158 z"
+       id="path35"
+       sodipodi:nodetypes="csscsccsssssc"
+       inkscape:export-filename="C:\Users\M4tiD\OneDrive\Desktop\path35.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#000000;stroke-width:1.78737;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect35"
+       width="3.1666236"
+       height="9.1226244"
+       x="131.58716"
+       y="41.042782" />
+    <rect
+       style="fill:#000000;stroke-width:1.78737;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect35-2"
+       width="3.0121872"
+       height="9.5903463"
+       x="-46.999088"
+       y="128.28285"
+       transform="rotate(-90)"
+       inkscape:export-filename="C:\Users\M4tiD\OneDrive\Desktop\rect35-2.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <ellipse
+       style="fill:#000000;stroke-width:2.065;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="path36"
+       cx="155.37656"
+       cy="42.564842"
+       rx="1.5875"
+       ry="1.4882812" />
+    <ellipse
+       style="fill:#000000;stroke-width:2.065;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="ellipse37"
+       cx="158.75"
+       cy="46.004425"
+       rx="1.5875"
+       ry="1.4882812" />
+    <ellipse
+       style="fill:#000000;stroke-width:2.065;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="ellipse38"
+       cx="151.80469"
+       cy="45.607552"
+       rx="1.5875"
+       ry="1.4882812" />
+    <ellipse
+       style="fill:#000000;stroke-width:2.065;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="ellipse39"
+       cx="155.17813"
+       cy="49.047134"
+       rx="1.5875"
+       ry="1.4882812" />
+  </g>
+</svg>
