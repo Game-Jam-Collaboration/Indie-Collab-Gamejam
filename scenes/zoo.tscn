@@ -5,13 +5,17 @@
 [ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/first_person_controller.gd" id="4_1pju0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kddj0"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sky_top_color = Color(0.029538823, 0.044381306, 0.065225236, 1)
+sky_horizon_color = Color(0.27545968, 0.28154975, 0.2937426, 1)
+sky_cover_modulate = Color(0.12591085, 0.12591085, 0.12591082, 1)
+ground_bottom_color = Color(0.18538642, 0.18421221, 0.1740655, 1)
+ground_horizon_color = Color(0.15471098, 0.15870944, 0.16671553, 1)
 
 [sub_resource type="Sky" id="Sky_q8s1k"]
 sky_material = SubResource("ProceduralSkyMaterial_kddj0")
 
 [sub_resource type="Environment" id="Environment_mm0a5"]
+background_mode = 2
 sky = SubResource("Sky_q8s1k")
 tonemap_mode = 2
 glow_enabled = true
@@ -21,10 +25,10 @@ albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_q8s1k"]
 material = SubResource("StandardMaterial3D_qchbg")
-size = Vector3(22, 1, 22)
+size = Vector3(16, 1, 16)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_q8s1k"]
-size = Vector3(22, 1, 22)
+[sub_resource type="BoxShape3D" id="BoxShape3D_cr7vb"]
+size = Vector3(16, 1, 16)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_qchbg"]
 material = ExtResource("2_8w6y2")
@@ -48,6 +52,10 @@ size = Vector3(4, 4, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mrac1"]
 size = Vector3(4, 4, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
+emission_enabled = true
+emission = Color(0.45840502, 0.45840508, 0.45840502, 1)
+
 [node name="Playground" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_20f6w")
 
@@ -58,10 +66,12 @@ environment = SubResource("Environment_mm0a5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=398946337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
 mesh = SubResource("BoxMesh_q8s1k")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1681170978]
-shape = SubResource("BoxShape3D_q8s1k")
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=735863756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
+shape = SubResource("BoxShape3D_cr7vb")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1419284204]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0.5, 0)
@@ -79,11 +89,10 @@ spot_attenuation = -10.0
 spot_angle = 2.0
 spot_angle_attenuation = 0.022097109
 
-[node name="MrPillBody" type="CharacterBody3D" parent="." unique_id=767200988 node_paths=PackedStringArray("camera_pivot", "debug_laser", "door")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9, 3.101016, 7)
+[node name="MrPillBody" type="CharacterBody3D" parent="." unique_id=767200988 node_paths=PackedStringArray("camera_pivot", "door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 1, 2.4999998)
 script = ExtResource("4_1pju0")
 camera_pivot = NodePath("CameraPivot")
-debug_laser = NodePath("")
 door = NodePath("../Door")
 
 [node name="CameraPivot" type="Node3D" parent="MrPillBody" unique_id=592344755]
@@ -118,3 +127,20 @@ mesh = SubResource("BoxMesh_emj6c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door" unique_id=2034061248]
 shape = SubResource("BoxShape3D_mrac1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1658217358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92547035, -2.600001)
+size = Vector3(4.5, 4.5, 16)
+material = SubResource("StandardMaterial3D_cr7vb")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D" unique_id=1341332121]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.5999999)
+operation = 2
+radius = 2.0
+height = 15.0
+sides = 24
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=808605897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2000003, 0)
+operation = 2
+size = Vector3(4.5, 4.5, 16)
