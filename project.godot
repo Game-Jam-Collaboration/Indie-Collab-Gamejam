@@ -25,6 +25,10 @@ folder_colors={
 "res://scenes/": "red"
 }
 
+[global_group]
+
+Interactable="This is the group that the player's raycast looks for."
+
 [input]
 
 MoveForward={

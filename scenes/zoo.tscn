@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dwy2wfsw1ckf" path="res://scripts/playground.gd" id="1_20f6w"]
 [ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_8w6y2"]
-[ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/first_person_controller.gd" id="4_1pju0"]
+[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/Player.tscn" id="3_20f6w"]
+[ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scenes/airlock_door.gd" id="4_8w6y2"]
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="4_ctmmb"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/zoo.VoxelGI_data.res" id="5_20f6w"]
 
@@ -38,21 +39,11 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 5.0
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_qchbg"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kddj0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_o6wi6"]
-size = Vector3(22, 8, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_mm0a5"]
-size = Vector3(4, 4, 1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_emj6c"]
-size = Vector3(4, 4, 1)
+size = Vector3(2, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mrac1"]
-size = Vector3(4, 4, 1)
+size = Vector3(2, 4, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
 
@@ -89,42 +80,31 @@ spot_attenuation = -10.0
 spot_angle = 2.0
 spot_angle_attenuation = 0.022097109
 
-[node name="MrPillBody" type="CharacterBody3D" parent="." unique_id=767200988 node_paths=PackedStringArray("camera_pivot")]
+[node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_20f6w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 1, 2.4999998)
-script = ExtResource("4_1pju0")
-camera_pivot = NodePath("CameraPivot")
 
-[node name="CameraPivot" type="Node3D" parent="MrPillBody" unique_id=592344755]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5999999)
+[node name="AirlockDoor" type="Node3D" parent="." unique_id=1584106529]
+unique_name_in_owner = true
+script = ExtResource("4_8w6y2")
 
-[node name="Camera" type="Camera3D" parent="MrPillBody/CameraPivot" unique_id=977381716]
+[node name="LeftSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1533642126]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.9, -11.1)
 
-[node name="Selector" type="RayCast3D" parent="MrPillBody/CameraPivot" unique_id=62773059]
-target_position = Vector3(0, 0, -2)
-
-[node name="Mesh" type="MeshInstance3D" parent="MrPillBody" unique_id=84236089]
-mesh = SubResource("CapsuleMesh_qchbg")
-
-[node name="Collision" type="CollisionShape3D" parent="MrPillBody" unique_id=1294294375]
-shape = SubResource("CapsuleShape3D_kddj0")
-
-[node name="CSGMesh3D2" type="CSGMesh3D" parent="." unique_id=1320754943]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, -11.1)
-use_collision = true
-mesh = SubResource("BoxMesh_o6wi6")
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGMesh3D2" unique_id=1327175826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9999999, 0)
-operation = 2
-mesh = SubResource("BoxMesh_mm0a5")
-
-[node name="Door" type="StaticBody3D" parent="." unique_id=1533642126]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -11.1)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Door" unique_id=846247817]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/LeftSide" unique_id=846247817]
 mesh = SubResource("BoxMesh_emj6c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Door" unique_id=2034061248]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/LeftSide" unique_id=2034061248]
+shape = SubResource("BoxShape3D_mrac1")
+
+[node name="RightSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1848405555]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.9, -11.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/RightSide" unique_id=1877820158]
+mesh = SubResource("BoxMesh_emj6c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/RightSide" unique_id=1799629018]
 shape = SubResource("BoxShape3D_mrac1")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1658217358]

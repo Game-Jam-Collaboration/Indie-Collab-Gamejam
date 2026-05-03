@@ -27,13 +27,16 @@ func _unhandled_input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 	if event is InputEventMouseMotion and focused:
 		yaw -= event.relative.x * mouse_sensitivity
 		pitch -= event.relative.y * mouse_sensitivity
 		pitch = clamp(pitch, deg_to_rad(-89), deg_to_rad(89))
 		rotation.y = yaw
 		camera_pivot.rotation.x = pitch
+	if event is InputEventMouseButton:
+		if event.pressed:
+			if event.button_index == 1:
+				_interact_with()
 
 
 func _physics_process(delta):
@@ -60,3 +63,21 @@ func _physics_process(delta):
 		velocity.y = jump_force
 
 	move_and_slide()
+	
+	# Use this for debugging
+	#_debug_raycast()
+
+
+func _interact_with() -> void:
+	var collision:CollisionObject3D = %Selector.get_collider()
+	if collision != null and collision.is_in_group("Interactable"):
+		if collision.has_method("_interact"):
+			collision._interact()
+		else:
+			collision.get_parent()._interact()
+
+
+func _debug_raycast() -> void:
+	var collision = %Selector.get_collider()
+	if collision != null and collision.is_in_group("Interactable"):
+		print(collision)
