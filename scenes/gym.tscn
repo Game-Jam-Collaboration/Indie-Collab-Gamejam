@@ -14,15 +14,15 @@ size = Vector3(50, 1, 50)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0md2f"]
 size = Vector3(50, 1, 50)
 
+[sub_resource type="BoxMesh" id="BoxMesh_wp3es"]
+size = Vector3(0.1, 1, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_0md2f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4duur"]
 albedo_color = Color(1, 0.31711304, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4duur"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_wp3es"]
-size = Vector3(0.1, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wp3es"]
 albedo_color = Color(0.703945, 0.3157615, 0, 1)
@@ -51,6 +51,18 @@ mesh = SubResource("BoxMesh_4duur")
 [node name="Collision" type="CollisionShape3D" parent="Floor" unique_id=165870084]
 shape = SubResource("BoxShape3D_0md2f")
 
+[node name="PlayerInteractionRange" type="Node3D" parent="." unique_id=1582418619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerInteractionRange" unique_id=885336994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4499998, 0.144, 0)
+mesh = SubResource("BoxMesh_wp3es")
+
+[node name="Label3D3" type="Label3D" parent="PlayerInteractionRange" unique_id=1358660190]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 2.4499998, 0.6495306, 0)
+text = "Player Reach: 2m"
+font_size = 24
+
 [node name="StaticInteraction" type="Node3D" parent="." unique_id=629443918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
 
@@ -65,10 +77,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4duur")
 [node name="Collision" type="CollisionShape3D" parent="StaticInteraction/ColorChangingCube" unique_id=1055683749]
 shape = SubResource("BoxShape3D_4duur")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticInteraction" unique_id=885336994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45, 0.144, 0)
-mesh = SubResource("BoxMesh_wp3es")
-
 [node name="Label3D" type="Label3D" parent="StaticInteraction" unique_id=1365764061]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.9765062, 0)
 text = "Each interactable object must have it's own `_interact` method composed and must be apart of the global group \"Interactable\"."
@@ -80,11 +88,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1
 text = "Basic Left Click Interaction"
 autowrap_mode = 2
 autowrap_trim_flags = 64
-
-[node name="Label3D3" type="Label3D" parent="StaticInteraction" unique_id=1358660190]
-transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 2.4499998, 0.6495306, 0)
-text = "Player Reach: 2m"
-font_size = 24
 
 [node name="Pickup" type="Node3D" parent="." unique_id=1995308713]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, -6.1)
