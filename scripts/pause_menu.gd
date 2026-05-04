@@ -5,6 +5,10 @@ extends Node2D
 @export var script_type : String
 var current_scene = ""
 
+var focused:bool:
+	get:
+		return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+
 func _ready() -> void:
 	
 	if script_type == "Pause":
@@ -60,7 +64,7 @@ func _unhandled_input(event):
 		if current_scene == "ship":
 			if event is InputEventKey and event.pressed:
 				if event.keycode == KEY_ESCAPE:
-					visible = !visible
+					visible = !focused
 				
 
 ##It makes the input calls.
