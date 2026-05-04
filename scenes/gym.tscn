@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://cd1c1o5nmlwht" path="res://scripts/gym.gd" id="1_5hyia"]
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="3_8el2m"]
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
-[ext_resource type="PackedScene" uid="uid://bmnltr7am5ltm" path="res://assets/blend_files/ButtonOnPedestal.blend" id="5_oxjoy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
 
@@ -21,6 +20,21 @@ size = Vector3(50, 1, 50)
 albedo_color = Color(1, 0.31711304, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4duur"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wp3es"]
+size = Vector3(0.1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wp3es"]
+albedo_color = Color(0.703945, 0.3157615, 0, 1)
+emission_enabled = true
+emission = Color(0.62059534, 0.32975677, 3.85046e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oxjoy"]
+material = SubResource("StandardMaterial3D_wp3es")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vi6gq"]
+size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8el2m"]
 
@@ -40,7 +54,7 @@ shape = SubResource("BoxShape3D_0md2f")
 [node name="StaticInteraction" type="Node3D" parent="." unique_id=629443918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
 
-[node name="ColorChangingCube" type="StaticBody3D" parent="StaticInteraction" unique_id=696917697]
+[node name="ColorChangingCube" type="StaticBody3D" parent="StaticInteraction" unique_id=696917697 groups=["Interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("3_wp3es")
 
@@ -51,16 +65,53 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4duur")
 [node name="Collision" type="CollisionShape3D" parent="StaticInteraction/ColorChangingCube" unique_id=1055683749]
 shape = SubResource("BoxShape3D_4duur")
 
-[node name="Label3D" type="Label3D" parent="StaticInteraction/ColorChangingCube" unique_id=1365764061]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.2, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticInteraction" unique_id=885336994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45, 0.144, 0)
+mesh = SubResource("BoxMesh_wp3es")
+
+[node name="Label3D" type="Label3D" parent="StaticInteraction" unique_id=1365764061]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.9765062, 0)
+text = "Each interactable object must have it's own `_interact` method composed and must be apart of the global group \"Interactable\"."
+autowrap_mode = 2
+autowrap_trim_flags = 64
+
+[node name="Label3D2" type="Label3D" parent="StaticInteraction" unique_id=662652065]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.8765062, 0)
 text = "Basic Left Click Interaction"
+autowrap_mode = 2
+autowrap_trim_flags = 64
+
+[node name="Label3D3" type="Label3D" parent="StaticInteraction" unique_id=1358660190]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 2.4499998, 0.6495306, 0)
+text = "Player Reach: 2m"
+font_size = 24
+
+[node name="Pickup" type="Node3D" parent="." unique_id=1995308713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, -6.1)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Pickup" unique_id=1933395679 groups=["Pickupable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup/RigidBody3D" unique_id=188073717]
+mesh = SubResource("BoxMesh_oxjoy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup/RigidBody3D" unique_id=554799807]
+shape = SubResource("BoxShape3D_vi6gq")
+
+[node name="Label3D" type="Label3D" parent="Pickup" unique_id=535649663]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.5765061, 0)
+text = "Each pickupable object must simply be apart of the global group \"Pickupable\". The first person controler attached the player manages pickup / releasing objects."
+autowrap_mode = 2
+autowrap_trim_flags = 64
+
+[node name="Label3D2" type="Label3D" parent="Pickup" unique_id=244620683]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.4765062, 0)
+text = "Basic Pickup Interaction"
+autowrap_mode = 2
+autowrap_trim_flags = 64
 
 [node name="Player" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-
-[node name="ThirdPersonCamera" type="Camera3D" parent="Player" unique_id=2013485059]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.9281874, 0.37211314, 0, -0.37211314, 0.9281874, 0, 1.6, 1.4000001)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=975214808]
 
@@ -84,6 +135,3 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 text = "E - Turn on Player Debug
 T - Third Person (Dev Debug Only)"
-
-[node name="ButtonOnPedestal" parent="." unique_id=1514126500 instance=ExtResource("5_oxjoy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.904636, 0.49999976, 4.598881)

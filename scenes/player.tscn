@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://63pukkc2w1sy"]
 
 [ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/first_person_controller.gd" id="1_3vyb7"]
+[ext_resource type="Shader" uid="uid://dufsum10fcd6f" path="res://scenes/crosshair.gdshader" id="2_g2els"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qchbg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kddj0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
+shader = ExtResource("2_g2els")
+shader_parameter/color = Color(0.4, 0.7, 0.15, 1)
+shader_parameter/radius = 0.12
 
 [node name="MrPillBody" type="CharacterBody3D" unique_id=1720547152 node_paths=PackedStringArray("camera_pivot")]
 script = ExtResource("1_3vyb7")
@@ -20,8 +26,37 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -2)
 
+[node name="Holder" type="Node3D" parent="CameraPivot" unique_id=2028694079]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40000004, -0.3, -0.70000017)
+
+[node name="Hook" type="Node3D" parent="CameraPivot" unique_id=1818684715]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40000004, -0.3, -0.5000001)
+
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=548159479]
 mesh = SubResource("CapsuleMesh_qchbg")
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=1668720991]
 shape = SubResource("CapsuleShape3D_kddj0")
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="." unique_id=1772392677]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.9281874, 0.37211314, 0, -0.37211314, 0.9281874, 0, 1.6, 1.4000001)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1313886014]
+
+[node name="ColorRect" type="ColorRect" parent="UI" unique_id=191733598]
+material = SubResource("ShaderMaterial_qhqgy")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.57729274, 0.04510989, 1.4439226e-07, 1)

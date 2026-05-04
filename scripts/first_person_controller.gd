@@ -8,8 +8,11 @@ extends CharacterBody3D
 @export var vertical_speed:float = 10.0
 @export var camera_pivot:Node3D
 
-var camera_enabled := true
+var first_person := true
 
+var in_hand:CollisionObject3D = null
+var previous_pickup_parent:Node
+var previous_pickup_transform:Variant
 
 var yaw := 0.0
 var pitch := 0.0
@@ -29,7 +32,16 @@ func _unhandled_input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if focused and camera_enabled:
+		if event.keycode == KEY_E:
+			if !get_tree().debug_collisions_hint:
+				get_tree().debug_collisions_hint = true
+			else:
+				get_tree().debug_collisions_hint = false
+			get_tree().reload_current_scene()
+		elif event.keycode == KEY_T:
+			%ThirdPersonCamera.make_current()
+			first_person = false
+	if focused and first_person:
 		if event is InputEventMouseMotion:
 			yaw -= event.relative.x * mouse_sensitivity
 			pitch -= event.relative.y * mouse_sensitivity
@@ -39,10 +51,17 @@ func _unhandled_input(event):
 		if event is InputEventMouseButton:
 			if event.pressed:
 				if event.button_index == 1:
-					_interact_with()
+					if %Holder.get_child_count() > 0:
+						_release_pickup()
+					else:
+						_interact_with()
 
 
 func _physics_process(delta):
+	if in_hand:
+		in_hand.look_at(%Hook.global_position)
+		in_hand.rotation_degrees.z = 0
+		in_hand.rotation_degrees.x = 0
 	if !focused: return
 	var input_dir := Input.get_vector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward")
 	
@@ -69,11 +88,27 @@ func _physics_process(delta):
 
 func _interact_with() -> void:
 	var collision:CollisionObject3D = %Selector.get_collider()
-	if collision != null and collision.is_in_group("Interactable"):
-		if collision.has_method("_interact"):
-			collision._interact()
-		else:
-			collision.get_parent()._interact()
+	if collision != null:
+		print(collision)
+		if collision.is_in_group("Interactable"):
+			if collision.has_method("_interact"):
+				collision._interact()
+		elif collision.is_in_group("Pickupable"):
+			in_hand = collision
+			previous_pickup_parent = collision.get_parent()
+			previous_pickup_transform = collision.global_transform
+			if collision is RigidBody3D:
+				collision.freeze = true
+			collision.reparent(%Holder)
+			collision.position = Vector3.ZERO
+
+
+func _release_pickup() -> void:
+	in_hand.reparent(previous_pickup_parent)
+	in_hand.freeze = false
+	in_hand = null
+	previous_pickup_parent = null
+	previous_pickup_transform = null
 
 
 func _debug_raycast() -> void:
