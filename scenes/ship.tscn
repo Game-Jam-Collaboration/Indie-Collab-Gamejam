@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_itrim"]
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="5_bseor"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/ship.VoxelGI_data.res" id="6_tlr80"]
-[ext_resource type="PackedScene" uid="uid://bmnltr7am5ltm" path="res://assets/blend_files/ButtonOnPedestal.blend" id="8_8qiel"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qchbg"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -128,6 +127,3 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.8183327)
 size = Vector3(30, 20, 30)
 data = ExtResource("6_tlr80")
-
-[node name="ButtonOnPedestal2" parent="." unique_id=1514126500 instance=ExtResource("8_8qiel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07463868, 0, -10.473874)
