@@ -3,7 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="1_4duur"]
 [ext_resource type="Script" uid="uid://cd1c1o5nmlwht" path="res://scripts/gym.gd" id="1_5hyia"]
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="3_8el2m"]
+[ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="3_oxjoy"]
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
+[ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
 
@@ -13,6 +15,13 @@ size = Vector3(50, 1, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0md2f"]
 size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oxjoy"]
+albedo_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vi6gq"]
+material = SubResource("StandardMaterial3D_oxjoy")
+size = Vector3(1, 2.5, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wp3es"]
 size = Vector3(0.1, 1, 1)
@@ -50,6 +59,23 @@ mesh = SubResource("BoxMesh_4duur")
 
 [node name="Collision" type="CollisionShape3D" parent="Floor" unique_id=165870084]
 shape = SubResource("BoxShape3D_0md2f")
+
+[node name="AssemblyInteraction" type="Node3D" parent="." unique_id=1585064865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7, 2.118542, -14.6)
+
+[node name="PanelBacking" type="MeshInstance3D" parent="AssemblyInteraction" unique_id=50627038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36854196, 0)
+mesh = SubResource("BoxMesh_vi6gq")
+
+[node name="fuse_panel" parent="AssemblyInteraction/PanelBacking" unique_id=2103524746 instance=ExtResource("3_oxjoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3000002)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="AssemblyInteraction" unique_id=1731034523]
+transform = Transform3D(1, 0, 0, 0, 0.087155804, 0.9961947, 0, -0.9961947, 0.087155804, 0, 1.8, 1)
+light_energy = 0.6
+
+[node name="Fuse" parent="AssemblyInteraction" unique_id=462221478 instance=ExtResource("4_vi6gq")]
+transform = Transform3D(1, 0, 0, 0, 0.34202015, -0.9396926, 0, 0.9396926, 0.34202015, 2.5, 0.099999905, 1.1000004)
 
 [node name="PlayerInteractionRange" type="Node3D" parent="." unique_id=1582418619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
