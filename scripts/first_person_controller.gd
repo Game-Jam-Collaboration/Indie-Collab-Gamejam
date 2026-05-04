@@ -93,6 +93,8 @@ func _interact_with() -> void:
 		if collision.is_in_group("Interactable"):
 			if collision.has_method("_interact"):
 				collision._interact()
+			else:
+				collision.get_parent()._interact()
 		elif collision.is_in_group("Pickupable"):
 			in_hand = collision
 			previous_pickup_parent = collision.get_parent()
