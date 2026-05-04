@@ -2,26 +2,12 @@
 
 [ext_resource type="Script" uid="uid://vhqt8tk4hjhg" path="res://scripts/playground.gd" id="1_7j21i"]
 [ext_resource type="Material" uid="uid://bpkwcejv3jtbo" path="res://assets/materials/laser_material.tres" id="2_3m36u"]
+[ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_8qiel"]
 [ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="3_8qiel"]
 [ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_itrim"]
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="5_bseor"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/ship.VoxelGI_data.res" id="6_tlr80"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kddj0"]
-sky_top_color = Color(0.029538823, 0.044381306, 0.065225236, 1)
-sky_horizon_color = Color(0.27545968, 0.28154975, 0.2937426, 1)
-sky_cover_modulate = Color(0.12591085, 0.12591085, 0.12591082, 1)
-ground_bottom_color = Color(0.18538642, 0.18421221, 0.1740655, 1)
-ground_horizon_color = Color(0.15471098, 0.15870944, 0.16671553, 1)
-
-[sub_resource type="Sky" id="Sky_q8s1k"]
-sky_material = SubResource("ProceduralSkyMaterial_kddj0")
-
-[sub_resource type="Environment" id="Environment_mm0a5"]
-background_mode = 2
-sky = SubResource("Sky_q8s1k")
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="PackedScene" uid="uid://bmnltr7am5ltm" path="res://assets/blend_files/ButtonOnPedestal.blend" id="8_8qiel"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qchbg"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -50,8 +36,7 @@ size = Vector3(2, 4, 1)
 [node name="Playground" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_7j21i")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=929306466]
-environment = SubResource("Environment_mm0a5")
+[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_8qiel")]
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1878826705]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -113,6 +98,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.9, -11.1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/RightSide" unique_id=1877820158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00013911724, 0.0046937466, -0.0030622482)
 mesh = SubResource("BoxMesh_emj6c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/RightSide" unique_id=1799629018]
@@ -142,3 +128,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.8183327)
 size = Vector3(30, 20, 30)
 data = ExtResource("6_tlr80")
+
+[node name="ButtonOnPedestal2" parent="." unique_id=1514126500 instance=ExtResource("8_8qiel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07463868, 0, -10.473874)

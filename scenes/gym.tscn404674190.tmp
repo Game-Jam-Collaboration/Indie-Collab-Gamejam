@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://duorikyjsn4d4"]
+
+[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="1_4duur"]
+[ext_resource type="Script" uid="uid://cd1c1o5nmlwht" path="res://scenes/gym.gd" id="1_5hyia"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4duur"]
+material = SubResource("StandardMaterial3D_0md2f")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0md2f"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0md2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4duur"]
+albedo_color = Color(1, 0.31711304, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4duur"]
+
+[node name="Gym" type="Node3D" unique_id=774975801]
+script = ExtResource("1_5hyia")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=430429808]
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor" unique_id=1387472729]
+mesh = SubResource("BoxMesh_4duur")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor" unique_id=165870084]
+shape = SubResource("BoxShape3D_0md2f")
+
+[node name="StaticInteraction" type="Node3D" parent="." unique_id=629443918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
+
+[node name="ColorChangingCube" type="StaticBody3D" parent="StaticInteraction" unique_id=696917697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="StaticInteraction/ColorChangingCube" unique_id=447766689]
+mesh = SubResource("BoxMesh_0md2f")
+surface_material_override/0 = SubResource("StandardMaterial3D_4duur")
+
+[node name="Collision" type="CollisionShape3D" parent="StaticInteraction/ColorChangingCube" unique_id=1055683749]
+shape = SubResource("BoxShape3D_4duur")
+
+[node name="Label3D" type="Label3D" parent="StaticInteraction/ColorChangingCube" unique_id=1365764061]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.2, 0)
+text = "Basic Left Click Interaction"
+
+[node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)

@@ -12,7 +12,6 @@ config_version=5
 
 config/name="SOS: Repair Needed"
 config/description="A Indie Game Clinic Collab Game Jam project: https://itch.io/jam/indie-game-clinic-collab-jam-26"
-run/main_scene="uid://b2rf74tyaywdw"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SOS_RepairNeeded"
 config/features=PackedStringArray("4.6", "Forward Plus")

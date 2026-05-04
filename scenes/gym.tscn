@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://duorikyjsn4d4"]
+
+[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="1_4duur"]
+[ext_resource type="Script" uid="uid://cd1c1o5nmlwht" path="res://scripts/gym.gd" id="1_5hyia"]
+[ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="3_8el2m"]
+[ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
+[ext_resource type="PackedScene" uid="uid://bmnltr7am5ltm" path="res://assets/blend_files/ButtonOnPedestal.blend" id="5_oxjoy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4duur"]
+material = SubResource("StandardMaterial3D_0md2f")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0md2f"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0md2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4duur"]
+albedo_color = Color(1, 0.31711304, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4duur"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8el2m"]
+
+[node name="Gym" type="Node3D" unique_id=774975801]
+script = ExtResource("1_5hyia")
+
+[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("3_8el2m")]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=430429808]
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor" unique_id=1387472729]
+mesh = SubResource("BoxMesh_4duur")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor" unique_id=165870084]
+shape = SubResource("BoxShape3D_0md2f")
+
+[node name="StaticInteraction" type="Node3D" parent="." unique_id=629443918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
+
+[node name="ColorChangingCube" type="StaticBody3D" parent="StaticInteraction" unique_id=696917697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_wp3es")
+
+[node name="Mesh" type="MeshInstance3D" parent="StaticInteraction/ColorChangingCube" unique_id=447766689]
+mesh = SubResource("BoxMesh_0md2f")
+surface_material_override/0 = SubResource("StandardMaterial3D_4duur")
+
+[node name="Collision" type="CollisionShape3D" parent="StaticInteraction/ColorChangingCube" unique_id=1055683749]
+shape = SubResource("BoxShape3D_4duur")
+
+[node name="Label3D" type="Label3D" parent="StaticInteraction/ColorChangingCube" unique_id=1365764061]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.2, 0)
+text = "Basic Left Click Interaction"
+
+[node name="Player" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="Player" unique_id=2013485059]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.9281874, 0.37211314, 0, -0.37211314, 0.9281874, 0, 1.6, 1.4000001)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=975214808]
+
+[node name="Panel" type="PanelContainer" parent="UI" unique_id=1621090332]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8el2m")
+
+[node name="Margin" type="MarginContainer" parent="UI/Panel" unique_id=863781186]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="UI/Panel/Margin" unique_id=647694921]
+layout_mode = 2
+text = "E - Turn on Player Debug
+T - Third Person (Dev Debug Only)"
+
+[node name="ButtonOnPedestal" parent="." unique_id=1514126500 instance=ExtResource("5_oxjoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.904636, 0.49999976, 4.598881)
