@@ -1,5 +1,7 @@
 [gd_scene format=4 uid="uid://84jij4m7xt2m"]
 
+[ext_resource type="Script" uid="uid://dl7qplfu2j80d" path="res://scenes/fuse_panel.gd" id="1_5b65a"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_af7gh"]
 resource_name = "Panel"
 cull_mode = 2
@@ -71,10 +73,22 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qc3rj")
 
-[node name="fuse_panel" type="Node3D" unique_id=764555347]
+[sub_resource type="BoxShape3D" id="BoxShape3D_t20le"]
+size = Vector3(0.5, 0.6, 0.2)
+
+[node name="FusePanel" type="Area3D" unique_id=1958303086 groups=["AssemblyPoint"]]
+script = ExtResource("1_5b65a")
 
 [node name="Panel" type="MeshInstance3D" parent="." unique_id=1985057079]
 mesh = SubResource("ArrayMesh_4jap7")
 
 [node name="Holders" type="MeshInstance3D" parent="." unique_id=232232018]
 mesh = SubResource("ArrayMesh_6wo2m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=736823330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.1)
+shape = SubResource("BoxShape3D_t20le")
+
+[node name="AssemblyPoint" type="Marker3D" parent="." unique_id=107549274]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.13956223)

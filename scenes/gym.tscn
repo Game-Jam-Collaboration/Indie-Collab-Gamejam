@@ -55,6 +55,7 @@ script = ExtResource("1_5hyia")
 [node name="Floor" type="StaticBody3D" parent="." unique_id=430429808]
 
 [node name="Mesh" type="MeshInstance3D" parent="Floor" unique_id=1387472729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0013046265, 0.00052809715, 0.0010051727)
 mesh = SubResource("BoxMesh_4duur")
 
 [node name="Collision" type="CollisionShape3D" parent="Floor" unique_id=165870084]
@@ -67,15 +68,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7, 2.118542, -14.6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36854196, 0)
 mesh = SubResource("BoxMesh_vi6gq")
 
-[node name="fuse_panel" parent="AssemblyInteraction/PanelBacking" unique_id=2103524746 instance=ExtResource("3_oxjoy")]
+[node name="fuse_panel" parent="AssemblyInteraction/PanelBacking" unique_id=2103524746 node_paths=PackedStringArray("environment_light") instance=ExtResource("3_oxjoy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3000002)
+environment_light = NodePath("../../SpotLight3D")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="AssemblyInteraction" unique_id=1731034523]
 transform = Transform3D(1, 0, 0, 0, 0.087155804, 0.9961947, 0, -0.9961947, 0.087155804, 0, 1.8, 1)
+light_color = Color(0.44694954, 0.14658591, 0.15094438, 1)
 light_energy = 0.6
+
+[node name="Label3D3" type="Label3D" parent="AssemblyInteraction" unique_id=2912436]
+transform = Transform3D(0.76604444, 0, -0.6427876, 0, 1, 0, 0.6427876, 0, 0.76604444, 2.767788, 0.87861085, 0.81830025)
+text = "Assembly point objects are recommended to be RigidBody3D objects to feel more interactable."
+autowrap_mode = 2
+autowrap_trim_flags = 64
 
 [node name="Fuse" parent="AssemblyInteraction" unique_id=462221478 instance=ExtResource("4_vi6gq")]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, -0.9396926, 0, 0.9396926, 0.34202015, 2.5, 0.099999905, 1.1000004)
+
+[node name="Label3D" type="Label3D" parent="AssemblyInteraction" unique_id=1477753773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2765062, 0)
+text = "Each assembly point object must have it's own `assemble` method composed and must be apart of the global group \"AssemblyPoint\"."
+autowrap_mode = 2
+autowrap_trim_flags = 64
+
+[node name="Label3D2" type="Label3D" parent="AssemblyInteraction" unique_id=1176646921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.176506, 0)
+text = "Assembly Interaction"
+autowrap_mode = 2
+autowrap_trim_flags = 64
 
 [node name="PlayerInteractionRange" type="Node3D" parent="." unique_id=1582418619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8, 0, 0)
@@ -111,7 +132,7 @@ autowrap_trim_flags = 64
 
 [node name="Label3D2" type="Label3D" parent="StaticInteraction" unique_id=662652065]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.8765062, 0)
-text = "Basic Static Interaction"
+text = "Static Interaction"
 autowrap_mode = 2
 autowrap_trim_flags = 64
 
@@ -135,7 +156,7 @@ autowrap_trim_flags = 64
 
 [node name="Label3D2" type="Label3D" parent="Pickup" unique_id=244620683]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.4765062, 0)
-text = "Basic Pickup Interaction"
+text = "Pickup Interaction"
 autowrap_mode = 2
 autowrap_trim_flags = 64
 

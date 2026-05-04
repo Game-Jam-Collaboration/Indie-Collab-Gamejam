@@ -13,6 +13,13 @@ var first_person := true
 var in_hand:CollisionObject3D = null
 var previous_pickup_parent:Node
 var previous_pickup_transform:Variant
+var assembling := false
+var assembly_mechanism:Node = null
+var assembly_tween:Tween = null:
+	set(value):
+		if assembly_tween and assembly_tween.is_running(): assembly_tween.kill()
+		assembly_tween = value
+		return assembly_tween
 
 var yaw := 0.0
 var pitch := 0.0
@@ -51,7 +58,14 @@ func _unhandled_input(event):
 		if event is InputEventMouseButton:
 			if event.pressed:
 				if event.button_index == 1:
-					if %Holder.get_child_count() > 0:
+					if assembling:
+						assembling = false
+						in_hand = null
+						previous_pickup_parent = null
+						previous_pickup_transform = null
+						if assembly_mechanism:
+							assembly_mechanism.assemble()
+					elif %Holder.get_child_count() > 0:
 						_release_pickup()
 					else:
 						_interact_with()
@@ -59,9 +73,22 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	if in_hand:
-		in_hand.look_at(%Hook.global_position)
-		in_hand.rotation_degrees.z = 0
-		in_hand.rotation_degrees.x = 0
+		assembly_mechanism = %Selector.get_collider()
+		if assembly_mechanism and assembly_mechanism.is_in_group("AssemblyPoint"):
+			var assembly_point = assembly_mechanism.get_node("%AssemblyPoint") 
+			in_hand.reparent(assembly_point)
+			assembly_tween = create_tween()
+			assembly_tween.tween_property(in_hand, "position", Vector3.ZERO, .2)
+			assembly_tween.tween_property(in_hand, "rotation", Vector3.ZERO, .2)
+			assembling = true
+		else:
+			assembling = false
+		if !assembling:
+			if in_hand.get_parent() != %Holder:
+				in_hand.reparent(%Holder)
+				assembly_tween = create_tween()
+				assembly_tween.tween_property(in_hand, "position", Vector3.ZERO, .15)
+				assembly_tween.tween_property(in_hand, "rotation", Vector3.ZERO, .15)
 	if !focused: return
 	var input_dir := Input.get_vector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward")
 	
@@ -93,15 +120,18 @@ func _interact_with() -> void:
 				collision.get_parent()._interact()
 		elif collision.is_in_group("Pickupable"):
 			in_hand = collision
+			%Selector.add_exception(in_hand)
 			previous_pickup_parent = collision.get_parent()
 			previous_pickup_transform = collision.global_transform
 			if collision is RigidBody3D:
 				collision.freeze = true
 			collision.reparent(%Holder)
 			collision.position = Vector3.ZERO
+			collision.rotation = Vector3.ZERO
 
 
 func _release_pickup() -> void:
+	%Selector.remove_exception(in_hand)
 	in_hand.reparent(previous_pickup_parent)
 	in_hand.freeze = false
 	in_hand = null

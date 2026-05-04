@@ -25,6 +25,7 @@ unique_name_in_owner = true
 [node name="Selector" type="RayCast3D" parent="CameraPivot" unique_id=154650258]
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -2)
+collide_with_areas = true
 
 [node name="Holder" type="Node3D" parent="CameraPivot" unique_id=2028694079]
 unique_name_in_owner = true
