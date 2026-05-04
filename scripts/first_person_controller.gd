@@ -81,15 +81,11 @@ func _physics_process(delta):
 		velocity.y = jump_force
 
 	move_and_slide()
-	
-	# Use this for debugging
-	#_debug_raycast()
 
 
 func _interact_with() -> void:
 	var collision:CollisionObject3D = %Selector.get_collider()
 	if collision != null:
-		print(collision)
 		if collision.is_in_group("Interactable"):
 			if collision.has_method("_interact"):
 				collision._interact()
@@ -111,9 +107,3 @@ func _release_pickup() -> void:
 	in_hand = null
 	previous_pickup_parent = null
 	previous_pickup_transform = null
-
-
-func _debug_raycast() -> void:
-	var collision = %Selector.get_collider()
-	if collision != null and collision.is_in_group("Interactable"):
-		print(collision)
