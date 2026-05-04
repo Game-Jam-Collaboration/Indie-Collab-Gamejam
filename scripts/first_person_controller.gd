@@ -48,6 +48,8 @@ func _unhandled_input(event):
 		elif event.keycode == KEY_T:
 			%ThirdPersonCamera.make_current()
 			first_person = false
+		elif event.keycode == KEY_Q:
+			get_tree().root.get_node("Gym/%Brush").brush()
 	if focused and first_person:
 		if event is InputEventMouseMotion:
 			yaw -= event.relative.x * mouse_sensitivity

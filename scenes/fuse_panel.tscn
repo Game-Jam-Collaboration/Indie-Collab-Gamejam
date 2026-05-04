@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://84jij4m7xt2m"]
 
-[ext_resource type="Script" uid="uid://dl7qplfu2j80d" path="res://scenes/fuse_panel.gd" id="1_5b65a"]
+[ext_resource type="Script" uid="uid://dl7qplfu2j80d" path="res://scripts/fuse_panel.gd" id="1_5b65a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_af7gh"]
 resource_name = "Panel"
