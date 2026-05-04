@@ -85,7 +85,7 @@ autowrap_trim_flags = 64
 
 [node name="Label3D2" type="Label3D" parent="StaticInteraction" unique_id=662652065]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.8765062, 0)
-text = "Basic Left Click Interaction"
+text = "Basic Interaction"
 autowrap_mode = 2
 autowrap_trim_flags = 64
 
