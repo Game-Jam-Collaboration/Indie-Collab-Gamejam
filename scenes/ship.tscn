@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="5_bseor"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/ship.VoxelGI_data.res" id="6_tlr80"]
 [ext_resource type="PackedScene" uid="uid://cyjcynnw0eim8" path="res://scenes/ship_asset.tscn" id="8_8qiel"]
+[ext_resource type="Material" uid="uid://bxrbkiu31wnus" path="res://assets/materials/wall.tres" id="8_itrim"]
+[ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="9_itrim"]
+[ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="10_bseor"]
+[ext_resource type="PackedScene" uid="uid://o8ehv7665u8y" path="res://scenes/ceiling_light.tscn" id="11_tlr80"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qchbg"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -35,6 +39,29 @@ material = SubResource("StandardMaterial3D_8qiel")
 size = Vector3(10, 2, 3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bseor"]
+material = ExtResource("8_itrim")
+size = Vector3(3, 6, 18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_03y04"]
+material = ExtResource("8_itrim")
+size = Vector3(3, 6, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_48mkp"]
+material = ExtResource("8_itrim")
+size = Vector3(3, 6, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bseor"]
+albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tlr80"]
+material = SubResource("StandardMaterial3D_bseor")
+size = Vector3(1, 5, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tbq4g"]
+material = SubResource("StandardMaterial3D_bseor")
+size = Vector3(1, 9.4, 12)
 
 [node name="Level" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_7j21i")
@@ -121,5 +148,61 @@ transform = Transform3D(0.17364822, -0.9848077, 0, 0.9848077, 0.17364822, 0, 0, 
 
 [node name="VoxelGI" type="VoxelGI" parent="." unique_id=2082848283]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.090912, 3.1386108, -38.647343)
+visible = false
 size = Vector3(127.66815, 26.277222, 107.85492)
 data = ExtResource("6_tlr80")
+
+[node name="Wall" type="MeshInstance3D" parent="." unique_id=21327083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5.592944, -18)
+mesh = SubResource("BoxMesh_bseor")
+
+[node name="Wall6" type="MeshInstance3D" parent="." unique_id=981793176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5.559649, -16.8)
+mesh = SubResource("BoxMesh_bseor")
+
+[node name="Wall7" type="MeshInstance3D" parent="." unique_id=845406225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 5.559649, -19.8)
+mesh = SubResource("BoxMesh_bseor")
+
+[node name="Wall8" type="MeshInstance3D" parent="." unique_id=1177134293]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20.5, 5.559649, -27.300001)
+mesh = SubResource("BoxMesh_bseor")
+
+[node name="Wall2" type="MeshInstance3D" parent="." unique_id=1735493882]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 5.611768, -18)
+mesh = SubResource("BoxMesh_03y04")
+
+[node name="Wall3" type="MeshInstance3D" parent="." unique_id=1398205912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.400002, 5.5461764, -18.6)
+mesh = SubResource("BoxMesh_48mkp")
+
+[node name="Ceiling" type="MeshInstance3D" parent="." unique_id=556522965]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -2, 8.1, -19)
+mesh = SubResource("BoxMesh_tlr80")
+
+[node name="Ceiling2" type="MeshInstance3D" parent="." unique_id=1944067049]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -12.2, 8.1, -19)
+mesh = SubResource("BoxMesh_tbq4g")
+
+[node name="Wall4" type="MeshInstance3D" parent="." unique_id=1363220847]
+transform = Transform3D(0.9396926, 0, 0.34202012, 0, 1, 0, -0.34202012, 0, 0.9396926, -10.791494, 5.630736, -47.852688)
+mesh = SubResource("BoxMesh_03y04")
+
+[node name="Wall5" type="MeshInstance3D" parent="." unique_id=1498172156]
+transform = Transform3D(0.9396926, 0, 0.34202012, 0, 1, 0, -0.34202012, 0, 0.9396926, -21.948898, 5.6556587, -42.275455)
+mesh = SubResource("BoxMesh_48mkp")
+
+[node name="Ceiling3" type="MeshInstance3D" parent="." unique_id=126584759]
+transform = Transform3D(-4.1075268e-08, 0.9396926, 0.34202012, -1, -4.371139e-08, 0, 1.4950174e-08, -0.34202012, 0.9396926, -16.25961, 8.1, -44.771854)
+mesh = SubResource("BoxMesh_tbq4g")
+
+[node name="FusePanel" parent="." unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object") instance=ExtResource("9_itrim")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, -3.5527137e-15, 1, -3.5527137e-15, -4.371139e-08, 0.39999998, 3.9000003, -18)
+environment_light = NodePath("")
+emissive_object = NodePath("")
+
+[node name="Fuse" parent="FusePanel" unique_id=2062436736 instance=ExtResource("10_bseor")]
+transform = Transform3D(0.056672286, 0.70483214, -0.70710677, -0.9967831, 0.08014676, 4.3570775e-08, 0.056672346, 0.704832, 0.70710677, 0, -0.60000014, 1.6607726)
+
+[node name="CeilingLight" parent="." unique_id=1544596186 instance=ExtResource("11_tlr80")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 7.6000004, -18)
