@@ -15,4 +15,4 @@ func _interact() -> void:
 	tween.set_parallel(true)
 	tween.tween_property(%Button, "position:x", %Button.position.x + 0.025, tween_length)
 	tween.tween_property(%Button, "position:y", %Button.position.y + 0.05, tween_length)
-	get_tree().root.get_node("Playground/%AirlockDoor")._open()
+	get_tree().root.get_node("Level/%AirlockDoor")._open()
