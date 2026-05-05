@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cs4jrk62ae5bd"
-path="res://.godot/imported/ship_v2.blend-e997ecee2d001f2670363b6f6a8a3913.scn"
+uid="uid://bejuh3yc2x02"
+path="res://.godot/imported/corner_wall.blend-c5481be98a3d6a9bcdf0bd316d72f399.scn"
 
 [deps]
 
-source_file="res://assets/blend_files/ship_v2.blend"
-dest_files=["res://.godot/imported/ship_v2.blend-e997ecee2d001f2670363b6f6a8a3913.scn"]
+source_file="res://assets/blend_files/corner_wall.blend"
+dest_files=["res://.godot/imported/corner_wall.blend-c5481be98a3d6a9bcdf0bd316d72f399.scn"]
 
 [params]
 
@@ -24,7 +24,7 @@ nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
-meshes/light_baking=0
+meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
@@ -37,14 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"nodes": {
-"PATH:Ship": {
-"generate/physics": true,
-"physics/shape_type": 2
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true
