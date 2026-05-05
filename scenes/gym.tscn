@@ -249,7 +249,7 @@ visible = false
 size = Vector3(83.302, 20, 122.142944)
 data = SubResource("VoxelGIData_nb3du")
 
-[node name="ship_v2" parent="." unique_id=2031689446 instance=ExtResource("8_xhcdp")]
+[node name="ship_v2" parent="." unique_id=1022696628 instance=ExtResource("8_xhcdp")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 23.769798, 0.006188631, 38.785004)
 
 [node name="CeilingLight" parent="ship_v2" unique_id=1544596186 instance=ExtResource("9_hvubb")]
