@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://o8ehv7665u8y"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3m36u"]
+top_radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itrim"]
+metallic_specular = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.40244856, 0, 0.03540007, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bseor"]
+material = SubResource("StandardMaterial3D_itrim")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.3
+
+[node name="CeilingLight" type="MeshInstance3D" unique_id=1544596186]
+mesh = SubResource("CylinderMesh_3m36u")
+
+[node name="Bulb" type="MeshInstance3D" parent="." unique_id=1255755475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09162998, 0)
+mesh = SubResource("CylinderMesh_bseor")
+
+[node name="CeilingLight" type="SpotLight3D" parent="." unique_id=1103074039]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.4000001, 0)
+light_color = Color(0.3525131, 0, 0.002929743, 1)
+light_energy = 3.0
+spot_range = 6.0
+spot_angle_attenuation = 0.14358763

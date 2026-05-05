@@ -7,7 +7,21 @@
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 [ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
-[ext_resource type="PackedScene" uid="uid://cyjcynnw0eim8" path="res://scenes/ship_asset.tscn" id="8_fmm5l"]
+[ext_resource type="PackedScene" uid="uid://cs4jrk62ae5bd" path="res://assets/blend_files/ship_v2.blend" id="8_xhcdp"]
+[ext_resource type="PackedScene" uid="uid://o8ehv7665u8y" path="res://scenes/ceiling_light.tscn" id="9_hvubb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xhcdp"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_hvubb"]
+sky_material = SubResource("ProceduralSkyMaterial_xhcdp")
+
+[sub_resource type="Environment" id="Environment_j88v8"]
+background_mode = 2
+sky = SubResource("Sky_hvubb")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
 emission_enabled = true
@@ -59,7 +73,10 @@ height = 0.1
 [node name="Gym" type="Node3D" unique_id=774975801]
 script = ExtResource("1_5hyia")
 
-[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("3_8el2m")]
+[node name="SpaceEnvironment" parent="." unique_id=107833806 instance=ExtResource("3_8el2m")]
+
+[node name="DefaultEnvironment" type="WorldEnvironment" parent="." unique_id=1878620023]
+environment = SubResource("Environment_j88v8")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=430429808]
 
@@ -213,5 +230,13 @@ text = "WIP"
 autowrap_mode = 2
 autowrap_trim_flags = 64
 
-[node name="ship" parent="." unique_id=1458809927 instance=ExtResource("8_fmm5l")]
-transform = Transform3D(-0.9396927, 0, -0.34202027, 0, 1, 0, 0.34202027, 0, -0.9396927, 35.200005, -1.3000002, -8.900001)
+[node name="ship_v2" parent="." unique_id=144540390 instance=ExtResource("8_xhcdp")]
+transform = Transform3D(0.087155804, 0, 0.9961947, 0, 1, 0, -0.9961947, 0, 0.087155804, 23.770233, 4.7683716e-07, 38.784077)
+
+[node name="CeilingLight" parent="ship_v2" unique_id=1544596186 instance=ExtResource("9_hvubb")]
+transform = Transform3D(0.92050487, 0.39073113, 0, -0.39073113, 0.92050487, 0, 0, 0, 1, -8.301, 4.745, -33.907)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ship_v2" unique_id=879367167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9184036, 3.6608377, -48.744827)
+omni_range = 130.609
+omni_attenuation = 1.5
