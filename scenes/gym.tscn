@@ -231,12 +231,13 @@ autowrap_mode = 2
 autowrap_trim_flags = 64
 
 [node name="ship_v2" parent="." unique_id=144540390 instance=ExtResource("8_xhcdp")]
-transform = Transform3D(0.087155804, 0, 0.9961947, 0, 1, 0, -0.9961947, 0, 0.087155804, 23.770233, 4.7683716e-07, 38.784077)
+transform = Transform3D(0.087155804, 0, 0.9961947, 0, 1, 0, -0.9961947, 0, 0.087155804, 23.769798, 0.006188631, 38.785004)
 
 [node name="CeilingLight" parent="ship_v2" unique_id=1544596186 instance=ExtResource("9_hvubb")]
 transform = Transform3D(0.92050487, 0.39073113, 0, -0.39073113, 0.92050487, 0, 0, 0, 1, -8.301, 4.745, -33.907)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="ship_v2" unique_id=879367167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9184036, 3.6608377, -48.744827)
+shadow_enabled = true
 omni_range = 130.609
 omni_attenuation = 1.5
