@@ -7,6 +7,13 @@
 [ext_resource type="Script" uid="uid://c5pkju5juf8rs" path="res://scripts/airlock_door.gd" id="4_itrim"]
 [ext_resource type="PackedScene" uid="uid://cm24vjm4vqf3i" path="res://scenes/button_on_pedestal.tscn" id="5_bseor"]
 [ext_resource type="VoxelGIData" uid="uid://dph7rnijfo437" path="res://scenes/ship.VoxelGI_data.res" id="6_tlr80"]
+[ext_resource type="PackedScene" uid="uid://cyjcynnw0eim8" path="res://scenes/ship_asset.tscn" id="8_8qiel"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qchbg"]
+material = ExtResource("2_3m36u")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 5.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qchbg"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -18,17 +25,23 @@ size = Vector3(16, 1, 16)
 [sub_resource type="BoxShape3D" id="BoxShape3D_cr7vb"]
 size = Vector3(16, 1, 16)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_qchbg"]
-material = ExtResource("2_3m36u")
-top_radius = 0.05
-bottom_radius = 0.05
-height = 5.0
-
 [sub_resource type="BoxMesh" id="BoxMesh_emj6c"]
 size = Vector3(2, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mrac1"]
 size = Vector3(2, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qiel"]
+size = Vector3(3, 4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qiel"]
+albedo_color = Color(0.29219002, 0.29219005, 0.29219002, 1)
+metallic = 1.0
+emission_enabled = true
+emission = Color(0.23392546, 0.23392546, 0.23392543, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_itrim"]
+size = Vector3(10, 1, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr7vb"]
 
@@ -36,28 +49,6 @@ size = Vector3(2, 4, 1)
 script = ExtResource("1_7j21i")
 
 [node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_8qiel")]
-
-[node name="Ground" type="StaticBody3D" parent="." unique_id=1878826705]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=398946337]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
-mesh = SubResource("BoxMesh_q8s1k")
-
-[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=735863756]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
-shape = SubResource("BoxShape3D_cr7vb")
-
-[node name="CenterRoomFloor" type="StaticBody3D" parent="." unique_id=1885758729]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -16)
-
-[node name="Mesh" type="MeshInstance3D" parent="CenterRoomFloor" unique_id=1415899679]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
-mesh = SubResource("BoxMesh_q8s1k")
-
-[node name="Collision" type="CollisionShape3D" parent="CenterRoomFloor" unique_id=438622833]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6000001)
-shape = SubResource("BoxShape3D_cr7vb")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1419284204]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0.5, 0)
@@ -76,54 +67,87 @@ spot_angle = 2.0
 spot_angle_attenuation = 0.022097109
 
 [node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_8qiel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 1, 2.4999998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3000002, 1.3, 1.7999997)
 
-[node name="AirlockDoor" type="Node3D" parent="." unique_id=1584106529]
+[node name="ButtonOnPedestal" parent="." unique_id=1244680119 instance=ExtResource("5_bseor")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.70000017, 0, -11.7)
+
+[node name="Entry" type="Node3D" parent="." unique_id=1934900923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.27863455, 0.16611522)
+
+[node name="Ground" type="StaticBody3D" parent="Entry" unique_id=1878826705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Entry/Ground" unique_id=398946337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.3)
+mesh = SubResource("BoxMesh_q8s1k")
+
+[node name="Collision" type="CollisionShape3D" parent="Entry/Ground" unique_id=735863756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.3)
+shape = SubResource("BoxShape3D_cr7vb")
+
+[node name="AirlockDoor" type="Node3D" parent="Entry" unique_id=1584106529]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6)
 script = ExtResource("4_itrim")
 
-[node name="LeftSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1533642126]
+[node name="LeftSide" type="StaticBody3D" parent="Entry/AirlockDoor" unique_id=1533642126]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.9, -11.1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/LeftSide" unique_id=846247817]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Entry/AirlockDoor/LeftSide" unique_id=846247817]
 mesh = SubResource("BoxMesh_emj6c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/LeftSide" unique_id=2034061248]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entry/AirlockDoor/LeftSide" unique_id=2034061248]
 shape = SubResource("BoxShape3D_mrac1")
 
-[node name="RightSide" type="StaticBody3D" parent="AirlockDoor" unique_id=1848405555]
+[node name="RightSide" type="StaticBody3D" parent="Entry/AirlockDoor" unique_id=1848405555]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.9, -11.1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="AirlockDoor/RightSide" unique_id=1877820158]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Entry/AirlockDoor/RightSide" unique_id=1877820158]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00013911724, 0.0046937466, -0.0030622482)
 mesh = SubResource("BoxMesh_emj6c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AirlockDoor/RightSide" unique_id=1799629018]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entry/AirlockDoor/RightSide" unique_id=1799629018]
 shape = SubResource("BoxShape3D_mrac1")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1658217358]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92547035, -2.600001)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Entry/AirlockDoor" unique_id=2049114045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2, -10.3)
+mesh = SubResource("BoxMesh_8qiel")
+surface_material_override/0 = SubResource("StandardMaterial3D_8qiel")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Entry/AirlockDoor" unique_id=1654674048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -10.3)
+mesh = SubResource("BoxMesh_itrim")
+surface_material_override/0 = SubResource("StandardMaterial3D_8qiel")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Entry/AirlockDoor" unique_id=288732376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, -10.3)
+mesh = SubResource("BoxMesh_8qiel")
+surface_material_override/0 = SubResource("StandardMaterial3D_8qiel")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Entry" unique_id=1658217358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92547035, -4.2000012)
 size = Vector3(4.5, 4.5, 16)
 material = SubResource("StandardMaterial3D_cr7vb")
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D" unique_id=1341332121]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Entry/CSGBox3D" unique_id=1341332121]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.5999999)
 operation = 2
 radius = 2.0
 height = 15.0
 sides = 24
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=808605897]
+[node name="CSGBox3D" type="CSGBox3D" parent="Entry/CSGBox3D" unique_id=808605897]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2000003, 0)
 operation = 2
 size = Vector3(4.5, 4.5, 16)
 
-[node name="ButtonOnPedestal" parent="." unique_id=1244680119 instance=ExtResource("5_bseor")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0, -10.2)
+[node name="ship" parent="Entry" unique_id=1458809927 instance=ExtResource("8_8qiel")]
+transform = Transform3D(0.24117666, 0, -0.97048116, 0, 1, 0, 0.97048116, 0, 0.24117666, -38.51246, -2.1200304, -24.284761)
 
 [node name="VoxelGI" type="VoxelGI" parent="." unique_id=2082848283]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.8183327)
-size = Vector3(30, 20, 30)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.090912, 0, -41.201817)
+size = Vector3(127.66815, 20, 102.74597)
 data = ExtResource("6_tlr80")

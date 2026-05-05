@@ -7,15 +7,18 @@
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 [ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
+[ext_resource type="PackedScene" uid="uid://cyjcynnw0eim8" path="res://scenes/ship_asset.tscn" id="8_fmm5l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0md2f"]
+emission_enabled = true
+emission = Color(0.24840033, 0.24840012, 0.24840012, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4duur"]
 material = SubResource("StandardMaterial3D_0md2f")
-size = Vector3(50, 1, 50)
+size = Vector3(50, 1, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0md2f"]
-size = Vector3(50, 1, 50)
+size = Vector3(50, 1, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oxjoy"]
 albedo_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
@@ -169,7 +172,7 @@ autowrap_mode = 2
 autowrap_trim_flags = 64
 
 [node name="Player" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.781056, 1.4, 21.88601)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=975214808]
 
@@ -209,3 +212,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5765061, 0)
 text = "WIP"
 autowrap_mode = 2
 autowrap_trim_flags = 64
+
+[node name="ship" parent="." unique_id=1458809927 instance=ExtResource("8_fmm5l")]
+transform = Transform3D(-0.9396927, 0, -0.34202027, 0, 1, 0, 0.34202027, 0, -0.9396927, 35.200005, -1.3000002, -8.900001)
