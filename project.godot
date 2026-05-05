@@ -29,6 +29,10 @@ window/size/viewport_height=1080
 window/size/window_width_override=1200
 window/size/window_height_override=800
 
+[editor]
+
+movie_writer/movie_file="C:/Users/rldre/Indie-Collab-Gamejam/clip.ogv"
+
 [file_customization]
 
 folder_colors={

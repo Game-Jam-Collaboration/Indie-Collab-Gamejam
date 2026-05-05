@@ -9,5 +9,5 @@ func assemble() -> void:
 	if emissive_object:
 		var new_material:StandardMaterial3D = emissive_object.mesh.surface_get_material(0).duplicate()
 		new_material.emission = Color.WHITE_SMOKE
+		new_material.emission_energy_multiplier = 3
 		emissive_object.mesh.surface_set_material(0, new_material)
-		
