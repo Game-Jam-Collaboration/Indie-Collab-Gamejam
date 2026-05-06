@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://o8ehv7665u8y" path="res://scenes/ceiling_light.tscn" id="9_hvubb"]
 [ext_resource type="PackedScene" uid="uid://d3c1pcdg18vbe" path="res://assets/blend_files/wall.blend" id="10_hvubb"]
 [ext_resource type="PackedScene" uid="uid://bejuh3yc2x02" path="res://assets/blend_files/corner_wall.blend" id="11_j88v8"]
+[ext_resource type="Script" uid="uid://c7jv5d516max2" path="res://scripts/assembly_status_panel.gd" id="20_status"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xhcdp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -82,6 +83,10 @@ _data = {
 "octree_size": Vector3(128, 32, 128),
 "to_cell_xform": Transform3D(1.0479525, 0, 0, 0, 1.0479525, 0, 0, 0, 1.0479525, 43.648273, 10.479526, 64.00001)
 }
+
+[sub_resource type="BoxMesh" id="BoxMesh_multiassy"]
+material = SubResource("StandardMaterial3D_oxjoy")
+size = Vector3(1.6, 1.4, 0.15)
 
 [node name="Gym" type="Node3D" unique_id=774975801]
 script = ExtResource("1_5hyia")
@@ -605,3 +610,47 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.558859, 0.5149696, 0)
 
 [node name="wall2" parent="." unique_id=838409410 instance=ExtResource("10_hvubb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.5149696, 0)
+
+[node name="MultiSlotAssembly" type="Node3D" parent="." unique_id=9100001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7, 2.118542, -14.6)
+
+[node name="Housing" type="MeshInstance3D" parent="MultiSlotAssembly" unique_id=9100009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.08)
+mesh = SubResource("BoxMesh_multiassy")
+
+[node name="StatusPanel" type="Node3D" parent="MultiSlotAssembly" unique_id=9100002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0.05)
+script = ExtResource("20_status")
+spacing = 0.8
+light_radius = 0.06
+
+[node name="FuseSlot1" parent="MultiSlotAssembly" unique_id=9100003 node_paths=PackedStringArray("status_panel") instance=ExtResource("3_oxjoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+status_panel = NodePath("../StatusPanel")
+can_remove_fuse = true
+
+[node name="FuseSlot2" parent="MultiSlotAssembly" unique_id=9100004 node_paths=PackedStringArray("status_panel") instance=ExtResource("3_oxjoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+status_panel = NodePath("../StatusPanel")
+slot_index = 1
+can_remove_fuse = true
+
+[node name="Fuse1" parent="MultiSlotAssembly" unique_id=9100005 instance=ExtResource("4_vi6gq")]
+transform = Transform3D(0.9796449, 0.0052439123, 0.20066983, 0.20037451, 0.034614027, -0.97910774, -0.012080349, 0.999387, 0.03285867, -0.6, -1.5335593, 1)
+sleeping = true
+
+[node name="Fuse2" parent="MultiSlotAssembly" unique_id=9100006 instance=ExtResource("4_vi6gq")]
+transform = Transform3D(0.9796449, 0.0052439123, 0.20066983, 0.20037451, 0.034614027, -0.97910774, -0.012080349, 0.999387, 0.03285867, 0.6, -1.5335593, 1)
+sleeping = true
+
+[node name="Label3D" type="Label3D" parent="MultiSlotAssembly" unique_id=9100007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+text = "Multi-Slot Assembly"
+autowrap_mode = 2
+autowrap_trim_flags = 64
+
+[node name="Label3D2" type="Label3D" parent="MultiSlotAssembly" unique_id=9100008]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 2, 0)
+text = "Status lights advance from red to green as each sub-component is installed. Configure light_count on StatusPanel for any N."
+autowrap_mode = 2
+autowrap_trim_flags = 64
