@@ -114,22 +114,33 @@ func _physics_process(delta):
 
 func _interact_with() -> void:
 	var collision:CollisionObject3D = %Selector.get_collider()
-	if collision != null:
-		if collision.is_in_group("Interactable"):
-			if collision.has_method("_interact"):
-				collision._interact()
-			else:
-				collision.get_parent()._interact()
-		elif collision.is_in_group("Pickupable"):
-			in_hand = collision
-			%Selector.add_exception(in_hand)
-			previous_pickup_parent = collision.get_parent()
-			previous_pickup_transform = collision.global_transform
-			if collision is RigidBody3D:
-				collision.freeze = true
-			collision.reparent(%Holder)
-			collision.position = Vector3.ZERO
-			collision.rotation = Vector3.ZERO
+	if collision == null:
+		return
+	if collision.is_in_group("Interactable"):
+		if collision.has_method("_interact"):
+			collision._interact()
+		else:
+			collision.get_parent()._interact()
+		return
+	if collision.is_in_group("AssemblyPoint") and collision.has_method("can_remove") and collision.can_remove():
+		var removed: CollisionObject3D = collision.release_assembled()
+		if removed != null:
+			_take_into_hand(removed, collision.get_parent())
+		return
+	if collision.is_in_group("Pickupable"):
+		_take_into_hand(collision, collision.get_parent())
+
+
+func _take_into_hand(item: CollisionObject3D, drop_parent: Node) -> void:
+	in_hand = item
+	%Selector.add_exception(item)
+	previous_pickup_parent = drop_parent
+	previous_pickup_transform = item.global_transform
+	if item is RigidBody3D:
+		item.freeze = true
+	item.reparent(%Holder)
+	item.position = Vector3.ZERO
+	item.rotation = Vector3.ZERO
 
 
 func _release_pickup() -> void:
