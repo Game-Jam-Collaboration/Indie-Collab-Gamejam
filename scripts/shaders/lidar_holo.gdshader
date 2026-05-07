@@ -46,7 +46,6 @@ void fragment() {
 	float alpha = v_life * flicker * glitch;
 	float intensity = emission_energy * (1.0 + band_factor * scan_band_strength);
 
-	ALBEDO = vec3(0.0);
-	EMISSION = base_color * intensity * alpha;
+	ALBEDO = base_color * intensity;
 	ALPHA = alpha;
 }
