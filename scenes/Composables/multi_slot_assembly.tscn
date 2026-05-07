@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cf470ghmpj6vh"]
+
+[ext_resource type="Script" uid="uid://c7jv5d516max2" path="res://scripts/assembly_status_panel.gd" id="1_7nhfg"]
+[ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="2_435mi"]
+[ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="3_to67w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oxjoy"]
+albedo_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_multiassy"]
+material = SubResource("StandardMaterial3D_oxjoy")
+size = Vector3(1.6, 1.4, 0.15)
+
+[node name="MultiSlotAssembly" type="Node3D" unique_id=127057132]
+
+[node name="Housing" type="MeshInstance3D" parent="." unique_id=1588032002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.08)
+mesh = SubResource("BoxMesh_multiassy")
+
+[node name="StatusPanel" type="Node3D" parent="." unique_id=929290417]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0.05)
+script = ExtResource("1_7nhfg")
+spacing = 0.8
+light_radius = 0.06
+
+[node name="FuseSlot1" parent="." unique_id=1958303086 node_paths=PackedStringArray("status_panel") instance=ExtResource("2_435mi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+status_panel = NodePath("../StatusPanel")
+can_remove_fuse = true
+
+[node name="FuseSlot2" parent="." unique_id=1142915527 node_paths=PackedStringArray("status_panel") instance=ExtResource("2_435mi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+status_panel = NodePath("../StatusPanel")
+slot_index = 1
+can_remove_fuse = true
+
+[node name="Fuse1" parent="." unique_id=2062436736 instance=ExtResource("3_to67w")]
+transform = Transform3D(0.9796449, 0.0052439123, 0.20066983, 0.20037451, 0.034614027, -0.97910774, -0.012080349, 0.999387, 0.03285867, -0.6, -1.5335593, 1)
+sleeping = true
+
+[node name="Fuse2" parent="." unique_id=1810259479 instance=ExtResource("3_to67w")]
+transform = Transform3D(0.9796449, 0.0052439123, 0.20066983, 0.20037451, 0.034614027, -0.97910774, -0.012080349, 0.999387, 0.03285867, 0.6, -1.5335593, 1)
+sleeping = true
