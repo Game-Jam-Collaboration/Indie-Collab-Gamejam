@@ -48,11 +48,12 @@ shape = SubResource("Shape_pedestal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02, 0)
 mesh = SubResource("Mesh_emitter")
 
-[node name="ScanButton" type="StaticBody3D" parent="." unique_id=1314687865 node_paths=PackedStringArray("lidar", "button_mesh")]
+[node name="ScanButton" type="StaticBody3D" parent="." unique_id=1314687865 node_paths=PackedStringArray("lidar", "button_mesh", "glow_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.025, 0.22)
 script = ExtResource("1_scan")
 lidar = NodePath("../LidarRenderer")
 button_mesh = NodePath("Mesh")
+glow_light = NodePath("../GlowLight")
 
 [node name="Mesh" type="MeshInstance3D" parent="ScanButton" unique_id=1328622947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.13312048)
@@ -71,5 +72,5 @@ hologram_scale = 0.022
 [node name="GlowLight" type="OmniLight3D" parent="." unique_id=1476426615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 light_color = Color(0.55, 1, 0.55, 1)
-light_energy = 1.5
+light_energy = 0.375
 omni_range = 2.5
