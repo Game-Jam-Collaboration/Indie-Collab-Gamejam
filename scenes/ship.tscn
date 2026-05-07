@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cf470ghmpj6vh" path="res://scenes/multi_slot_assembly.tscn" id="4_dybam"]
 [ext_resource type="Script" path="res://scripts/ship_navigation.gd" id="5_shipnav"]
 [ext_resource type="PackedScene" path="res://scenes/ship_dash.tscn" id="6_shipdash"]
+[ext_resource type="PackedScene" path="res://scenes/holodeck.tscn" id="7_holodeck"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qfr6"]
 albedo_color = Color(0.08372667, 0.1468741, 0.100522034, 1)
@@ -90,3 +91,6 @@ script = ExtResource("5_shipnav")
 [node name="ShipDash" parent="." unique_id=9200002 node_paths=PackedStringArray("navigation") instance=ExtResource("6_shipdash")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 1.7, 1.0)
 navigation = NodePath("../ShipNavigation")
+
+[node name="Holodeck" parent="." unique_id=9200003 instance=ExtResource("7_holodeck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 1.5)
