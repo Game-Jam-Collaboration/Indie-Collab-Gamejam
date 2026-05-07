@@ -73,6 +73,7 @@ void fragment() {
 	float alpha = v_life * flicker * glitch;
 	float intensity = emission_energy * (1.0 + band_factor * scan_band_strength + v_arrival * arrival_flash);
 
-	ALBEDO = base_color * intensity;
+	vec3 debug_color = mix(base_color, vec3(3.0, 0.05, 0.05), v_is_hit);
+	ALBEDO = debug_color * intensity;
 	ALPHA = alpha;
 }
