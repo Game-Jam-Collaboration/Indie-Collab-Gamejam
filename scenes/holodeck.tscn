@@ -32,6 +32,16 @@ size = Vector3(0.12, 0.05, 0.12)
 [sub_resource type="BoxShape3D" id="Shape_button"]
 size = Vector3(0.12, 0.05, 0.12)
 
+[sub_resource type="ShaderMaterial" id="Mat_ship_icon"]
+shader = ExtResource("3_iconholo")
+
+[sub_resource type="CylinderMesh" id="Mesh_ship_icon"]
+top_radius = 0.0
+bottom_radius = 0.025
+height = 0.16
+radial_segments = 8
+rings = 1
+
 [node name="Holodeck" type="Node3D" unique_id=1634337371]
 
 [node name="Pedestal" type="StaticBody3D" parent="." unique_id=212426351]
@@ -63,11 +73,17 @@ mesh = SubResource("Mesh_button")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0.13343653)
 shape = SubResource("Shape_button")
 
-[node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931]
+[node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931 node_paths=PackedStringArray("ship_icon")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 script = ExtResource("2_lidar")
 emission_energy = 1.6
 hologram_scale = 0.033
+ship_icon = NodePath("ShipIcon")
+
+[node name="ShipIcon" type="MeshInstance3D" parent="LidarRenderer"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("Mesh_ship_icon")
+material_override = SubResource("Mat_ship_icon")
 
 [node name="GlowLight" type="OmniLight3D" parent="." unique_id=1476426615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)

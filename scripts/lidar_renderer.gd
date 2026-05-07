@@ -14,6 +14,7 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 @export var lifetime: float = 5.0
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
 @export var auto_scan_interval: float = 0.0
+@export var ship_icon: MeshInstance3D = null
 
 const DEAD_CUSTOM := Color(-1.0e6, 0.0, 0.0, 0.0)
 
@@ -53,11 +54,19 @@ func _ready() -> void:
 		_multi_mesh.set_instance_transform(i, t_zero)
 		_multi_mesh.set_instance_custom_data(i, DEAD_CUSTOM)
 
+	if ship_icon and ship_icon.material_override is ShaderMaterial:
+		var icon_mat: ShaderMaterial = ship_icon.material_override
+		icon_mat.set_shader_parameter("base_color", Vector3(point_color.r, point_color.g, point_color.b))
+		icon_mat.set_shader_parameter("emission_energy", emission_energy)
+
 
 func _process(_delta: float) -> void:
+	var t := Time.get_ticks_msec() / 1000.0
 	if _shader_material:
-		_shader_material.set_shader_parameter("current_time", Time.get_ticks_msec() / 1000.0)
+		_shader_material.set_shader_parameter("current_time", t)
 		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
+	if ship_icon and ship_icon.material_override is ShaderMaterial:
+		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
 
 	if auto_scan_interval <= 0.0 or probe == null:
 		return
@@ -76,13 +85,13 @@ func trigger_scan() -> void:
 	var result: Dictionary = probe.scan()
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
 	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
-	print("[Lidar] %d hits, %d misses | probe@%s | sim_pos=%s | heading=%.2f" % [
-		hits.size(),
-		misses.size(),
-		probe.global_position,
-		(probe.navigation.simulated_position if probe.navigation else Vector3.ZERO),
-		(probe.navigation.heading if probe.navigation else 0.0),
-	])
+	#print("[Lidar] %d hits, %d misses | probe@%s | sim_pos=%s | heading=%.2f" % [
+		#hits.size(),
+		#misses.size(),
+		#probe.global_position,
+		#(probe.navigation.simulated_position if probe.navigation else Vector3.ZERO),
+		#(probe.navigation.heading if probe.navigation else 0.0),
+	#])
 	display_points(hits, true)
 	display_points(misses, false)
 
