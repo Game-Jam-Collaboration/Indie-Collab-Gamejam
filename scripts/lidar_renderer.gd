@@ -2,12 +2,12 @@ class_name LidarRenderer
 extends Node3D
 
 @export var probe: ScanProbe = null
-@export var point_size: float = 0.03
+@export var point_size: float = 0.003
 @export var point_color: Color = Color(0.55, 1.0, 0.55)
 @export var emission_energy: float = 2.5
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
-@export var max_points: int = 4000
+@export var max_points: int = 40000
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
 @export var auto_scan_interval: float = 0.0
 
@@ -23,8 +23,8 @@ func _ready() -> void:
 	var sphere := SphereMesh.new()
 	sphere.radius = point_size
 	sphere.height = point_size * 2.0
-	sphere.radial_segments = 6
-	sphere.rings = 3
+	sphere.radial_segments = 4
+	sphere.rings = 2
 
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = point_color

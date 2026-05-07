@@ -2,7 +2,7 @@ class_name ScanProbe
 extends Node3D
 
 @export var navigation: ShipNavigation = null
-@export var ray_count: int = 800
+@export var ray_count: int = 8000
 @export var scan_range: float = 30.0
 @export var jitter_radians: float = 0.025
 
