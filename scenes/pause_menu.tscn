@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/pause_menu.gd" id="1_jvnd5"]
 [ext_resource type="Shader" uid="uid://3qtsesfwrqgi" path="res://scripts/shaders/menu_shader.gdshader" id="1_kukqi"]
-[ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/textures/main_menu.svg" id="2_g4jo0"]
 [ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/textures/continue.svg" id="2_komsw"]
+[ext_resource type="Texture2D" uid="uid://c0y1rpwm0m08f" path="res://assets/textures/exit.png" id="4_5d2l8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5d2l8"]
 shader = ExtResource("1_kukqi")
@@ -52,10 +52,10 @@ text = "Credits"
 
 [node name="Button3" type="Button" parent="Control" unique_id=1660551048]
 layout_mode = 0
-offset_left = 918.0
+offset_left = 937.0
 offset_top = 352.0
-offset_right = 1094.0
-offset_bottom = 517.0
+offset_right = 1098.0
+offset_bottom = 513.0
 pivot_offset = Vector2(88, 82)
-icon = ExtResource("2_g4jo0")
+icon = ExtResource("4_5d2l8")
 flat = true
