@@ -68,8 +68,13 @@ func trigger_scan() -> void:
 	var result: Dictionary = probe.scan()
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
 	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
-	if hits.is_empty() and misses.is_empty():
-		push_warning("LidarRenderer: scan returned 0 rays — probe at %s" % probe.global_position)
+	print("[Lidar] %d hits, %d misses | probe@%s | sim_pos=%s | heading=%.2f" % [
+		hits.size(),
+		misses.size(),
+		probe.global_position,
+		(probe.navigation.simulated_position if probe.navigation else Vector3.ZERO),
+		(probe.navigation.heading if probe.navigation else 0.0),
+	])
 	display_points(hits, true)
 	display_points(misses, false)
 
