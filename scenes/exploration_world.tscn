@@ -144,7 +144,7 @@ mesh = SubResource("Mesh_wreck")
 shape = SubResource("Shape_wreck")
 
 [node name="Wreck5" type="StaticBody3D" parent="Wreckage"]
-transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, 0, 0, 0)
+transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, -19, 0, 9)
 
 [node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck5"]
 mesh = SubResource("Mesh_wreck")

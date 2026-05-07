@@ -49,6 +49,7 @@ func scan() -> Dictionary:
 		dir = dir.rotated(Vector3.RIGHT, randf_range(-jitter_radians, jitter_radians))
 
 		var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * scan_range)
+		query.hit_from_inside = true
 		var result := space_state.intersect_ray(query)
 		if result and result.has("position"):
 			hits.append(inv_basis * (result["position"] - origin))
