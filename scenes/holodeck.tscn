@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgyuvv5vp071k" path="res://scripts/scan_button.gd" id="1_scan"]
 [ext_resource type="Script" uid="uid://douogsdtjl3jh" path="res://scripts/lidar_renderer.gd" id="2_lidar"]
+[ext_resource type="Shader" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_pedestal"]
 albedo_color = Color(0.16, 0.18, 0.16, 1)
