@@ -49,6 +49,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _shader_material:
 		_shader_material.set_shader_parameter("current_time", Time.get_ticks_msec() / 1000.0)
+		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
 
 	if auto_scan_interval <= 0.0 or probe == null:
 		return
