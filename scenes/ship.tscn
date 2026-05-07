@@ -5,6 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_8qiel"]
 [ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/Composables/ship.tscn" id="4_tfsc7"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
+size = Vector3(4, 1, 1)
+
 [node name="Level" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_7j21i")
 
@@ -15,3 +18,10 @@ transform = Transform3D(0.9999924, 0.0038818077, 0.00032422287, -0.0038806668, 0
 
 [node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("4_tfsc7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=549631702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.6000004)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1436563572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, -0.19999981)
+shape = SubResource("BoxShape3D_tfsc7")

@@ -17,7 +17,7 @@ script = ExtResource("1_3vyb7")
 camera_pivot = NodePath("CameraPivot")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1420675210]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5999999)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.39999992)
 
 [node name="Camera" type="Camera3D" parent="CameraPivot" unique_id=289991315]
 unique_name_in_owner = true
@@ -36,6 +36,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40000004, -0.3, -0.5000001)
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=548159479]
+visible = false
 mesh = SubResource("CapsuleMesh_qchbg")
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=1668720991]
