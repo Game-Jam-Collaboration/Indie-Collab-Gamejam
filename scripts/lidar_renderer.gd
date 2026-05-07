@@ -15,10 +15,13 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
 @export var auto_scan_interval: float = 0.0
 
+const DEAD_CUSTOM := Color(-1.0e6, 0.0, 0.0, 0.0)
+
 var _multi_mesh: MultiMesh
 var _multi_mesh_instance: MultiMeshInstance3D
 var _shader_material: ShaderMaterial
 var _next_scan_time: float = 0.0
+var _write_head: int = 0
 
 
 func _ready() -> void:
@@ -42,8 +45,13 @@ func _ready() -> void:
 	_multi_mesh.transform_format = MultiMesh.TRANSFORM_3D
 	_multi_mesh.use_custom_data = true
 	_multi_mesh.mesh = sphere
-	_multi_mesh.instance_count = 0
+	_multi_mesh.instance_count = max_points
 	_multi_mesh_instance.multimesh = _multi_mesh
+
+	var t_zero := Transform3D()
+	for i in max_points:
+		_multi_mesh.set_instance_transform(i, t_zero)
+		_multi_mesh.set_instance_custom_data(i, DEAD_CUSTOM)
 
 
 func _process(_delta: float) -> void:
@@ -80,32 +88,24 @@ func trigger_scan() -> void:
 
 
 func display_points(points: PackedVector3Array, is_hit: bool = true) -> void:
-	var existing: int = _multi_mesh.instance_count
 	var incoming: int = points.size()
 	if incoming == 0:
 		return
 
-	if existing + incoming > max_points:
-		var keep := max_points - incoming
-		if keep < 0:
-			keep = 0
-		for i in keep:
-			var src_idx := existing - keep + i
-			_multi_mesh.set_instance_transform(i, _multi_mesh.get_instance_transform(src_idx))
-			_multi_mesh.set_instance_custom_data(i, _multi_mesh.get_instance_custom_data(src_idx))
-		existing = keep
-
-	var new_total := existing + incoming
-	_multi_mesh.instance_count = new_total
 	var spawn_time := Time.get_ticks_msec() / 1000.0
 	var hit_flag := 1.0 if is_hit else 0.0
 	for i in incoming:
+		var idx: int = _write_head
+		_write_head = (_write_head + 1) % max_points
+
 		var local_pos := points[i] * hologram_scale
 		var t := Transform3D()
 		t.origin = local_pos
-		_multi_mesh.set_instance_transform(existing + i, t)
-		_multi_mesh.set_instance_custom_data(existing + i, Color(spawn_time, randf(), local_pos.y, hit_flag))
+		_multi_mesh.set_instance_transform(idx, t)
+		_multi_mesh.set_instance_custom_data(idx, Color(spawn_time, randf(), local_pos.y, hit_flag))
 
 
 func clear() -> void:
-	_multi_mesh.instance_count = 0
+	for i in max_points:
+		_multi_mesh.set_instance_custom_data(i, DEAD_CUSTOM)
+	_write_head = 0
