@@ -8,6 +8,7 @@ uniform float lifetime = 5.0;
 
 uniform vec3 lidar_origin_world = vec3(0.0);
 uniform float travel_speed = 3.0;
+uniform float max_launch_delay = 0.5;
 uniform float arrival_flash = 1.4;
 uniform float arrival_flash_decay = 6.0;
 
@@ -26,29 +27,33 @@ varying float v_life;
 varying float v_seed;
 varying float v_local_y;
 varying float v_arrival;
+varying float v_effective_age;
 
 void vertex() {
 	float spawn_time = INSTANCE_CUSTOM.r;
 	v_seed = INSTANCE_CUSTOM.g;
 	v_local_y = INSTANCE_CUSTOM.b;
 	float age = current_time - spawn_time;
-	v_life = clamp(1.0 - age / lifetime, 0.0, 1.0);
+	float launch_delay = v_seed * max_launch_delay;
+	v_effective_age = age - launch_delay;
+	v_life = clamp(1.0 - v_effective_age / lifetime, 0.0, 1.0);
 
 	vec3 final_world = MODEL_MATRIX[3].xyz;
 	vec3 final_local = final_world - lidar_origin_world;
 	float dist = length(final_local);
 	float travel_time = dist / max(travel_speed, 0.0001);
-	float g = clamp(age / max(travel_time, 0.0001), 0.0, 1.0);
+	float g = clamp(v_effective_age / max(travel_time, 0.0001), 0.0, 1.0);
 
-	vec3 displacement = (g - 1.0) * final_local;
-	VERTEX += displacement;
+	vec4 world_pos = MODEL_MATRIX * vec4(VERTEX, 1.0);
+	world_pos.xyz += (g - 1.0) * final_local;
+	POSITION = PROJECTION_MATRIX * VIEW_MATRIX * world_pos;
 
-	v_arrival = exp(-(age - travel_time) * arrival_flash_decay);
-	v_arrival = clamp(v_arrival, 0.0, 1.0) * step(travel_time, age);
+	v_arrival = exp(-(v_effective_age - travel_time) * arrival_flash_decay);
+	v_arrival = clamp(v_arrival, 0.0, 1.0) * step(travel_time, v_effective_age);
 }
 
 void fragment() {
-	if (v_life <= 0.0) {
+	if (v_effective_age < 0.0 || v_life <= 0.0) {
 		discard;
 	}
 
