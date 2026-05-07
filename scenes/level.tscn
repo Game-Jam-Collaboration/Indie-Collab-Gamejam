@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dppyc5l3hovsx"]
+[gd_scene format=3 uid="uid://bcpp6xrjw0euf"]
 
 [ext_resource type="Script" uid="uid://vhqt8tk4hjhg" path="res://scripts/playground.gd" id="1_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_ppgk2"]

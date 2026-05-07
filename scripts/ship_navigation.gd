@@ -1,0 +1,34 @@
+class_name ShipNavigation
+extends Node3D
+
+signal heading_changed(new_heading: float)
+signal position_changed(new_position: Vector3)
+
+@export var translate_speed: float = 2.0
+@export var rotate_speed_deg: float = 30.0
+
+var simulated_position: Vector3 = Vector3.ZERO:
+	set(value):
+		simulated_position = value
+		position_changed.emit(simulated_position)
+
+var heading: float = 0.0:
+	set(value):
+		heading = wrapf(value, -PI, PI)
+		heading_changed.emit(heading)
+
+
+func translate_forward(amount: float) -> void:
+	var forward := Vector3(-sin(heading), 0.0, -cos(heading))
+	simulated_position = simulated_position + forward * amount
+
+
+func rotate_yaw(radians: float) -> void:
+	heading = heading + radians
+
+
+func get_simulated_transform() -> Transform3D:
+	var t := Transform3D.IDENTITY
+	t.basis = Basis(Vector3.UP, heading)
+	t.origin = simulated_position
+	return t
