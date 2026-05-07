@@ -15,6 +15,7 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
 @export var auto_scan_interval: float = 0.0
 @export var ship_icon: MeshInstance3D = null
+@export var ship_icon_brightness: float = 0.5
 
 const DEAD_CUSTOM := Color(-1.0e6, 0.0, 0.0, 0.0)
 
@@ -57,7 +58,7 @@ func _ready() -> void:
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		var icon_mat: ShaderMaterial = ship_icon.material_override
 		icon_mat.set_shader_parameter("base_color", Vector3(point_color.r, point_color.g, point_color.b))
-		icon_mat.set_shader_parameter("emission_energy", emission_energy)
+		icon_mat.set_shader_parameter("emission_energy", emission_energy * ship_icon_brightness)
 
 
 func _process(_delta: float) -> void:
