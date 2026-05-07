@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 [ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
+[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/Composables/ship.tscn" id="9_xhcdp"]
 [ext_resource type="Script" uid="uid://c7jv5d516max2" path="res://scripts/assembly_status_panel.gd" id="20_status"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xhcdp"]
@@ -203,7 +204,7 @@ autowrap_mode = 2
 autowrap_trim_flags = 64
 
 [node name="Player" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.781056, 1.4, 21.88601)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.181056, 4.3, 13.486009)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=975214808]
 
@@ -293,3 +294,6 @@ transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 2, 0)
 text = "Status lights advance from red to green as each sub-component is installed. Configure light_count on StatusPanel for any N."
 autowrap_mode = 2
 autowrap_trim_flags = 64
+
+[node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("9_xhcdp")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 2.1000001, 13.400001)

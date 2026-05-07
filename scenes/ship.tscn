@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://vhqt8tk4hjhg" path="res://scripts/playground.gd" id="1_7j21i"]
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_8qiel"]
-[ext_resource type="PackedScene" uid="uid://63pukkc2w1sy" path="res://scenes/player.tscn" id="3_8qiel"]
+[ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_8qiel"]
+[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/Composables/ship.tscn" id="4_tfsc7"]
 
 [node name="Level" type="Node3D" unique_id=1383991437]
 script = ExtResource("1_7j21i")
@@ -11,3 +12,6 @@ script = ExtResource("1_7j21i")
 
 [node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_8qiel")]
 transform = Transform3D(0.9999924, 0.0038818077, 0.00032422287, -0.0038806668, 0.9999865, -0.0034470167, -0.00033760376, 0.003445732, 0.99999404, -2.3000002, 3.6, 1.7999997)
+
+[node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("4_tfsc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, 0)
