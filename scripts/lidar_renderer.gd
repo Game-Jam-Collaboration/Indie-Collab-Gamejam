@@ -1,6 +1,8 @@
 class_name LidarRenderer
 extends Node3D
 
+const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
+
 @export var probe: ScanProbe = null
 @export var point_size: float = 0.003
 @export var point_color: Color = Color(0.55, 1.0, 0.55)
@@ -8,11 +10,14 @@ extends Node3D
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
 @export var max_points: int = 40000
+## Seconds before a point fully fades to nothing.
+@export var lifetime: float = 5.0
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
 @export var auto_scan_interval: float = 0.0
 
 var _multi_mesh: MultiMesh
 var _multi_mesh_instance: MultiMeshInstance3D
+var _shader_material: ShaderMaterial
 var _next_scan_time: float = 0.0
 
 
@@ -26,22 +31,25 @@ func _ready() -> void:
 	sphere.radial_segments = 4
 	sphere.rings = 2
 
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = point_color
-	mat.emission_enabled = true
-	mat.emission = point_color
-	mat.emission_energy_multiplier = emission_energy
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	sphere.material = mat
+	_shader_material = ShaderMaterial.new()
+	_shader_material.shader = HOLO_SHADER
+	_shader_material.set_shader_parameter("base_color", Vector3(point_color.r, point_color.g, point_color.b))
+	_shader_material.set_shader_parameter("emission_energy", emission_energy)
+	_shader_material.set_shader_parameter("lifetime", lifetime)
+	sphere.material = _shader_material
 
 	_multi_mesh = MultiMesh.new()
 	_multi_mesh.transform_format = MultiMesh.TRANSFORM_3D
+	_multi_mesh.use_custom_data = true
 	_multi_mesh.mesh = sphere
 	_multi_mesh.instance_count = 0
 	_multi_mesh_instance.multimesh = _multi_mesh
 
 
 func _process(_delta: float) -> void:
+	if _shader_material:
+		_shader_material.set_shader_parameter("current_time", Time.get_ticks_msec() / 1000.0)
+
 	if auto_scan_interval <= 0.0 or probe == null:
 		return
 	var now := Time.get_ticks_msec() / 1000.0
@@ -75,14 +83,18 @@ func display_points(points: PackedVector3Array) -> void:
 		for i in keep:
 			var src_idx := existing - keep + i
 			_multi_mesh.set_instance_transform(i, _multi_mesh.get_instance_transform(src_idx))
+			_multi_mesh.set_instance_custom_data(i, _multi_mesh.get_instance_custom_data(src_idx))
 		existing = keep
 
 	var new_total := existing + incoming
 	_multi_mesh.instance_count = new_total
+	var spawn_time := Time.get_ticks_msec() / 1000.0
 	for i in incoming:
+		var local_pos := points[i] * hologram_scale
 		var t := Transform3D()
-		t.origin = points[i] * hologram_scale
+		t.origin = local_pos
 		_multi_mesh.set_instance_transform(existing + i, t)
+		_multi_mesh.set_instance_custom_data(existing + i, Color(spawn_time, randf(), local_pos.y, 0.0))
 
 
 func clear() -> void:
