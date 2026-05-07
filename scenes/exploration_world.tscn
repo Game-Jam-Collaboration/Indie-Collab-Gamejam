@@ -1,0 +1,153 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/scan_probe.gd" id="1_probe"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_rock"]
+albedo_color = Color(0.4, 0.38, 0.36, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_wreck"]
+albedo_color = Color(0.32, 0.3, 0.28, 1)
+roughness = 0.7
+metallic = 0.4
+
+[sub_resource type="SphereMesh" id="Mesh_rock"]
+material = SubResource("Mat_rock")
+radius = 1.8
+height = 3.6
+
+[sub_resource type="SphereShape3D" id="Shape_rock"]
+radius = 1.8
+
+[sub_resource type="BoxMesh" id="Mesh_wreck"]
+material = SubResource("Mat_wreck")
+size = Vector3(2.5, 2.5, 2.5)
+
+[sub_resource type="BoxShape3D" id="Shape_wreck"]
+size = Vector3(2.5, 2.5, 2.5)
+
+[node name="ExplorationWorld" type="Node3D"]
+
+[node name="ScanProbe" type="Node3D" parent="."]
+script = ExtResource("1_probe")
+
+[node name="Rocks" type="Node3D" parent="."]
+
+[node name="Rock1" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock1"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock1"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock2" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2, 14)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock2"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock2"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock3" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -3, -10)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock3"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock3"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock4" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, -12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock4"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock4"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock5" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock5"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock5"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock6" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 20)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock6"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock6"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock7" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, 4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock7"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock7"]
+shape = SubResource("Shape_rock")
+
+[node name="Rock8" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock8"]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock8"]
+shape = SubResource("Shape_rock")
+
+[node name="Wreckage" type="Node3D" parent="."]
+
+[node name="Wreck1" type="StaticBody3D" parent="Wreckage"]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, -18, 0, 10)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck1"]
+mesh = SubResource("Mesh_wreck")
+
+[node name="Collision" type="CollisionShape3D" parent="Wreckage/Wreck1"]
+shape = SubResource("Shape_wreck")
+
+[node name="Wreck2" type="StaticBody3D" parent="Wreckage"]
+transform = Transform3D(0.766, 0, -0.643, 0, 1, 0, 0.643, 0, 0.766, -16, 1.5, 12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck2"]
+mesh = SubResource("Mesh_wreck")
+
+[node name="Collision" type="CollisionShape3D" parent="Wreckage/Wreck2"]
+shape = SubResource("Shape_wreck")
+
+[node name="Wreck3" type="StaticBody3D" parent="Wreckage"]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, 22, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck3"]
+mesh = SubResource("Mesh_wreck")
+
+[node name="Collision" type="CollisionShape3D" parent="Wreckage/Wreck3"]
+shape = SubResource("Shape_wreck")
+
+[node name="Wreck4" type="StaticBody3D" parent="Wreckage"]
+transform = Transform3D(0.5, 0.5, -0.707, -0.707, 0.707, 0, 0.5, 0.5, 0.707, 24, 1.5, 2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck4"]
+mesh = SubResource("Mesh_wreck")
+
+[node name="Collision" type="CollisionShape3D" parent="Wreckage/Wreck4"]
+shape = SubResource("Shape_wreck")
+
+[node name="Wreck5" type="StaticBody3D" parent="Wreckage"]
+transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, -19, 0, 9)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wreckage/Wreck5"]
+mesh = SubResource("Mesh_wreck")
+
+[node name="Collision" type="CollisionShape3D" parent="Wreckage/Wreck5"]
+shape = SubResource("Shape_wreck")

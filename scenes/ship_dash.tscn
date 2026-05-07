@@ -1,0 +1,119 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ship_dash.gd" id="1_dash"]
+[ext_resource type="Script" path="res://scripts/ship_dash_button.gd" id="2_btn"]
+[ext_resource type="Script" path="res://scripts/ship_compass.gd" id="3_cmp"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_console"]
+albedo_color = Color(0.18, 0.2, 0.22, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_button"]
+albedo_color = Color(0.35, 0.55, 0.6, 1)
+emission_enabled = true
+emission = Color(0.1, 0.4, 0.5, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_compass_base"]
+albedo_color = Color(0.85, 0.85, 0.8, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_needle"]
+albedo_color = Color(0.9, 0.15, 0.15, 1)
+emission_enabled = true
+emission = Color(0.9, 0.15, 0.15, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="Mesh_console"]
+material = SubResource("Mat_console")
+size = Vector3(0.7, 0.3, 0.5)
+
+[sub_resource type="BoxShape3D" id="Shape_console"]
+size = Vector3(0.7, 0.3, 0.5)
+
+[sub_resource type="BoxMesh" id="Mesh_button"]
+material = SubResource("Mat_button")
+size = Vector3(0.08, 0.04, 0.08)
+
+[sub_resource type="BoxShape3D" id="Shape_button"]
+size = Vector3(0.08, 0.04, 0.08)
+
+[sub_resource type="CylinderMesh" id="Mesh_compass_base"]
+material = SubResource("Mat_compass_base")
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.01
+
+[sub_resource type="BoxMesh" id="Mesh_needle"]
+material = SubResource("Mat_needle")
+size = Vector3(0.008, 0.006, 0.1)
+
+[node name="ShipDash" type="Node3D"]
+script = ExtResource("1_dash")
+
+[node name="Console" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Console"]
+mesh = SubResource("Mesh_console")
+
+[node name="Collision" type="CollisionShape3D" parent="Console"]
+shape = SubResource("Shape_console")
+
+[node name="ButtonForward" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17, -0.13)
+script = ExtResource("2_btn")
+direction = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="ButtonForward"]
+mesh = SubResource("Mesh_button")
+
+[node name="Collision" type="CollisionShape3D" parent="ButtonForward"]
+shape = SubResource("Shape_button")
+
+[node name="ButtonReverse" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17, 0.05)
+script = ExtResource("2_btn")
+direction = 1
+
+[node name="Mesh" type="MeshInstance3D" parent="ButtonReverse"]
+mesh = SubResource("Mesh_button")
+
+[node name="Collision" type="CollisionShape3D" parent="ButtonReverse"]
+shape = SubResource("Shape_button")
+
+[node name="ButtonTurnLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0.17, -0.04)
+script = ExtResource("2_btn")
+direction = 2
+
+[node name="Mesh" type="MeshInstance3D" parent="ButtonTurnLeft"]
+mesh = SubResource("Mesh_button")
+
+[node name="Collision" type="CollisionShape3D" parent="ButtonTurnLeft"]
+shape = SubResource("Shape_button")
+
+[node name="ButtonTurnRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.17, -0.04)
+script = ExtResource("2_btn")
+direction = 3
+
+[node name="Mesh" type="MeshInstance3D" parent="ButtonTurnRight"]
+mesh = SubResource("Mesh_button")
+
+[node name="Collision" type="CollisionShape3D" parent="ButtonTurnRight"]
+shape = SubResource("Shape_button")
+
+[node name="Compass" type="Node3D" parent="." node_paths=PackedStringArray("needle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 0.165, -0.04)
+script = ExtResource("3_cmp")
+needle = NodePath("Needle")
+
+[node name="Base" type="MeshInstance3D" parent="Compass"]
+mesh = SubResource("Mesh_compass_base")
+
+[node name="Needle" type="Node3D" parent="Compass"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0)
+
+[node name="NeedleMesh" type="MeshInstance3D" parent="Compass/Needle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.04)
+mesh = SubResource("Mesh_needle")

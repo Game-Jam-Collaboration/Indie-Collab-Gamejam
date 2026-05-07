@@ -15,6 +15,7 @@ var previous_pickup_parent:Node
 var previous_pickup_transform:Variant
 var assembling := false
 var assembly_mechanism:Node = null
+var hold_target:Node = null
 var assembly_tween:Tween = null:
 	set(value):
 		if assembly_tween and assembly_tween.is_running(): assembly_tween.kill()
@@ -58,8 +59,8 @@ func _unhandled_input(event):
 			rotation.y = yaw
 			camera_pivot.rotation.x = pitch
 		if event is InputEventMouseButton:
-			if event.pressed:
-				if event.button_index == 1:
+			if event.button_index == 1:
+				if event.pressed:
 					if assembling:
 						assembling = false
 						in_hand = null
@@ -70,10 +71,21 @@ func _unhandled_input(event):
 					elif %Holder.get_child_count() > 0:
 						_release_pickup()
 					else:
-						_interact_with()
+						var collision:CollisionObject3D = %Selector.get_collider()
+						if collision and collision.is_in_group("HoldInteractable"):
+							_start_hold(collision)
+						else:
+							_interact_with()
+				else:
+					_end_hold()
 
 
 func _physics_process(delta):
+	if hold_target:
+		if not is_instance_valid(hold_target) or %Selector.get_collider() != hold_target:
+			_end_hold()
+		elif hold_target.has_method("on_held"):
+			hold_target.on_held(delta)
 	if in_hand:
 		assembly_mechanism = %Selector.get_collider()
 		if assembly_mechanism and assembly_mechanism.is_in_group("AssemblyPoint"):
@@ -150,3 +162,17 @@ func _release_pickup() -> void:
 	in_hand = null
 	previous_pickup_parent = null
 	previous_pickup_transform = null
+
+
+func _start_hold(target: Node) -> void:
+	hold_target = target
+	if target.has_method("on_press_start"):
+		target.on_press_start()
+
+
+func _end_hold() -> void:
+	if hold_target == null:
+		return
+	if is_instance_valid(hold_target) and hold_target.has_method("on_press_end"):
+		hold_target.on_press_end()
+	hold_target = null
