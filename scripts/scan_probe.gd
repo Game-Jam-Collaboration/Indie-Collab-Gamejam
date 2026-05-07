@@ -9,17 +9,22 @@ extends Node3D
 
 func _ready() -> void:
 	add_to_group("scan_probe")
+
+
+func _resolve_navigation() -> void:
 	if navigation == null:
 		navigation = get_tree().get_first_node_in_group("ship_navigation") as ShipNavigation
 
 
 func _process(_delta: float) -> void:
+	_resolve_navigation()
 	if navigation == null:
 		return
 	position = navigation.simulated_position
 
 
 func scan() -> PackedVector3Array:
+	_resolve_navigation()
 	var hits := PackedVector3Array()
 	var space_state := get_world_3d().direct_space_state
 	if space_state == null:

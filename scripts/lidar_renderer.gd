@@ -17,9 +17,6 @@ var _next_scan_time: float = 0.0
 
 
 func _ready() -> void:
-	if probe == null:
-		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
-
 	_multi_mesh_instance = MultiMeshInstance3D.new()
 	add_child(_multi_mesh_instance)
 
@@ -55,8 +52,14 @@ func _process(_delta: float) -> void:
 
 func trigger_scan() -> void:
 	if probe == null:
+		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
+	if probe == null:
+		push_warning("LidarRenderer: no ScanProbe found in tree")
 		return
-	display_points(probe.scan())
+	var hits := probe.scan()
+	if hits.is_empty():
+		push_warning("LidarRenderer: scan returned 0 hits — probe at %s, range %s" % [probe.global_position, probe.scan_range])
+	display_points(hits)
 
 
 func display_points(points: PackedVector3Array) -> void:
