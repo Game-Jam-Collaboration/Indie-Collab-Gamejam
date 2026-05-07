@@ -65,13 +65,16 @@ func trigger_scan() -> void:
 	if probe == null:
 		push_warning("LidarRenderer: no ScanProbe found in tree")
 		return
-	var hits := probe.scan()
-	if hits.is_empty():
-		push_warning("LidarRenderer: scan returned 0 hits — probe at %s, range %s" % [probe.global_position, probe.scan_range])
-	display_points(hits)
+	var result: Dictionary = probe.scan()
+	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
+	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
+	if hits.is_empty() and misses.is_empty():
+		push_warning("LidarRenderer: scan returned 0 rays — probe at %s" % probe.global_position)
+	display_points(hits, true)
+	display_points(misses, false)
 
 
-func display_points(points: PackedVector3Array) -> void:
+func display_points(points: PackedVector3Array, is_hit: bool = true) -> void:
 	var existing: int = _multi_mesh.instance_count
 	var incoming: int = points.size()
 	if incoming == 0:
@@ -90,12 +93,13 @@ func display_points(points: PackedVector3Array) -> void:
 	var new_total := existing + incoming
 	_multi_mesh.instance_count = new_total
 	var spawn_time := Time.get_ticks_msec() / 1000.0
+	var hit_flag := 1.0 if is_hit else 0.0
 	for i in incoming:
 		var local_pos := points[i] * hologram_scale
 		var t := Transform3D()
 		t.origin = local_pos
 		_multi_mesh.set_instance_transform(existing + i, t)
-		_multi_mesh.set_instance_custom_data(existing + i, Color(spawn_time, randf(), local_pos.y, 0.0))
+		_multi_mesh.set_instance_custom_data(existing + i, Color(spawn_time, randf(), local_pos.y, hit_flag))
 
 
 func clear() -> void:

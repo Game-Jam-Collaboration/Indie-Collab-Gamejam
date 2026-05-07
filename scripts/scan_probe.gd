@@ -23,12 +23,13 @@ func _process(_delta: float) -> void:
 	position = navigation.simulated_position
 
 
-func scan() -> PackedVector3Array:
+func scan() -> Dictionary:
 	_resolve_navigation()
 	var hits := PackedVector3Array()
+	var misses := PackedVector3Array()
 	var space_state := get_world_3d().direct_space_state
 	if space_state == null:
-		return hits
+		return {"hits": hits, "misses": misses}
 
 	var origin := global_position
 	var phi := PI * (sqrt(5.0) - 1.0)
@@ -36,6 +37,7 @@ func scan() -> PackedVector3Array:
 	if navigation:
 		heading = navigation.heading
 	var basis := Basis(Vector3.UP, heading)
+	var inv_basis := basis.transposed()
 
 	for i in ray_count:
 		var t := float(i) / float(max(1, ray_count - 1))
@@ -49,7 +51,8 @@ func scan() -> PackedVector3Array:
 		var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * scan_range)
 		var result := space_state.intersect_ray(query)
 		if result and result.has("position"):
-			var local: Vector3 = result["position"] - origin
-			hits.append(basis.transposed() * local)
+			hits.append(inv_basis * (result["position"] - origin))
+		else:
+			misses.append(inv_basis * (dir * scan_range))
 
-	return hits
+	return {"hits": hits, "misses": misses}
