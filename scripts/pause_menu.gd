@@ -76,7 +76,7 @@ func _execute_input_command(button_index):
 		#List of inputs.
 		if button_input_variation[button_index].substr(0,6) == "res://":
 			
-			if button_input_variation[button_index] == "res://scenes/ship.tscn":
+			if button_input_variation[button_index] == "res://scenes/level.tscn":
 				PauseMenu.current_scene = "ship"
 			
 			if script_type == "Pause":

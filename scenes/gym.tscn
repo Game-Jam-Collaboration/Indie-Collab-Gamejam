@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 [ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
-[ext_resource type="PackedScene" uid="uid://cf470ghmpj6vh" path="res://scenes/Composables/multi_slot_assembly.tscn" id="8_xhcdp"]
-[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/Composables/ship.tscn" id="9_xhcdp"]
+[ext_resource type="PackedScene" uid="uid://cf470ghmpj6vh" path="res://scenes/multi_slot_assembly.tscn" id="8_xhcdp"]
+[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="9_xhcdp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xhcdp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

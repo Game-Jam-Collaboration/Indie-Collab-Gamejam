@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dppyc5l3hovsx"]
+
+[ext_resource type="Script" uid="uid://vhqt8tk4hjhg" path="res://scripts/playground.gd" id="1_mx8sn"]
+[ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_ppgk2"]
+[ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_2r41h"]
+[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="4_klq6b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
+size = Vector3(4, 1, 1)
+
+[node name="Level" type="Node3D" unique_id=1383991437]
+script = ExtResource("1_mx8sn")
+
+[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_ppgk2")]
+
+[node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_2r41h")]
+transform = Transform3D(0.9999924, 0.0038818077, 0.00032422287, -0.0038806668, 0.9999865, -0.0034470167, -0.00033760376, 0.003445732, 0.99999404, -2.3000002, 3.6, 1.7999997)
+
+[node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("4_klq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=549631702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.6000004)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1436563572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, -0.19999981)
+shape = SubResource("BoxShape3D_tfsc7")
