@@ -9,6 +9,7 @@ extends StaticBody3D
 @export var glow_light: OmniLight3D = null
 @export var glow_full_energy: float = 1.5
 @export var glow_idle_ratio: float = 0.25
+@export var glow_ramp_up_duration: float = 0.5
 
 var _is_scanning: bool = false
 var _scan_end_time: float = 0.0
@@ -45,13 +46,19 @@ func _flash_glow() -> void:
 		return
 	if _glow_tween and _glow_tween.is_running():
 		_glow_tween.kill()
-	glow_light.light_energy = glow_full_energy
 	_glow_tween = create_tween()
 	_glow_tween.tween_property(
 		glow_light,
 		"light_energy",
+		glow_full_energy,
+		glow_ramp_up_duration,
+	)
+	var decay_duration: float = max(0.1, lidar.lifetime - glow_ramp_up_duration)
+	_glow_tween.tween_property(
+		glow_light,
+		"light_energy",
 		glow_full_energy * glow_idle_ratio,
-		lidar.lifetime,
+		decay_duration,
 	)
 
 

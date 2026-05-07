@@ -5,7 +5,7 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 
 @export var probe: ScanProbe = null
 @export var point_size: float = 0.003
-@export var point_color: Color = Color(0.55, 1.0, 0.55)
+@export var point_color: Color = Color(0.08, 0.95, 0.18)
 @export var emission_energy: float = 2.5
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
