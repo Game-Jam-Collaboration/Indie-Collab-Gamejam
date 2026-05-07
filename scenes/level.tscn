@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_2r41h"]
 [ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="4_klq6b"]
+[ext_resource type="PackedScene" path="res://scenes/exploration_world.tscn" id="5_explore"]
+[ext_resource type="Script" path="res://scripts/lidar_renderer.gd" id="6_lidar"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
 size = Vector3(4, 1, 1)
@@ -25,3 +27,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.6000004)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1436563572]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, -0.19999981)
 shape = SubResource("BoxShape3D_tfsc7")
+
+[node name="ExplorationWorld" parent="." unique_id=9300001 instance=ExtResource("5_explore")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, 0)
+
+[node name="LidarRenderer" type="Node3D" parent="." unique_id=9300002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3, 3.5, 0.5)
+script = ExtResource("6_lidar")
+hologram_scale = 0.02
+auto_scan_interval = 2.0

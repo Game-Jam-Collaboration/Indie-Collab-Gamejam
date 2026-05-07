@@ -18,6 +18,10 @@ var heading: float = 0.0:
 		heading_changed.emit(heading)
 
 
+func _ready() -> void:
+	add_to_group("ship_navigation")
+
+
 func translate_forward(amount: float) -> void:
 	var forward := Vector3(-sin(heading), 0.0, -cos(heading))
 	simulated_position = simulated_position + forward * amount
