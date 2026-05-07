@@ -45,7 +45,7 @@ void vertex() {
 	float travel_time = dist / max(travel_speed, 0.0001);
 	float g = clamp(v_effective_age / max(travel_time, 0.0001), 0.0, 1.0);
 
-	float miss_visible_fraction = 0.8;
+	float miss_visible_fraction = 1.0;
 	float effective_lifetime = mix(travel_time * miss_visible_fraction, lifetime, v_is_hit);
 	v_life = clamp(1.0 - v_effective_age / max(effective_lifetime, 0.0001), 0.0, 1.0);
 
