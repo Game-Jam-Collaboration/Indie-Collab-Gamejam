@@ -67,10 +67,10 @@ shape = SubResource("Shape_button")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 script = ExtResource("2_lidar")
 emission_energy = 1.6
-hologram_scale = 0.022
+hologram_scale = 0.033
 
 [node name="GlowLight" type="OmniLight3D" parent="." unique_id=1476426615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 light_color = Color(0.55, 1, 0.55, 1)
-light_energy = 0.375
+light_energy = 0.1875
 omni_range = 2.5

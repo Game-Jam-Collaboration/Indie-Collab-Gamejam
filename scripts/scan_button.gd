@@ -8,7 +8,7 @@ extends StaticBody3D
 @export var button_mesh: MeshInstance3D = null
 @export var glow_light: OmniLight3D = null
 @export var glow_full_energy: float = 1.5
-@export var glow_idle_ratio: float = 0.25
+@export var glow_idle_ratio: float = 0.125
 @export var glow_ramp_up_duration: float = 0.5
 
 var _is_scanning: bool = false
