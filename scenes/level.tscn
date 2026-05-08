@@ -15,10 +15,9 @@ script = ExtResource("1_mx8sn")
 [node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_ppgk2")]
 
 [node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_2r41h")]
-transform = Transform3D(0.9999924, 0.0038818077, 0.00032422287, -0.0038806668, 0.9999865, -0.0034470167, -0.00033760376, 0.003445732, 0.99999404, -2.3000002, 3.6, 1.7999997)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 1, 0.20512843, 1.976273, 2.5354738)
 
 [node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("4_klq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=549631702]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.6000004)

@@ -36,8 +36,8 @@ func scan() -> Dictionary:
 	var heading := 0.0
 	if navigation:
 		heading = navigation.heading
-	var basis := Basis(Vector3.UP, heading)
-	var inv_basis := basis.transposed()
+	var _basis := Basis(Vector3.UP, heading)
+	var inv_basis := _basis.transposed()
 
 	for i in ray_count:
 		var t := float(i) / float(max(1, ray_count - 1))
