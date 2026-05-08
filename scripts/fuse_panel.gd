@@ -1,32 +1,47 @@
+@tool
 extends Area3D
+
+@export_tool_button("Disassemble") var disassemble_button = disassemble
 
 @export var environment_light:Light3D = null
 @export var emissive_object:MeshInstance3D
+@export var emissive_material_idx:int = 0
 @export var status_panel: AssemblyStatusPanel = null
 @export var slot_index: int = 0
 @export var can_remove_fuse: bool = false
 
-var _original_light_color: Color
-var _original_emission_material: Material
+var online := false
 
+var offline_light_color:Color = Color.FIREBRICK
+var online_light_color:Color = Color.FOREST_GREEN
 
-func _ready() -> void:
-	if environment_light:
-		_original_light_color = environment_light.light_color
-	if emissive_object and emissive_object.mesh:
-		_original_emission_material = emissive_object.mesh.surface_get_material(0)
+var offline_emissive:StandardMaterial3D = load("res://assets/materials/offline_emissive.tres")
+var online_emissive:StandardMaterial3D = load("res://assets/materials/online_emissive.tres")
 
 
 func assemble() -> void:
 	if status_panel:
 		status_panel.mark_complete(slot_index)
-	if environment_light:
-		environment_light.light_color = Color.CORNSILK
-	if emissive_object:
-		var new_material:StandardMaterial3D = emissive_object.mesh.surface_get_material(0).duplicate()
-		new_material.emission = Color.WHITE_SMOKE
-		new_material.emission_energy_multiplier = 3
-		emissive_object.mesh.surface_set_material(0, new_material)
+	_change_lighting()
+
+
+func disassemble() -> void:
+	if status_panel:
+		status_panel.mark_pending(slot_index)
+	_change_lighting()
+
+
+func _change_lighting() -> void:
+	if online:
+		if environment_light:
+			environment_light.light_color = offline_light_color
+		if emissive_object:
+			emissive_object.mesh.surface_set_material(emissive_material_idx, offline_emissive)
+	else:
+		if environment_light:
+			environment_light.light_color = online_light_color
+		if emissive_object:
+			emissive_object.mesh.surface_set_material(emissive_material_idx, online_emissive)
 
 
 func can_remove() -> bool:
@@ -47,8 +62,5 @@ func release_assembled() -> CollisionObject3D:
 		return null
 	if status_panel:
 		status_panel.mark_pending(slot_index)
-	if environment_light:
-		environment_light.light_color = _original_light_color
-	if emissive_object and _original_emission_material:
-		emissive_object.mesh.surface_set_material(0, _original_emission_material)
+	_change_lighting()
 	return fuse
