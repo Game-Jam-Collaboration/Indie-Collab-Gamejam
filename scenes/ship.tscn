@@ -89,7 +89,7 @@ light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 script = ExtResource("5_shipnav")
 
 [node name="ShipDash" parent="." index="11" unique_id=9200002 node_paths=PackedStringArray("navigation") instance=ExtResource("6_shipdash")]
-transform = Transform3D(-0.9999999, 0, 0.00054112275, 0, 1, 0, -0.00054112275, 0, -0.9999999, -0.5723301, 0.7605069, 5.012961)
+transform = Transform3D(-0.9999999, 0, 0.00054112275, 0, 1, 0, -0.00054112275, 0, -0.9999999, -0.9723301, 0.7605069, 5.012961)
 navigation = NodePath("../ShipNavigation")
 
 [node name="Holodeck" parent="." index="12" unique_id=9200003 instance=ExtResource("7_holodeck")]
