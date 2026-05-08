@@ -1,4 +1,4 @@
-extends Node2D
+extends PanelContainer
 
 @export var button_input_variation : Array = []
 
@@ -21,11 +21,6 @@ func _ready() -> void:
 	get_node("Control/Button").mouse_entered.connect(_mouse_entered.bind(""))
 	get_node("Control/Button").mouse_exited.connect(_mouse_exited.bind(""))
 	get_node("Control/Button").pressed.connect(_mouse_pressed.bind(0))
-	
-	#Credits
-	get_node("Control/Button2").mouse_entered.connect(_mouse_entered.bind(2))
-	get_node("Control/Button2").mouse_exited.connect(_mouse_exited.bind(2))
-	get_node("Control/Button2").pressed.connect(_mouse_pressed.bind(1))
 	
 	#Exit
 	get_node("Control/Button3").mouse_entered.connect(_mouse_entered.bind(3))

@@ -4,43 +4,39 @@
 [ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/textures/continue.svg" id="2_2wh52"]
 [ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/textures/main_menu.svg" id="3_ow34m"]
 
-[node name="MainMenu" type="Node2D" unique_id=1466794680]
+[sub_resource type="Gradient" id="Gradient_5d2l8"]
+offsets = PackedFloat32Array(0.060714304, 0.75, 1)
+colors = PackedColorArray(0.2520276, 0.25202766, 0.25202763, 1, 0, 0, 0, 1, 0.4941861, 0.4941861, 0.4941861, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7l7mv"]
+gradient = SubResource("Gradient_5d2l8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqqt6"]
+texture = SubResource("GradientTexture2D_7l7mv")
+
+[node name="MainMenu" type="PanelContainer" unique_id=47972032]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bqqt6")
 script = ExtResource("1_yqorp")
 button_input_variation = ["res://scenes/level.tscn", null, "Quit"]
 script_type = "Main Menu"
 
-[node name="Control" type="Control" parent="." unique_id=1967807538]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Control" type="VBoxContainer" parent="." unique_id=756867926]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 64
 
 [node name="Button" type="Button" parent="Control" unique_id=1700068839]
-layout_mode = 0
-offset_left = 488.0
-offset_top = 155.0
-offset_right = 661.0
-offset_bottom = 291.0
-pivot_offset = Vector2(86.5, 68)
+layout_mode = 2
 icon = ExtResource("2_2wh52")
 flat = true
 
-[node name="Button2" type="Button" parent="Control" unique_id=424456398]
-visible = false
-layout_mode = 0
-offset_left = 488.0
-offset_top = 276.0
-offset_right = 641.0
-offset_bottom = 324.0
-pivot_offset = Vector2(76.5, 24)
-text = "Credits"
-
 [node name="Button3" type="Button" parent="Control" unique_id=1840031564]
-layout_mode = 0
-offset_left = 481.0
-offset_top = 333.0
-offset_right = 657.0
-offset_bottom = 498.0
-pivot_offset = Vector2(88, 82)
+layout_mode = 2
 icon = ExtResource("3_ow34m")
 flat = true

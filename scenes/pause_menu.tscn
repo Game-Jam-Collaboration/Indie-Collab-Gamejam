@@ -5,24 +5,37 @@
 [ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/textures/main_menu.svg" id="2_g4jo0"]
 [ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/textures/continue.svg" id="2_komsw"]
 
+[sub_resource type="Gradient" id="Gradient_5d2l8"]
+offsets = PackedFloat32Array(0.060714304, 0.75, 1)
+colors = PackedColorArray(0.25278953, 0.25278953, 0.25278953, 0.76100004, 0, 0, 0, 0.060000002, 0.4941861, 0.4941861, 0.4941861, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7l7mv"]
+gradient = SubResource("Gradient_5d2l8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4r4p"]
+texture = SubResource("GradientTexture2D_7l7mv")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5d2l8"]
 shader = ExtResource("1_kukqi")
 shader_parameter/shake_power = 0.03
 shader_parameter/shake_rate = 0.2
-shader_parameter/shake_speed = 5.0
+shader_parameter/shake_speed = 3.0
 shader_parameter/shake_block_size = 30.5
-shader_parameter/shake_color_rate = 0.01
+shader_parameter/shake_color_rate = 0.0
 
-[node name="PauseMenu" type="Node2D" unique_id=1091664148]
+[node name="PauseMenu" type="PanelContainer" unique_id=1837155855]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_v4r4p")
 script = ExtResource("1_jvnd5")
 button_input_variation = ["Continue", null, "res://scenes/main_menu.tscn"]
 script_type = "Pause"
 
 [node name="Control" type="Control" parent="." unique_id=942911089]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=817432964]
 material = SubResource("ShaderMaterial_5d2l8")
@@ -39,16 +52,6 @@ offset_bottom = 286.0
 pivot_offset = Vector2(86.5, 68)
 icon = ExtResource("2_komsw")
 flat = true
-
-[node name="Button2" type="Button" parent="Control" unique_id=169673902]
-visible = false
-layout_mode = 0
-offset_left = 942.0
-offset_top = 292.0
-offset_right = 1095.0
-offset_bottom = 340.0
-pivot_offset = Vector2(76.5, 24)
-text = "Credits"
 
 [node name="Button3" type="Button" parent="Control" unique_id=1660551048]
 layout_mode = 0
