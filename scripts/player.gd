@@ -8,6 +8,8 @@ extends CharacterBody3D
 @export var vertical_speed:float = 10.0
 @export var camera_pivot:Node3D
 
+@onready var ship:Node3D = null
+
 var first_person := true
 
 var in_hand:CollisionObject3D = null
@@ -31,6 +33,9 @@ var focused:bool:
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	ship = get_tree().root.get_node_or_null("Level/%Ship")
+	if ship == null:
+		push_warning("There is no ship in this scene, player controller may not work properly.")
 
 
 func _unhandled_input(event):
@@ -50,7 +55,7 @@ func _unhandled_input(event):
 			%ThirdPersonCamera.make_current()
 			first_person = false
 		elif event.keycode == KEY_Q:
-			get_tree().root.get_node("Gym/%Brush").brush()
+			ship.get_node("%PowerPanel").disassemble()
 	if focused and first_person:
 		if event is InputEventMouseMotion:
 			yaw -= event.relative.x * mouse_sensitivity
@@ -68,6 +73,7 @@ func _unhandled_input(event):
 						previous_pickup_transform = null
 						if assembly_mechanism:
 							assembly_mechanism.assemble()
+							assembly_mechanism = null
 					elif %Holder.get_child_count() > 0:
 						_release_pickup()
 					else:

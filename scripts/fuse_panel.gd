@@ -1,7 +1,4 @@
-@tool
 extends Area3D
-
-@export_tool_button("Disassemble") var disassemble_button = disassemble
 
 @export var environment_light:Light3D = null
 @export var emissive_object:MeshInstance3D
@@ -9,6 +6,7 @@ extends Area3D
 @export var status_panel: AssemblyStatusPanel = null
 @export var slot_index: int = 0
 @export var can_remove_fuse: bool = false
+@export var fuse:RigidBody3D = null
 
 var online := false
 
@@ -22,17 +20,22 @@ var online_emissive:StandardMaterial3D = load("res://assets/materials/online_emi
 func assemble() -> void:
 	if status_panel:
 		status_panel.mark_complete(slot_index)
+	online = true
 	_change_lighting()
 
 
 func disassemble() -> void:
 	if status_panel:
 		status_panel.mark_pending(slot_index)
+	online = false
 	_change_lighting()
+	fuse.freeze = false
+	fuse.apply_central_impulse(Vector3(-2, 0, 0))
+	fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0,0))
 
 
 func _change_lighting() -> void:
-	if online:
+	if !online:
 		if environment_light:
 			environment_light.light_color = offline_light_color
 		if emissive_object:

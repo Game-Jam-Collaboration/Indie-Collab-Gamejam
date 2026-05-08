@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cd1c1o5nmlwht" path="res://scripts/gym.gd" id="1_5hyia"]
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="3_8el2m"]
 [ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="3_oxjoy"]
-[ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact.gd" id="3_wp3es"]
+[ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact_example.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
 [ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
 [ext_resource type="PackedScene" uid="uid://cf470ghmpj6vh" path="res://scenes/multi_slot_assembly.tscn" id="8_xhcdp"]
@@ -200,7 +200,7 @@ autowrap_mode = 2
 autowrap_trim_flags = 64
 
 [node name="Player" parent="." unique_id=1720547152 instance=ExtResource("1_4duur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.181056, 4.3, 13.486009)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.181056, 4.3, -0.41399193)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=975214808]
 
@@ -262,5 +262,6 @@ text = "Status lights advance from red to green as each sub-component is install
 autowrap_mode = 2
 autowrap_trim_flags = 64
 
-[node name="ship_v3" parent="." unique_id=2135941895 instance=ExtResource("9_xhcdp")]
+[node name="Ship" parent="." unique_id=2135941895 instance=ExtResource("9_xhcdp")]
+unique_name_in_owner = true
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 2.1000001, 13.400001)

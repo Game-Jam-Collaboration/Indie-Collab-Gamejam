@@ -45,13 +45,15 @@ mesh = SubResource("ArrayMesh_5qfr6")
 [node name="OmniLight3D" type="OmniLight3D" parent="FusePanelLight" index="0" unique_id=1768585145]
 light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 
-[node name="FusePanel" parent="." index="2" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object") instance=ExtResource("2_q2ovv")]
+[node name="PowerPanel" parent="." index="2" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse") instance=ExtResource("2_q2ovv")]
+unique_name_in_owner = true
 transform = Transform3D(-0.2818057, 0, -0.95947146, 0, 1, 0, 0.95947146, 0, -0.2818057, 4.081554, 1.1068584, 0)
 environment_light = NodePath("../FusePanelLight/OmniLight3D")
 emissive_object = NodePath("../FusePanelLight")
 emissive_material_idx = 1
+fuse = NodePath("Fuse")
 
-[node name="Fuse" parent="FusePanel" index="4" unique_id=2062436736 instance=ExtResource("3_3m36u")]
+[node name="Fuse" parent="PowerPanel" index="4" unique_id=2062436736 instance=ExtResource("3_3m36u")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0, 1.7270491)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="3" unique_id=2052206692]
