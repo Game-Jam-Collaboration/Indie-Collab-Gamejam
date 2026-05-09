@@ -12,10 +12,11 @@ sky_material = SubResource("ProceduralSkyMaterial_kddj0")
 
 [resource]
 background_mode = 1
-background_color = Color(0.20871013, 0.20871016, 0.20871013, 1)
+background_color = Color(0.18000486, 0.1800049, 0.1800048, 1)
 sky = SubResource("Sky_q8s1k")
 tonemap_mode = 2
 tonemap_exposure = 1.25
-ssr_enabled = true
 glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.2
 adjustment_enabled = true
