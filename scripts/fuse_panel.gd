@@ -60,10 +60,10 @@ func release_assembled() -> CollisionObject3D:
 	var ap := get_node_or_null("AssemblyPoint")
 	if ap == null or ap.get_child_count() == 0:
 		return null
-	var fuse := ap.get_child(0) as CollisionObject3D
-	if fuse == null:
+	var _fuse := ap.get_child(0) as CollisionObject3D
+	if _fuse == null:
 		return null
 	if status_panel:
 		status_panel.mark_pending(slot_index)
 	_change_lighting()
-	return fuse
+	return _fuse

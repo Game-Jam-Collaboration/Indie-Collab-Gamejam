@@ -5,7 +5,7 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 
 @export var direction: Direction = Direction.FORWARD
 @export var navigation: ShipNavigation = null
-@export var press_offset: Vector3 = Vector3(0, -0.012, 0)
+@export var press_offset: Vector3 = Vector3(0, -0.016, 0)
 
 var _rest_position: Vector3
 var _is_pressed: bool = false

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgyuvv5vp071k" path="res://scripts/scan_button.gd" id="1_scan"]
 [ext_resource type="Script" uid="uid://douogsdtjl3jh" path="res://scripts/lidar_renderer.gd" id="2_lidar"]
-[ext_resource type="Shader" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
+[ext_resource type="Shader" uid="uid://dx6oagqp4a4h" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_pedestal"]
 albedo_color = Color(0.16, 0.18, 0.16, 1)
@@ -16,15 +16,16 @@ size = Vector3(0.6, 1, 0.6)
 size = Vector3(0.6, 1, 0.6)
 
 [sub_resource type="StandardMaterial3D" id="Mat_emitter"]
-albedo_color = Color(0.55, 1, 0.55, 1)
+transparency = 1
+albedo_color = Color(0.54901963, 1, 0.54901963, 0.11372549)
 emission_enabled = true
 emission = Color(0.4, 1, 0.45, 1)
 emission_energy_multiplier = 2.5
 
 [sub_resource type="CylinderMesh" id="Mesh_emitter"]
 material = SubResource("Mat_emitter")
-top_radius = 0.18
-bottom_radius = 0.22
+top_radius = 0.15
+bottom_radius = 0.13
 height = 0.04
 
 [sub_resource type="BoxMesh" id="Mesh_button"]
@@ -34,7 +35,19 @@ size = Vector3(0.12, 0.05, 0.12)
 size = Vector3(0.12, 0.05, 0.12)
 
 [sub_resource type="ShaderMaterial" id="Mat_ship_icon"]
+render_priority = 0
 shader = ExtResource("3_iconholo")
+shader_parameter/base_color = Color(0.08, 0.95, 0.18, 1)
+shader_parameter/emission_energy = 1.6
+shader_parameter/current_time = 0.0
+shader_parameter/scan_band_speed = 0.4
+shader_parameter/scan_band_width = 0.3
+shader_parameter/scan_band_strength = 2.5
+shader_parameter/scan_band_axis_scale = 0.08
+shader_parameter/flicker_strength = 0.35
+shader_parameter/flicker_speed = 14.0
+shader_parameter/glitch_chance = 0.04
+shader_parameter/glitch_rate = 8.0
 
 [sub_resource type="CylinderMesh" id="Mesh_ship_icon"]
 top_radius = 0.0
@@ -47,6 +60,7 @@ rings = 1
 
 [node name="Pedestal" type="StaticBody3D" parent="." unique_id=212426351]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 
 [node name="Mesh" type="MeshInstance3D" parent="Pedestal" unique_id=1628032870]
 transform = Transform3D(1.5, 0, 0, 0, 1.014761, 0, 0, 0, 1.5, 0, 0, 0)
@@ -60,31 +74,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02, 0)
 mesh = SubResource("Mesh_emitter")
 
 [node name="ScanButton" type="StaticBody3D" parent="." unique_id=1314687865 node_paths=PackedStringArray("lidar", "button_mesh", "glow_light")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.025, 0.22)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.025, 0.12)
 script = ExtResource("1_scan")
 lidar = NodePath("../LidarRenderer")
 button_mesh = NodePath("Mesh")
 glow_light = NodePath("../GlowLight")
 
 [node name="Mesh" type="MeshInstance3D" parent="ScanButton" unique_id=1328622947]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.13312048)
 mesh = SubResource("Mesh_button")
 
 [node name="Collision" type="CollisionShape3D" parent="ScanButton" unique_id=1562264287]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0.13343653)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("Shape_button")
 
 [node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931 node_paths=PackedStringArray("ship_icon")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.7, 0)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.3000001, 0)
 script = ExtResource("2_lidar")
 emission_energy = 1.6
 hologram_scale = 0.033
 ship_icon = NodePath("ShipIcon")
 
-[node name="ShipIcon" type="MeshInstance3D" parent="LidarRenderer"]
+[node name="ShipIcon" type="MeshInstance3D" parent="LidarRenderer" unique_id=1657139447]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
-mesh = SubResource("Mesh_ship_icon")
 material_override = SubResource("Mat_ship_icon")
+mesh = SubResource("Mesh_ship_icon")
 
 [node name="GlowLight" type="OmniLight3D" parent="." unique_id=1476426615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)

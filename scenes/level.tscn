@@ -15,7 +15,7 @@ size = Vector3(4, 1, 1)
 [node name="MrPillBody" parent="." unique_id=1720547152 instance=ExtResource("3_2r41h")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 1, 0.20512843, 1.976273, 2.5354738)
 
-[node name="Ship" parent="." unique_id=2135941895 instance=ExtResource("4_klq6b")]
+[node name="Ship" parent="." unique_id=1987469297 instance=ExtResource("4_klq6b")]
 unique_name_in_owner = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=549631702]
