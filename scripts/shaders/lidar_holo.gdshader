@@ -2,6 +2,7 @@ shader_type spatial;
 render_mode unshaded, blend_add, depth_test_disabled, cull_disabled;
 
 uniform vec3 base_color : source_color = vec3(0.55, 1.0, 0.55);
+uniform vec3 anomaly_color : source_color = vec3(1.0, 0.18, 0.15);
 uniform float emission_energy : hint_range(0.0, 10.0) = 3.0;
 uniform float current_time = 0.0;
 uniform float lifetime = 5.0;
@@ -29,12 +30,15 @@ varying float v_local_y;
 varying float v_arrival;
 varying float v_effective_age;
 varying float v_is_hit;
+varying float v_is_anomaly;
 
 void vertex() {
 	float spawn_time = INSTANCE_CUSTOM.r;
 	v_seed = INSTANCE_CUSTOM.g;
 	v_local_y = INSTANCE_CUSTOM.b;
-	v_is_hit = INSTANCE_CUSTOM.a;
+	float kind = INSTANCE_CUSTOM.a;
+	v_is_anomaly = step(1.5, kind);
+	v_is_hit = step(0.5, kind);
 	float age = current_time - spawn_time;
 	float launch_delay = v_seed * max_launch_delay;
 	v_effective_age = age - launch_delay;
@@ -74,6 +78,7 @@ void fragment() {
 	float alpha = v_life * flicker * glitch;
 	float intensity = emission_energy * (1.0 + band_factor * scan_band_strength + v_arrival * arrival_flash);
 
-	ALBEDO = base_color * intensity;
+	vec3 color = mix(base_color, anomaly_color, v_is_anomaly);
+	ALBEDO = color * intensity;
 	ALPHA = alpha;
 }
