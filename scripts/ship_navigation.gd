@@ -9,7 +9,10 @@ signal position_changed(new_position: Vector3)
 
 var simulated_position: Vector3 = Vector3.ZERO:
 	set(value):
+		if value == simulated_position:
+			return
 		simulated_position = value
+		print("Ship position: ", simulated_position)
 		position_changed.emit(simulated_position)
 
 var heading: float = 0.0:

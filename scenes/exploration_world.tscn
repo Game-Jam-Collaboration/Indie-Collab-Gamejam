@@ -1,6 +1,45 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/scan_probe.gd" id="1_probe"]
+[ext_resource type="Script" path="res://scripts/anomaly.gd" id="2_anomaly"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomaly_ring"]
+albedo_color = Color(0.6, 0.15, 0.95, 1)
+emission_enabled = true
+emission = Color(0.65, 0.2, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomaly_spike"]
+albedo_color = Color(0.25, 0.95, 1, 1)
+emission_enabled = true
+emission = Color(0.3, 0.95, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomaly_core"]
+albedo_color = Color(1, 0.95, 0.8, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.8, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="TorusMesh" id="Mesh_anomaly_ring"]
+material = SubResource("Mat_anomaly_ring")
+inner_radius = 2.4
+outer_radius = 3.6
+ring_segments = 12
+rings = 64
+
+[sub_resource type="CapsuleMesh" id="Mesh_anomaly_spike"]
+material = SubResource("Mat_anomaly_spike")
+radius = 0.25
+height = 9.0
+
+[sub_resource type="SphereMesh" id="Mesh_anomaly_core"]
+material = SubResource("Mat_anomaly_core")
+radius = 0.9
+height = 1.8
+
+[sub_resource type="SphereShape3D" id="Shape_anomaly"]
+radius = 4.0
 
 [sub_resource type="StandardMaterial3D" id="Mat_rock"]
 albedo_color = Color(0.4, 0.38, 0.36, 1)
@@ -30,6 +69,28 @@ size = Vector3(2.5, 2.5, 2.5)
 
 [node name="ScanProbe" type="Node3D" parent="."]
 script = ExtResource("1_probe")
+
+[node name="Anomaly" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
+script = ExtResource("2_anomaly")
+anomaly_id = "ANOM-01"
+
+[node name="Ring" type="MeshInstance3D" parent="Anomaly"]
+mesh = SubResource("Mesh_anomaly_ring")
+
+[node name="Spike1" type="MeshInstance3D" parent="Anomaly"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("Mesh_anomaly_spike")
+
+[node name="Spike2" type="MeshInstance3D" parent="Anomaly"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+mesh = SubResource("Mesh_anomaly_spike")
+
+[node name="Core" type="MeshInstance3D" parent="Anomaly"]
+mesh = SubResource("Mesh_anomaly_core")
+
+[node name="Collision" type="CollisionShape3D" parent="Anomaly"]
+shape = SubResource("Shape_anomaly")
 
 [node name="Rocks" type="Node3D" parent="."]
 

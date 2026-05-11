@@ -6,6 +6,7 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 @export var probe: ScanProbe = null
 @export var point_size: float = 0.003
 @export var point_color: Color = Color(0.08, 0.95, 0.18)
+@export var anomaly_color: Color = Color(1.0, 0.18, 0.15)
 @export var emission_energy: float = 2.5
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
@@ -39,6 +40,7 @@ func _ready() -> void:
 	_shader_material = ShaderMaterial.new()
 	_shader_material.shader = HOLO_SHADER
 	_shader_material.set_shader_parameter("base_color", Vector3(point_color.r, point_color.g, point_color.b))
+	_shader_material.set_shader_parameter("anomaly_color", Vector3(anomaly_color.r, anomaly_color.g, anomaly_color.b))
 	_shader_material.set_shader_parameter("emission_energy", emission_energy)
 	_shader_material.set_shader_parameter("lifetime", lifetime)
 	sphere.material = _shader_material
@@ -86,24 +88,18 @@ func trigger_scan() -> void:
 	var result: Dictionary = probe.scan()
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
 	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
-	#print("[Lidar] %d hits, %d misses | probe@%s | sim_pos=%s | heading=%.2f" % [
-		#hits.size(),
-		#misses.size(),
-		#probe.global_position,
-		#(probe.navigation.simulated_position if probe.navigation else Vector3.ZERO),
-		#(probe.navigation.heading if probe.navigation else 0.0),
-	#])
-	display_points(hits, true)
-	display_points(misses, false)
+	var anomaly_hits: PackedVector3Array = result.get("anomaly_hits", PackedVector3Array())
+	display_points(hits, 1.0)
+	display_points(misses, 0.0)
+	display_points(anomaly_hits, 2.0)
 
 
-func display_points(points: PackedVector3Array, is_hit: bool = true) -> void:
+func display_points(points: PackedVector3Array, hit_flag: float = 1.0) -> void:
 	var incoming: int = points.size()
 	if incoming == 0:
 		return
 
 	var spawn_time := Time.get_ticks_msec() / 1000.0
-	var hit_flag := 1.0 if is_hit else 0.0
 	for i in incoming:
 		var idx: int = _write_head
 		_write_head = (_write_head + 1) % max_points

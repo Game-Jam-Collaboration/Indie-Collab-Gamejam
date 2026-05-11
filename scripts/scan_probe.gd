@@ -27,9 +27,10 @@ func scan() -> Dictionary:
 	_resolve_navigation()
 	var hits := PackedVector3Array()
 	var misses := PackedVector3Array()
+	var anomaly_hits := PackedVector3Array()
 	var space_state := get_world_3d().direct_space_state
 	if space_state == null:
-		return {"hits": hits, "misses": misses}
+		return {"hits": hits, "misses": misses, "anomaly_hits": anomaly_hits}
 
 	var origin := global_position
 	var phi := PI * (sqrt(5.0) - 1.0)
@@ -52,8 +53,14 @@ func scan() -> Dictionary:
 		query.hit_from_inside = true
 		var result := space_state.intersect_ray(query)
 		if result and result.has("position"):
-			hits.append(inv_basis * (result["position"] - origin))
+			var hit_pos: Vector3 = result["position"]
+			var local_hit: Vector3 = inv_basis * (hit_pos - origin)
+			var collider = result.get("collider")
+			if collider != null and collider.is_in_group("anomaly"):
+				anomaly_hits.append(local_hit)
+			else:
+				hits.append(local_hit)
 		else:
 			misses.append(inv_basis * (dir * scan_range))
 
-	return {"hits": hits, "misses": misses}
+	return {"hits": hits, "misses": misses, "anomaly_hits": anomaly_hits}

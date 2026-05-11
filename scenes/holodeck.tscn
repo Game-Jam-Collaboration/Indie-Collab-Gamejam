@@ -81,10 +81,11 @@ button_mesh = NodePath("Mesh")
 glow_light = NodePath("../GlowLight")
 
 [node name="Mesh" type="MeshInstance3D" parent="ScanButton" unique_id=1328622947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29833114, -0.04204023, -0.36582398)
 mesh = SubResource("Mesh_button")
 
 [node name="Collision" type="CollisionShape3D" parent="ScanButton" unique_id=1562264287]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.29952216, -0.04204023, -0.3616333)
 shape = SubResource("Shape_button")
 
 [node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931 node_paths=PackedStringArray("ship_icon")]
@@ -95,7 +96,7 @@ hologram_scale = 0.033
 ship_icon = NodePath("ShipIcon")
 
 [node name="ShipIcon" type="MeshInstance3D" parent="LidarRenderer" unique_id=1657139447]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+transform = Transform3D(-1, -8.742278e-08, 3.821371e-15, 0, -4.371139e-08, -1, 8.742278e-08, -1, 4.371139e-08, 0, 0, 0)
 material_override = SubResource("Mat_ship_icon")
 mesh = SubResource("Mesh_ship_icon")
 
