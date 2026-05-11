@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://qrnwp3ols8lw" path="res://scripts/ship_compass.gd" id="4_tlr80"]
 [ext_resource type="Script" uid="uid://cmukk110a2qof" path="res://scripts/ship_navigation.gd" id="5_shipnav"]
 [ext_resource type="PackedScene" uid="uid://bmq327un7la8u" path="res://scenes/holodeck.tscn" id="7_holodeck"]
-[ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scenes/oxygen_handle.gd" id="10_bseor"]
+[ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
 [ext_resource type="PackedScene" uid="uid://fobsv1w8dpmk" path="res://assets/blend_files/heater.blend" id="10_tlr80"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 
