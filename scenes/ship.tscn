@@ -707,7 +707,7 @@ script = ExtResource("5_shipnav")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35614997, -0.0643301, 5.0614514)
 
 [node name="Oxygen" type="Node3D" parent="." index="11" unique_id=1492467593]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.93184835, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4994856, 0.908187, -1.552626)
 
 [node name="Canister" type="MeshInstance3D" parent="Oxygen" index="0" unique_id=2069850239]
 mesh = SubResource("ArrayMesh_03y04")
@@ -721,10 +721,16 @@ script = ExtResource("10_bseor")
 [node name="Lever" type="MeshInstance3D" parent="Oxygen/StaticBody3D" index="0" unique_id=1701068746]
 unique_name_in_owner = true
 mesh = SubResource("ArrayMesh_vbj2c")
-"blend_shapes/Key 1" = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/StaticBody3D" index="1" unique_id=148553966]
 shape = SubResource("ConcavePolygonShape3D_dschd")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Oxygen" index="3" unique_id=1916200335]
+light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
+
 [node name="heater" parent="." index="12" unique_id=2122151706 instance=ExtResource("10_tlr80")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9065874, 2.3841858e-07, -0.7506721)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="heater" index="1" unique_id=1103265019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4392462, 0)
+light_color = Color(0.7963072, 0.5799591, 1.92523e-06, 1)
