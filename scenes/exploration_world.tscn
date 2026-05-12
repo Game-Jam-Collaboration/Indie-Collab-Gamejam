@@ -3,18 +3,6 @@
 [ext_resource type="Script" uid="uid://cdsje4fnckphp" path="res://scripts/scan_probe.gd" id="1_probe"]
 [ext_resource type="Script" uid="uid://bxwjq8sm0wpvy" path="res://scripts/anomaly.gd" id="2_anomaly"]
 
-[sub_resource type="StandardMaterial3D" id="Mat_anomaly_ring"]
-albedo_color = Color(0.6, 0.15, 0.95, 1)
-emission_enabled = true
-emission = Color(0.65, 0.2, 1, 1)
-emission_energy_multiplier = 4.0
-
-[sub_resource type="TorusMesh" id="Mesh_anomaly_ring"]
-material = SubResource("Mat_anomaly_ring")
-inner_radius = 2.4
-outer_radius = 3.6
-ring_segments = 12
-
 [sub_resource type="StandardMaterial3D" id="Mat_anomaly_spike"]
 albedo_color = Color(0.25, 0.95, 1, 1)
 emission_enabled = true
@@ -23,19 +11,12 @@ emission_energy_multiplier = 3.0
 
 [sub_resource type="CapsuleMesh" id="Mesh_anomaly_spike"]
 material = SubResource("Mat_anomaly_spike")
-radius = 0.25
-height = 9.0
-
-[sub_resource type="StandardMaterial3D" id="Mat_anomaly_core"]
-albedo_color = Color(1, 0.95, 0.8, 1)
-emission_enabled = true
-emission = Color(1, 0.95, 0.8, 1)
-emission_energy_multiplier = 6.0
+radius = 1.0
+height = 15.0
 
 [sub_resource type="SphereMesh" id="Mesh_anomaly_core"]
-material = SubResource("Mat_anomaly_core")
-radius = 0.9
-height = 1.8
+radius = 4.0
+height = 8.0
 
 [sub_resource type="SphereShape3D" id="Shape_anomaly"]
 radius = 4.0
@@ -61,9 +42,6 @@ script = ExtResource("1_probe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -36.4)
 script = ExtResource("2_anomaly")
 
-[node name="Ring" type="MeshInstance3D" parent="Anomaly" unique_id=1498944464]
-mesh = SubResource("Mesh_anomaly_ring")
-
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly" unique_id=343972280]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("Mesh_anomaly_spike")
@@ -82,9 +60,6 @@ shape = SubResource("Shape_anomaly")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1, 0, -22.4)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-02"
-
-[node name="Ring" type="MeshInstance3D" parent="Anomaly2" unique_id=381941721]
-mesh = SubResource("Mesh_anomaly_ring")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly2" unique_id=992341845]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
@@ -105,9 +80,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.625954, 0, 34.38687)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-03"
 
-[node name="Ring" type="MeshInstance3D" parent="Anomaly3" unique_id=1180314867]
-mesh = SubResource("Mesh_anomaly_ring")
-
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly3" unique_id=1100775596]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("Mesh_anomaly_spike")
@@ -127,9 +99,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.391252, 0, 52.624428)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-04"
 
-[node name="Ring" type="MeshInstance3D" parent="Anomaly4" unique_id=44006562]
-mesh = SubResource("Mesh_anomaly_ring")
-
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly4" unique_id=1673190089]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("Mesh_anomaly_spike")
@@ -145,12 +114,9 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly5" type="StaticBody3D" parent="." unique_id=801647816]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.526937, 0, -14.428463)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.213305, 0, -14.428463)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-05"
-
-[node name="Ring" type="MeshInstance3D" parent="Anomaly5" unique_id=1362267501]
-mesh = SubResource("Mesh_anomaly_ring")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly5" unique_id=1712080893]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
@@ -171,9 +137,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.421167, 0, 29.910393)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-06"
 
-[node name="Ring" type="MeshInstance3D" parent="Anomaly6" unique_id=408273598]
-mesh = SubResource("Mesh_anomaly_ring")
-
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly6" unique_id=721470150]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("Mesh_anomaly_spike")
@@ -192,9 +155,6 @@ shape = SubResource("Shape_anomaly")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.850811, 0, 23.954609)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-07"
-
-[node name="Ring" type="MeshInstance3D" parent="Anomaly7" unique_id=578708677]
-mesh = SubResource("Mesh_anomaly_ring")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly7" unique_id=2137582162]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
@@ -219,6 +179,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.833612, 0, 14.996374)
 mesh = SubResource("Mesh_rock")
 
 [node name="Collision" type="CollisionShape3D" parent="Rocks/Rock1" unique_id=1256559864]
+shape = SubResource("Shape_rock")
+
+[node name="Rock8" type="StaticBody3D" parent="Rocks" unique_id=1183680701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.95333, 0, 1.1402855)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock8" unique_id=1611861914]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock8" unique_id=968891790]
+shape = SubResource("Shape_rock")
+
+[node name="Rock9" type="StaticBody3D" parent="Rocks" unique_id=1534934723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.478935, 0, -32.231064)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock9" unique_id=811583440]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock9" unique_id=145094920]
+shape = SubResource("Shape_rock")
+
+[node name="Rock10" type="StaticBody3D" parent="Rocks" unique_id=859264832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.430752, 0, -27.431252)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock10" unique_id=780854619]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock10" unique_id=28355039]
+shape = SubResource("Shape_rock")
+
+[node name="Rock11" type="StaticBody3D" parent="Rocks" unique_id=2054456161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.976982, 0, 21.361687)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock11" unique_id=579746384]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock11" unique_id=1265623795]
+shape = SubResource("Shape_rock")
+
+[node name="Rock12" type="StaticBody3D" parent="Rocks" unique_id=646823738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.95916, 0, 47.8216)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock12" unique_id=1695826615]
+mesh = SubResource("Mesh_rock")
+
+[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock12" unique_id=873488756]
 shape = SubResource("Shape_rock")
 
 [node name="Rock2" type="StaticBody3D" parent="Rocks" unique_id=86636494]

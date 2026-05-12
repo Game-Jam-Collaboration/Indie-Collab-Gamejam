@@ -43,6 +43,7 @@ func _interact() -> void:
 		return
 	_current_anomaly.recorded = true
 	print("[ANOMALY] %s scanned and recorded" % _current_anomaly.anomaly_id)
+	_current_anomaly.queue_free()
 
 
 func _update_target() -> void:
