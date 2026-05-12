@@ -5,12 +5,14 @@ const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 
 @export var probe: ScanProbe = null
 @export var point_size: float = 0.003
-@export var point_color: Color = Color(0.08, 0.95, 0.18)
-@export var anomaly_color: Color = Color(1.0, 0.18, 0.15)
+@export var point_color: Color = Color(0.62, 0.222, 0.218, 1.0)
+@export var asteroid_color: Color = Color(0.47, 0.433, 0.438, 1.0)
+@export var ship_color: Color = Color(0.157, 0.541, 0.192, 1.0)
+@export var anomaly_color: Color = Color(0.454, 0.246, 0.509, 1.0)
 @export var emission_energy: float = 2.5
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
-@export var max_points: int = 40000
+@export var max_points: int = 80000
 ## Seconds before a point fully fades to nothing.
 @export var lifetime: float = 5.0
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
@@ -59,7 +61,7 @@ func _ready() -> void:
 
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		var icon_mat: ShaderMaterial = ship_icon.material_override
-		icon_mat.set_shader_parameter("base_color", Vector3(point_color.r, point_color.g, point_color.b))
+		icon_mat.set_shader_parameter("base_color", Vector3(ship_color.r, ship_color.g, ship_color.b))
 		icon_mat.set_shader_parameter("emission_energy", emission_energy * ship_icon_brightness)
 
 

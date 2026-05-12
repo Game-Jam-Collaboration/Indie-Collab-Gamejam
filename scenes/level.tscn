@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_2r41h"]
 [ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="4_klq6b"]
-[ext_resource type="PackedScene" path="res://scenes/exploration_world.tscn" id="5_explore"]
+[ext_resource type="PackedScene" uid="uid://d3q686f5jaak0" path="res://scenes/exploration_world.tscn" id="5_explore"]
 [ext_resource type="AudioStream" uid="uid://bxiq873p6ul6d" path="res://assets/sounds/SFX-MovingShip1_loop_cut.wav" id="5_ppgk2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
