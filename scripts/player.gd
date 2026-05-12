@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var jump_force:float = 10.0
 @export var vertical_speed:float = 10.0
 @export var camera_pivot:Node3D
+@export var ship_movement_audio: AudioStreamPlayer3D = null
 
 @onready var ship:Node3D = null
 
@@ -175,14 +176,16 @@ func _release_pickup() -> void:
 
 
 func _start_hold(target: Node) -> void:
+	if !ship_movement_audio.playing:
+		ship_movement_audio.play()
 	hold_target = target
 	if target.has_method("on_press_start"):
 		target.on_press_start()
 
 
 func _end_hold() -> void:
-	if hold_target == null:
-		return
+	if hold_target == null: return
+	ship_movement_audio.stop()
 	if is_instance_valid(hold_target) and hold_target.has_method("on_press_end"):
 		hold_target.on_press_end()
 	hold_target = null

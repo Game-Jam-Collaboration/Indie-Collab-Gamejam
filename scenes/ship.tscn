@@ -543,13 +543,14 @@ data = PackedVector3Array(0, 0.81579995, 0.2056, 0.0233, 0.76199996, 0.17729999,
 [node name="NavButtons" type="Node3D" parent="." index="0" unique_id=903122595]
 transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
 
-[node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "indicator", "ship_movement_audio")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 navigation = NodePath("../../ShipNavigation")
 indicator = NodePath("../IndicatorForward")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+ship_movement_audio = NodePath("")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/Forward" index="0" unique_id=1053655108]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -559,7 +560,7 @@ mesh = SubResource("ArrayMesh_tbq4g")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045888685, 0.23313332, 0.6126938)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="Backward" type="StaticBody3D" parent="NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="Backward" type="StaticBody3D" parent="NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "indicator", "ship_movement_audio")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 1
@@ -567,6 +568,7 @@ navigation = NodePath("../../ShipNavigation")
 indicator = NodePath("../IndicatorReverse")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+ship_movement_audio = NodePath("")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/Backward" index="0" unique_id=1485384229]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -576,7 +578,7 @@ mesh = SubResource("ArrayMesh_tlr80")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045886817, 0.222332, -0.6267204)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "indicator", "ship_movement_audio")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 2
@@ -584,6 +586,7 @@ navigation = NodePath("../../ShipNavigation")
 indicator = NodePath("../IndicatorLeft")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+ship_movement_audio = NodePath("")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateLeft" index="0" unique_id=1467204394]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -593,7 +596,7 @@ mesh = SubResource("ArrayMesh_fs4we")
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, -0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "indicator", "ship_movement_audio")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 3
@@ -601,6 +604,7 @@ navigation = NodePath("../../ShipNavigation")
 indicator = NodePath("../IndicatorRight")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+ship_movement_audio = NodePath("")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateRight" index="0" unique_id=440499520]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)

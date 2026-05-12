@@ -9,6 +9,7 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 @export var indicator: MeshInstance3D = null
 @export var indicator_off_material: Material = null
 @export var indicator_on_material: Material = null
+@export var ship_movement_audio: AudioStreamPlayer3D = null
 
 var _rest_position: Vector3
 var _is_pressed: bool = false
