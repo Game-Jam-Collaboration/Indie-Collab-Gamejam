@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bmnltr7am5ltm"
-path="res://.godot/imported/ButtonOnPedestal.blend-fb6b5593cca22e2e58c49a3c9a8054ee.scn"
+uid="uid://cmrfttwkgstm8"
+path="res://.godot/imported/heater_lever_hope_and_dreams.blend-000c2dad774ad27b5f4d939bdd6ecb0a.scn"
 
 [deps]
 
-source_file="res://assets/blend_files/ButtonOnPedestal.blend"
-dest_files=["res://.godot/imported/ButtonOnPedestal.blend-fb6b5593cca22e2e58c49a3c9a8054ee.scn"]
+source_file="res://assets/blend_files/heater_lever_hope_and_dreams.blend"
+dest_files=["res://.godot/imported/heater_lever_hope_and_dreams.blend-000c2dad774ad27b5f4d939bdd6ecb0a.scn"]
 
 [params]
 
