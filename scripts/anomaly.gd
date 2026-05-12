@@ -8,3 +8,7 @@ var recorded: bool = false
 
 func _ready() -> void:
 	add_to_group("anomaly")
+
+
+func record() -> void:
+	await get_tree().create_timer(5).timeout

@@ -12,7 +12,7 @@ var simulated_position: Vector3 = Vector3.ZERO:
 		if value == simulated_position:
 			return
 		simulated_position = value
-		print("Ship position: ", simulated_position)
+		#print("Ship position: ", simulated_position)
 		position_changed.emit(simulated_position)
 
 var heading: float = 0.0:

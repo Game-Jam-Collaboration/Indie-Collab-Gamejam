@@ -208,6 +208,12 @@ albedo_color = Color(0.2, 0.05, 0.05, 1)
 roughness = 0.7
 
 [sub_resource type="StandardMaterial3D" id="Mat_alert_on"]
+albedo_color = Color(0.06989927, 0.28997687, 2.4065375e-07, 1)
+emission_enabled = true
+emission = Color(0.115171395, 0.32033008, 0.007489722, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_03y04"]
 albedo_color = Color(1, 0.25, 0.2, 1)
 emission_enabled = true
 emission = Color(1, 0.3, 0.2, 1)
@@ -654,6 +660,7 @@ navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")
 indicator_off_material = SubResource("Mat_alert_off")
 indicator_on_material = SubResource("Mat_alert_on")
+indicator_recording_material = SubResource("StandardMaterial3D_03y04")
 cover = NodePath("Cover")
 
 [node name="Base" type="MeshInstance3D" parent="RecordButton" index="0" unique_id=172497734]
