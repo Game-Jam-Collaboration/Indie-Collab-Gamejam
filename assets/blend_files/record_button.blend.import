@@ -4,11 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://crj8yfp7u82dd"
-valid=false
+path="res://.godot/imported/record_button.blend-c7bc8cc85941bb43350aa8b4cabc1d27.scn"
 
 [deps]
 
 source_file="res://assets/blend_files/record_button.blend"
+dest_files=["res://.godot/imported/record_button.blend-c7bc8cc85941bb43350aa8b4cabc1d27.scn"]
 
 [params]
 

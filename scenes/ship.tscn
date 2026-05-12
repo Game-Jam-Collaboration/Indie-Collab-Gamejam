@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
 [ext_resource type="PackedScene" uid="uid://fobsv1w8dpmk" path="res://assets/blend_files/heater.blend" id="10_tlr80"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
+[ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -540,7 +541,7 @@ data = PackedVector3Array(0, 0.81579995, 0.2056, 0.0233, 0.76199996, 0.17729999,
 [node name="ship_v3" unique_id=1009143488 instance=ExtResource("1_5qfr6")]
 
 [node name="NavButtons" type="Node3D" parent="." index="0" unique_id=903122595]
-transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.1419806, 0.9454718, 4.9665155)
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
 
 [node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
@@ -575,11 +576,14 @@ mesh = SubResource("ArrayMesh_tlr80")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045886817, 0.222332, -0.6267204)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation")]
+[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 2
 navigation = NodePath("../../ShipNavigation")
+indicator = NodePath("../IndicatorLeft")
+indicator_off_material = SubResource("Mat_indicator_off")
+indicator_on_material = SubResource("Mat_indicator_on")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateLeft" index="0" unique_id=1467204394]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -589,11 +593,14 @@ mesh = SubResource("ArrayMesh_fs4we")
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, -0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation")]
+[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 3
 navigation = NodePath("../../ShipNavigation")
+indicator = NodePath("../IndicatorRight")
+indicator_off_material = SubResource("Mat_indicator_off")
+indicator_on_material = SubResource("Mat_indicator_on")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateRight" index="0" unique_id=440499520]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -630,8 +637,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -0.45, 0)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
+[node name="IndicatorLeft" type="MeshInstance3D" parent="NavButtons" index="7" unique_id=2070938011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, 1.1915972)
+material_override = SubResource("Mat_indicator_off")
+mesh = SubResource("SphereMesh_indicator")
+
+[node name="IndicatorRight" type="MeshInstance3D" parent="NavButtons" index="8" unique_id=586624335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, -1.2007501)
+material_override = SubResource("Mat_indicator_off")
+mesh = SubResource("SphereMesh_indicator")
+
 [node name="RecordButton" type="Node3D" parent="." index="1" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover")]
-transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.34897327, 0.9454718, 4.9665155)
+transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.38994783, 0.91260415, 4.8517504)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")
@@ -650,7 +667,7 @@ transform = Transform3D(0.98836446, 0, 0, 0, 0.98836446, 0, 0, 0, 0.98836446, -2
 mesh = SubResource("ArrayMesh_bseor")
 
 [node name="AlertLight" type="MeshInstance3D" parent="RecordButton" index="3" unique_id=1010101003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8520737, 0.6000004, 0.1407485)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.496, -0.446, 0)
 material_override = SubResource("Mat_alert_off")
 mesh = SubResource("SphereMesh_alert")
 
@@ -661,15 +678,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 shape = SubResource("BoxShape_record_interactor")
 
 [node name="FusePanelLight" type="MeshInstance3D" parent="." index="3" unique_id=1399412660]
-transform = Transform3D(1.23181225e-08, 0.28180572, -0.9594716, 1, -4.3711385e-08, 0, -4.193984e-08, -0.9594716, -0.28180572, 4.0216694, 2.2068586, 0.0008678697)
+transform = Transform3D(1.2175313e-08, 0.27853864, -0.9604252, 1, -4.3711385e-08, 1.7266417e-15, -4.198152e-08, -0.9604252, -0.27853864, 4.1481853, 2.0860069, 0.007068336)
 mesh = SubResource("ArrayMesh_5qfr6")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="FusePanelLight" index="0" unique_id=1768585145]
+transform = Transform3D(1, -2.4868996e-14, 8.881784e-16, -7.1054274e-15, 0.9999998, -2.9802322e-08, 8.881784e-16, 2.9802322e-08, 0.9999998, 0, -0.03210318, 0.11069465)
 light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 
 [node name="PowerPanel" parent="." index="4" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse") instance=ExtResource("2_q2ovv")]
 unique_name_in_owner = true
-transform = Transform3D(-0.2818057, 0, -0.95947146, 0, 1, 0, 0.95947146, 0, -0.2818057, 4.081554, 1.1068584, 0)
+transform = Transform3D(-0.2890486, 0, -0.95731455, 0, 1, 0, 0.95731455, 0, -0.2890486, 4.0945597, 1.1068584, -0.011977673)
 environment_light = NodePath("../FusePanelLight/OmniLight3D")
 emissive_object = NodePath("../FusePanelLight")
 emissive_material_idx = 1
@@ -721,6 +739,7 @@ script = ExtResource("10_bseor")
 [node name="Lever" type="MeshInstance3D" parent="Oxygen/StaticBody3D" index="0" unique_id=1701068746]
 unique_name_in_owner = true
 mesh = SubResource("ArrayMesh_vbj2c")
+"blend_shapes/Key 1" = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/StaticBody3D" index="1" unique_id=148553966]
 shape = SubResource("ConcavePolygonShape3D_dschd")
@@ -728,9 +747,12 @@ shape = SubResource("ConcavePolygonShape3D_dschd")
 [node name="OmniLight3D" type="OmniLight3D" parent="Oxygen" index="3" unique_id=1916200335]
 light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
 
-[node name="heater" parent="." index="12" unique_id=2122151706 instance=ExtResource("10_tlr80")]
+[node name="heater" parent="." index="12" unique_id=976087777 instance=ExtResource("10_tlr80")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9065874, 2.3841858e-07, -0.7506721)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="heater" index="1" unique_id=1103265019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4392462, 0)
 light_color = Color(0.7963072, 0.5799591, 1.92523e-06, 1)
+
+[node name="heater_lever" parent="." index="13" unique_id=1986176028 instance=ExtResource("12_03y04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8014779, 1.1949682, -2.0645995)
