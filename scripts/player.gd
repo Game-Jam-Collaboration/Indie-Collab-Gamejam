@@ -32,6 +32,8 @@ var focused:bool:
 
 
 func _ready():
+	yaw = rotation.y
+	pitch = camera_pivot.rotation.x
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	ship = get_tree().root.get_node_or_null("Level/%Ship")
 	if ship == null:
@@ -159,10 +161,12 @@ func _take_into_hand(item: CollisionObject3D, drop_parent: Node) -> void:
 	item.reparent(%Holder)
 	item.position = Vector3.ZERO
 	item.rotation = Vector3.ZERO
+	add_collision_exception_with(item)
 
 
 func _release_pickup() -> void:
 	%Selector.remove_exception(in_hand)
+	remove_collision_exception_with(in_hand)
 	in_hand.reparent(previous_pickup_parent)
 	in_hand.freeze = false
 	in_hand = null
