@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="3_oxjoy"]
 [ext_resource type="Script" uid="uid://dphffyt0myksf" path="res://scripts/_interact_example.gd" id="3_wp3es"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="4_vi6gq"]
-[ext_resource type="ArrayMesh" uid="uid://b2wbf6nn754uv" path="res://assets/meshes/splotch.tres" id="7_6mva0"]
 [ext_resource type="PackedScene" uid="uid://cf470ghmpj6vh" path="res://scenes/multi_slot_assembly.tscn" id="8_xhcdp"]
 [ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="9_xhcdp"]
 
@@ -64,11 +63,6 @@ size = Vector3(0.2, 0.2, 0.2)
 size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8el2m"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_6mva0"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.1
 
 [sub_resource type="VoxelGIData" id="VoxelGIData_nb3du"]
 _data = {
@@ -224,22 +218,6 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 text = "E - Turn on Player Debug
 T - Third Person (Dev Debug Only)"
-
-[node name="CleaningInteraction" type="Node3D" parent="." unique_id=1511609359]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8000002, 0.5516709, -14.400001)
-
-[node name="Splotch" type="MeshInstance3D" parent="CleaningInteraction" unique_id=1003139145]
-mesh = ExtResource("7_6mva0")
-
-[node name="Brush" type="MeshInstance3D" parent="CleaningInteraction/Splotch" unique_id=1580273160]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.439003, -0.0016709566, -0.21660629)
-mesh = SubResource("CylinderMesh_6mva0")
-
-[node name="Label3D" type="Label3D" parent="CleaningInteraction" unique_id=623934441]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5765061, 0)
-text = "WIP"
-autowrap_mode = 2
-autowrap_trim_flags = 64
 
 [node name="VoxelGI" type="VoxelGI" parent="." unique_id=464705833]
 transform = Transform3D(0.087155804, 0, 0.9961947, 0, 1, 0, -0.9961947, 0, 0.087155804, -20.823923, 4.639621, 40.651707)

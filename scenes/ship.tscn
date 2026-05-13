@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bm3yh6ec4d54w"]
 
-[ext_resource type="PackedScene" uid="uid://cmphbb56lmu11" path="res://assets/blend_files/ship_v3.blend" id="1_5qfr6"]
+[ext_resource type="PackedScene" uid="uid://cmphbb56lmu11" path="res://assets/blend_files/ship.blend" id="1_5qfr6"]
 [ext_resource type="Material" uid="uid://nvgaox8j2t7b" path="res://assets/materials/offline_emissive.tres" id="2_8qiel"]
 [ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="2_q2ovv"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="3_3m36u"]
@@ -524,7 +524,7 @@ metadata/extras = {
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dschd"]
 data = PackedVector3Array(0, 0.81579995, 0.2056, 0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, 0.0233, 0.76199996, 0.17729999, 0, 0.81579995, 0.2056, 0, 0.84849995, 0.28239998, 0.0233, 0.76199996, 0.17729999, 0, 0.84849995, 0.28239998, 0.017099999, 0.84849995, 0.2807, 0.020499999, 0.85609996, 0.1489, 0, 0.9191, 0.242, 0, 0.8436, 0.1542, 0.020499999, 0.85609996, 0.1489, 0.015, 0.91749996, 0.2599, 0, 0.9191, 0.242, 0.015, 0.91749996, 0.2599, 0, 0.9514, 0.34809998, 0, 0.9191, 0.242, 0.015, 0.91749996, 0.2599, 0.015, 0.9465, 0.355, 0, 0.9514, 0.34809998, 0.017099999, 0.84849995, 0.2807, 0.015, 0.9465, 0.355, 0.015, 0.91749996, 0.2599, 0.017099999, 0.84849995, 0.2807, 0.017099999, 0.8775, 0.37579998, 0.015, 0.9465, 0.355, 0, 0.8436, 0.1542, -0.015, 0.91749996, 0.2599, -0.020499999, 0.85609996, 0.1489, 0, 0.8436, 0.1542, 0, 0.9191, 0.242, -0.015, 0.91749996, 0.2599, -0.017099999, 0.84849995, 0.2807, 0, 0.77459997, 0.1752, -0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, -0.017099999, 0.84849995, 0.2807, 0, 0.84849995, 0.28239998, 0, 0.77459997, 0.1752, 0, 0.84849995, 0.28239998, 0, 0.81579995, 0.2056, 0.015, 0.9465, 0.355, 0, 0.912, 0.5513, 0, 0.9514, 0.34809998, 0.015, 0.9465, 0.355, 0.015, 0.9112, 0.5239, 0, 0.912, 0.5513, 0, 0.8775, 0.3775, 0.017099999, 0.8422, 0.54469997, 0.017099999, 0.8775, 0.37579998, 0, 0.8775, 0.3775, 0, 0.835, 0.5747, 0.017099999, 0.8422, 0.54469997, -0.015, 0.91749996, 0.2599, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.84849995, 0.2807, -0.015, 0.91749996, 0.2599, -0.015, 0.9465, 0.355, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.84849995, 0.2807, 0, 0.8775, 0.3775, 0, 0.84849995, 0.28239998, -0.017099999, 0.84849995, 0.2807, -0.017099999, 0.8775, 0.37579998, 0, 0.8775, 0.3775, 0, 0.84849995, 0.28239998, 0.017099999, 0.8775, 0.37579998, 0.017099999, 0.84849995, 0.2807, 0, 0.84849995, 0.28239998, 0, 0.8775, 0.3775, 0.017099999, 0.8775, 0.37579998, 0, 0.9191, 0.242, -0.015, 0.9465, 0.355, -0.015, 0.91749996, 0.2599, 0, 0.9191, 0.242, 0, 0.9514, 0.34809998, -0.015, 0.9465, 0.355, 0.017099999, 0.8422, 0.54469997, 0, 0.912, 0.5513, 0.015, 0.9112, 0.5239, 0.017099999, 0.8422, 0.54469997, 0, 0.835, 0.5747, 0, 0.912, 0.5513, 0, 0.835, 0.5747, -0.015, 0.9112, 0.5239, 0, 0.912, 0.5513, 0, 0.835, 0.5747, -0.017099999, 0.8422, 0.54469997, -0.015, 0.9112, 0.5239, 0.017099999, 0.8775, 0.37579998, 0.015, 0.9112, 0.5239, 0.015, 0.9465, 0.355, 0.017099999, 0.8775, 0.37579998, 0.017099999, 0.8422, 0.54469997, 0.015, 0.9112, 0.5239, -0.015, 0.9465, 0.355, -0.017099999, 0.8422, 0.54469997, -0.017099999, 0.8775, 0.37579998, -0.015, 0.9465, 0.355, -0.015, 0.9112, 0.5239, -0.017099999, 0.8422, 0.54469997, -0.017099999, 0.8775, 0.37579998, 0, 0.835, 0.5747, 0, 0.8775, 0.3775, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.8422, 0.54469997, 0, 0.835, 0.5747, 0, 0.9514, 0.34809998, -0.015, 0.9112, 0.5239, -0.015, 0.9465, 0.355, 0, 0.9514, 0.34809998, 0, 0.912, 0.5513, -0.015, 0.9112, 0.5239, 0, 0.8436, 0.1542, 0.0233, 0.76199996, 0.17729999, 0.020499999, 0.85609996, 0.1489, 0, 0.8436, 0.1542, 0, 0.77459997, 0.1752, 0.0233, 0.76199996, 0.17729999, -0.020499999, 0.85609996, 0.1489, 0, 0.77459997, 0.1752, 0, 0.8436, 0.1542, -0.020499999, 0.85609996, 0.1489, -0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, -0.017099999, 0.84849995, 0.2807, -0.020499999, 0.85609996, 0.1489, -0.015, 0.91749996, 0.2599, -0.017099999, 0.84849995, 0.2807, -0.0233, 0.76199996, 0.17729999, -0.020499999, 0.85609996, 0.1489, 0.017099999, 0.84849995, 0.2807, 0.020499999, 0.85609996, 0.1489, 0.0233, 0.76199996, 0.17729999, 0.017099999, 0.84849995, 0.2807, 0.015, 0.91749996, 0.2599, 0.020499999, 0.85609996, 0.1489)
 
-[node name="ship_v3" unique_id=1009143488 instance=ExtResource("1_5qfr6")]
+[node name="ship_v3" unique_id=1070939438 instance=ExtResource("1_5qfr6")]
 
 [node name="NavButtons" type="Node3D" parent="." index="0" unique_id=903122595]
 transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
@@ -596,22 +596,22 @@ mesh = SubResource("ArrayMesh_dschd")
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, 0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="IndicatorForward" type="MeshInstance3D" parent="NavButtons" index="5" unique_id=1010101001]
+[node name="IndicatorForward" type="MeshInstance3D" parent="NavButtons" index="4" unique_id=1010101001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, -0.45, 0)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorReverse" type="MeshInstance3D" parent="NavButtons" index="6" unique_id=1010101002]
+[node name="IndicatorReverse" type="MeshInstance3D" parent="NavButtons" index="5" unique_id=1010101002]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -0.45, 0)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorLeft" type="MeshInstance3D" parent="NavButtons" index="7" unique_id=2070938011]
+[node name="IndicatorLeft" type="MeshInstance3D" parent="NavButtons" index="6" unique_id=2070938011]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, 1.1915972)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorRight" type="MeshInstance3D" parent="NavButtons" index="8" unique_id=586624335]
+[node name="IndicatorRight" type="MeshInstance3D" parent="NavButtons" index="7" unique_id=586624335]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, -1.2007501)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
@@ -709,7 +709,6 @@ script = ExtResource("10_bseor")
 [node name="Lever" type="MeshInstance3D" parent="Oxygen/StaticBody3D" index="0" unique_id=1701068746]
 unique_name_in_owner = true
 mesh = SubResource("ArrayMesh_vbj2c")
-"blend_shapes/Key 1" = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/StaticBody3D" index="1" unique_id=148553966]
 shape = SubResource("ConcavePolygonShape3D_dschd")
