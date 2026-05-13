@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var ship:Node3D = null
 
 var first_person := true
+var frozen := false
 
 var in_hand:CollisionObject3D = null
 var previous_pickup_parent:Node
@@ -48,17 +49,7 @@ func _unhandled_input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if event.keycode == KEY_E:
-			if !get_tree().debug_collisions_hint:
-				get_tree().debug_collisions_hint = true
-			else:
-				get_tree().debug_collisions_hint = false
-			get_tree().reload_current_scene()
-		elif event.keycode == KEY_T:
-			%ThirdPersonCamera.make_current()
-			first_person = false
-		elif event.keycode == KEY_Q:
-			ship.get_node("%PowerPanel").disassemble()
+	if frozen: return
 	if focused and first_person:
 		if event is InputEventMouseMotion:
 			yaw -= event.relative.x * mouse_sensitivity
@@ -92,6 +83,7 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
+	if frozen: return
 	if hold_target:
 		if not is_instance_valid(hold_target) or %Selector.get_collider() != hold_target:
 			_end_hold()

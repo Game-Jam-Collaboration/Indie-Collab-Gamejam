@@ -12,6 +12,8 @@ extends Node3D
 @export var cover_anim_speed: float = 5.0
 @export var flash_period: float = .8
 
+@onready var player:Player = get_parent().player
+
 var _current_anomaly: Anomaly = null
 var _cover_rest_basis: Basis = Basis.IDENTITY
 var _cover_open: float = 0.0
@@ -49,9 +51,12 @@ func _interact() -> void:
 	_current_anomaly = null
 	anomaly.recorded = true
 	await get_tree().process_frame
-	print("[ANOMALY] %s scanned and recorded" % anomaly.anomaly_id)
 	recording = true
-	await anomaly.record()
+	%AnomalyRecording.stream = anomaly.track
+	%AnomalyRecording.play()
+	player.frozen = true
+	await %AnomalyRecording.finished
+	player.frozen = false
 	recording = false
 
 
