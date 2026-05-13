@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://c550a1nkjtliu" path="res://scripts/ship_dash_button.gd" id="3_bseor"]
 [ext_resource type="Script" uid="uid://cmukk110a2qof" path="res://scripts/ship_navigation.gd" id="5_shipnav"]
 [ext_resource type="PackedScene" uid="uid://bmq327un7la8u" path="res://scenes/holodeck.tscn" id="7_holodeck"]
-[ext_resource type="Script" path="res://scenes/oxygen_handle.gd" id="10_bseor"]
-[ext_resource type="PackedScene" uid="uid://fobsv1w8dpmk" path="res://assets/blend_files/heater.blend" id="10_tlr80"]
+[ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
+[ext_resource type="PackedScene" uid="uid://cbfg3h2e36xpv" path="res://scenes/heater.tscn" id="11_48mkp"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 [ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
 [ext_resource type="PackedScene" path="res://scenes/anomaly_map.tscn" id="13_anomap"]
@@ -717,15 +717,16 @@ shape = SubResource("ConcavePolygonShape3D_dschd")
 [node name="OmniLight3D" type="OmniLight3D" parent="Oxygen" index="3" unique_id=1916200335]
 light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
 
-[node name="heater" parent="." index="12" unique_id=976087777 instance=ExtResource("10_tlr80")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9065874, 2.3841858e-07, -0.7506721)
+[node name="Heater" parent="." index="12" unique_id=976087777 instance=ExtResource("11_48mkp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.831487, -0.2799909, -0.28434968)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="heater" index="1" unique_id=1103265019]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4392462, 0)
+[node name="HeaterLever" parent="Heater" index="4" unique_id=1986176028 node_paths=PackedStringArray("heater_light") instance=ExtResource("12_03y04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030009, 1.4749591, -1.7802498)
+heater_light = NodePath("../OmniLight3D")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Heater" index="5" unique_id=1103265019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07510042, 1.7192373, -0.46632242)
 light_color = Color(0.7963072, 0.5799591, 1.92523e-06, 1)
 
-[node name="heater_lever" parent="." index="13" unique_id=1986176028 instance=ExtResource("12_03y04")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8014779, 1.1949682, -2.0645995)
-
-[node name="AnomalyMap" parent="." index="14" unique_id=1010101010 instance=ExtResource("13_anomap")]
+[node name="AnomalyMap" parent="." index="13" unique_id=1010101010 instance=ExtResource("13_anomap")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8684014, 0.95, 5.06)
