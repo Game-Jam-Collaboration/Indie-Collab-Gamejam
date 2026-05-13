@@ -815,7 +815,6 @@ light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.831487, -0.2799909, -0.28434968)
 environment_light = NodePath("HeaterLight/OmniLight3D")
 emissive_object = NodePath("HeaterLight")
-emissive_material_idx = null
 
 [node name="HeaterLever" parent="Heater" index="4" unique_id=1986176028 node_paths=PackedStringArray("heater_light", "fuse_panel") instance=ExtResource("12_03y04")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030009, 1.4749591, -1.7802498)
