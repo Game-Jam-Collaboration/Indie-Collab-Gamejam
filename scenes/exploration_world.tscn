@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://d3q686f5jaak0"]
+[gd_scene format=3 uid="uid://cjwba0yvou34q"]
 
 [ext_resource type="Script" uid="uid://cdsje4fnckphp" path="res://scripts/scan_probe.gd" id="1_probe"]
 [ext_resource type="Script" uid="uid://bxwjq8sm0wpvy" path="res://scripts/anomaly.gd" id="2_anomaly"]
@@ -20,18 +20,6 @@ height = 8.0
 
 [sub_resource type="SphereShape3D" id="Shape_anomaly"]
 radius = 4.0
-
-[sub_resource type="StandardMaterial3D" id="Mat_rock"]
-albedo_color = Color(0.4, 0.38, 0.36, 1)
-roughness = 0.95
-
-[sub_resource type="SphereMesh" id="Mesh_rock"]
-material = SubResource("Mat_rock")
-radius = 1.8
-height = 3.6
-
-[sub_resource type="SphereShape3D" id="Shape_rock"]
-radius = 1.8
 
 [node name="ExplorationWorld" type="Node3D" unique_id=2065737458]
 
@@ -170,112 +158,3 @@ mesh = SubResource("Mesh_anomaly_core")
 [node name="Collision" type="CollisionShape3D" parent="Anomaly7" unique_id=1296420790]
 shape = SubResource("Shape_anomaly")
 
-[node name="Rocks" type="Node3D" parent="." unique_id=527968388]
-
-[node name="Rock1" type="StaticBody3D" parent="Rocks" unique_id=1757941948]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.833612, 0, 14.996374)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock1" unique_id=1832144241]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock1" unique_id=1256559864]
-shape = SubResource("Shape_rock")
-
-[node name="Rock8" type="StaticBody3D" parent="Rocks" unique_id=1183680701]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.95333, 0, 1.1402855)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock8" unique_id=1611861914]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock8" unique_id=968891790]
-shape = SubResource("Shape_rock")
-
-[node name="Rock9" type="StaticBody3D" parent="Rocks" unique_id=1534934723]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.478935, 0, -32.231064)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock9" unique_id=811583440]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock9" unique_id=145094920]
-shape = SubResource("Shape_rock")
-
-[node name="Rock10" type="StaticBody3D" parent="Rocks" unique_id=859264832]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.430752, 0, -27.431252)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock10" unique_id=780854619]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock10" unique_id=28355039]
-shape = SubResource("Shape_rock")
-
-[node name="Rock11" type="StaticBody3D" parent="Rocks" unique_id=2054456161]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.976982, 0, 21.361687)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock11" unique_id=579746384]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock11" unique_id=1265623795]
-shape = SubResource("Shape_rock")
-
-[node name="Rock12" type="StaticBody3D" parent="Rocks" unique_id=646823738]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.95916, 0, 47.8216)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock12" unique_id=1695826615]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock12" unique_id=873488756]
-shape = SubResource("Shape_rock")
-
-[node name="Rock2" type="StaticBody3D" parent="Rocks" unique_id=86636494]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2, 14)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock2" unique_id=2140788859]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock2" unique_id=2009111670]
-shape = SubResource("Shape_rock")
-
-[node name="Rock3" type="StaticBody3D" parent="Rocks" unique_id=1525361464]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -3, -10)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock3" unique_id=1442745103]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock3" unique_id=800815766]
-shape = SubResource("Shape_rock")
-
-[node name="Rock4" type="StaticBody3D" parent="Rocks" unique_id=1726056431]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, -7.7359467)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock4" unique_id=1480116707]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock4" unique_id=1498219029]
-shape = SubResource("Shape_rock")
-
-[node name="Rock5" type="StaticBody3D" parent="Rocks" unique_id=635839555]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.703873, 0, -6)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock5" unique_id=595798190]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock5" unique_id=790534791]
-shape = SubResource("Shape_rock")
-
-[node name="Rock6" type="StaticBody3D" parent="Rocks" unique_id=1051134273]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 34.42414)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock6" unique_id=1127455187]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock6" unique_id=574957729]
-shape = SubResource("Shape_rock")
-
-[node name="Rock7" type="StaticBody3D" parent="Rocks" unique_id=1671351063]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, 4)
-
-[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock7" unique_id=1022670786]
-mesh = SubResource("Mesh_rock")
-
-[node name="Collision" type="CollisionShape3D" parent="Rocks/Rock7" unique_id=183036420]
-shape = SubResource("Shape_rock")

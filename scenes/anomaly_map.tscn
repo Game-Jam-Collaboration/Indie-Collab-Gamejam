@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/anomaly_map.gd" id="1_anomap"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomap_panel"]
+albedo_color = Color(0.05, 0.08, 0.06, 1)
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.05, 0.3, 0.15, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomap_unscanned"]
+albedo_color = Color(1, 0.18, 0.15, 1)
+emission_enabled = true
+emission = Color(1, 0.25, 0.2, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_anomap_scanned"]
+albedo_color = Color(0.2, 1, 0.3, 1)
+emission_enabled = true
+emission = Color(0.25, 1, 0.35, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="BoxMesh" id="Mesh_anomap_panel"]
+material = SubResource("Mat_anomap_panel")
+size = Vector3(0.27, 0.006, 0.27)
+
+[sub_resource type="SphereMesh" id="Mesh_anomap_dot"]
+radius = 0.008
+height = 0.016
+radial_segments = 12
+rings = 6
+
+[node name="AnomalyMap" type="Node3D"]
+script = ExtResource("1_anomap")
+dot_mesh = SubResource("Mesh_anomap_dot")
+dot_unscanned_material = SubResource("Mat_anomap_unscanned")
+dot_scanned_material = SubResource("Mat_anomap_scanned")
+
+[node name="Panel" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_anomap_panel")
