@@ -3,16 +3,25 @@ extends Node3D
 
 const HOLO_SHADER = preload("res://scripts/shaders/lidar_holo.gdshader")
 
+enum ViewMode { SHIP_LOCKED, WORLD_LOCKED, RADAR_PING }
+
+@export var view_mode: ViewMode = ViewMode.SHIP_LOCKED
 @export var probe: ScanProbe = null
+## Seconds the radar scan line takes to complete a full rotation.
+@export var radar_period: float = 4.0
+## Rays cast per frame along the radar's great-circle slice while in RADAR_PING.
+@export var radar_rays_per_frame: int = 56
+@export var radar_sweep: Node3D = null
+@export var cardinal_ring: Node3D = null
 @export var point_size: float = 0.003
-@export var point_color: Color = Color(0.62, 0.222, 0.218, 1.0)
+@export var point_color: Color = Color(0.08, 0.95, 0.18, 1.0)
 @export var asteroid_color: Color = Color(0.47, 0.433, 0.438, 1.0)
 @export var ship_color: Color = Color(0.157, 0.541, 0.192, 1.0)
-@export var anomaly_color: Color = Color(0.289, 0.513, 0.196, 1.0)
+@export var anomaly_color: Color = Color(1.0, 0.18, 0.15, 1.0)
 @export var emission_energy: float = 2.5
 ## Meters of scan space per meter of hologram radius. Smaller = more compressed.
 @export var hologram_scale: float = 0.04
-@export var max_points: int = 80000
+@export var max_points: int = 160000
 ## Seconds before a point fully fades to nothing.
 @export var lifetime: float = 5.0
 ## Auto-scan cadence in seconds. 0 disables auto-scan.
@@ -27,11 +36,24 @@ var _multi_mesh_instance: MultiMeshInstance3D
 var _shader_material: ShaderMaterial
 var _next_scan_time: float = 0.0
 var _write_head: int = 0
+var _anomaly_point_indices: Dictionary = {}
+var _recolored_anomalies: Dictionary = {}
+var _anchor: Node3D = null
+var _base_basis: Basis = Basis.IDENTITY
+var _icon_base_basis: Basis = Basis.IDENTITY
+var _radar_angle: float = 0.0
+var _previous_non_radar_mode: ViewMode = ViewMode.SHIP_LOCKED
 
 
 func _ready() -> void:
+	_base_basis = transform.basis
+	_anchor = get_node_or_null("Anchor") as Node3D
+	if _anchor == null:
+		_anchor = Node3D.new()
+		_anchor.name = "Anchor"
+		add_child(_anchor)
 	_multi_mesh_instance = MultiMeshInstance3D.new()
-	add_child(_multi_mesh_instance)
+	_anchor.add_child(_multi_mesh_instance)
 
 	var sphere := SphereMesh.new()
 	sphere.radius = point_size
@@ -59,26 +81,211 @@ func _ready() -> void:
 		_multi_mesh.set_instance_transform(i, t_zero)
 		_multi_mesh.set_instance_custom_data(i, DEAD_CUSTOM)
 
+	if ship_icon != null:
+		_icon_base_basis = ship_icon.transform.basis
+
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		var icon_mat: ShaderMaterial = ship_icon.material_override
 		icon_mat.set_shader_parameter("base_color", Vector3(ship_color.r, ship_color.g, ship_color.b))
 		icon_mat.set_shader_parameter("emission_energy", emission_energy * ship_icon_brightness)
 
+	_setup_radar_arc()
+	_setup_cardinal_arrows()
 
-func _process(_delta: float) -> void:
+
+func _process(delta: float) -> void:
 	var t := Time.get_ticks_msec() / 1000.0
+	if view_mode == ViewMode.RADAR_PING:
+		var sweep_rate: float = TAU / max(radar_period, 0.0001)
+		_radar_angle = fposmod(_radar_angle + sweep_rate * delta, TAU)
+	_update_view_transform()
+	if view_mode == ViewMode.RADAR_PING:
+		_tick_radar(delta)
 	if _shader_material:
 		_shader_material.set_shader_parameter("current_time", t)
 		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
 
-	if auto_scan_interval <= 0.0 or probe == null:
+	_recolor_recorded_anomalies()
+
+	if auto_scan_interval > 0.0 and probe != null:
+		var now := Time.get_ticks_msec() / 1000.0
+		if now >= _next_scan_time:
+			trigger_scan()
+			_next_scan_time = now + auto_scan_interval
+
+
+func _setup_radar_arc() -> void:
+	if radar_sweep == null:
 		return
-	var now := Time.get_ticks_msec() / 1000.0
-	if now >= _next_scan_time:
-		trigger_scan()
-		_next_scan_time = now + auto_scan_interval
+	var ring := radar_sweep.get_node_or_null("Ring") as MeshInstance3D
+	if ring == null:
+		return
+	ring.transform = Transform3D.IDENTITY
+	ring.mesh = _build_radar_arc_mesh()
+	ring.material_override = _build_radar_arc_material()
+
+
+func _build_radar_arc_mesh() -> ArrayMesh:
+	var mesh := ArrayMesh.new()
+	var segments := 48
+	var radius := 1.5
+	var vertices := PackedVector3Array()
+	for i in segments + 1:
+		var t_along: float = float(i) / float(segments)
+		var angle: float = -PI * 0.5 + t_along * PI
+		vertices.append(Vector3(0.0, sin(angle) * radius, cos(angle) * radius))
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINE_STRIP, arrays)
+	return mesh
+
+
+func _build_radar_arc_material() -> StandardMaterial3D:
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.35, 1.0, 0.55, 0.55)
+	mat.emission_enabled = true
+	mat.emission = Color(0.45, 1.0, 0.6, 1.0)
+	mat.emission_energy_multiplier = 1.0
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	return mat
+
+
+func _setup_cardinal_arrows() -> void:
+	if cardinal_ring == null:
+		return
+	var arrow_mesh := _build_cardinal_arrow_mesh()
+	var white_mat := _build_arrow_material(Color(1, 1, 1, 1))
+	var red_mat := _build_arrow_material(Color(1, 0.18, 0.18, 1))
+	for name in ["N", "E", "S", "W"]:
+		var node := cardinal_ring.get_node_or_null(name) as MeshInstance3D
+		if node == null:
+			continue
+		node.mesh = arrow_mesh
+		node.material_override = red_mat if name == "N" else white_mat
+
+
+func _build_cardinal_arrow_mesh() -> ArrayMesh:
+	var mesh := ArrayMesh.new()
+	var vertices := PackedVector3Array([
+		Vector3(0.0, 0.0, 0.016),
+		Vector3(-0.009, 0.0, -0.006),
+		Vector3(0.009, 0.0, -0.006),
+	])
+	var indices := PackedInt32Array([0, 1, 2])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
+
+
+func _build_arrow_material(color: Color) -> StandardMaterial3D:
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = color
+	mat.emission_enabled = true
+	mat.emission = color
+	mat.emission_energy_multiplier = 2.5
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	return mat
+
+
+func _update_view_transform() -> void:
+	if probe == null:
+		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
+	if probe == null or probe.navigation == null:
+		return
+	var heading: float = probe.navigation.heading
+	var sim_pos: Vector3 = probe.navigation.simulated_position
+	transform.basis = _base_basis
+	if view_mode == ViewMode.WORLD_LOCKED:
+		if _anchor != null:
+			_anchor.transform.basis = Basis.IDENTITY
+			_anchor.transform.origin = -sim_pos * hologram_scale
+		if ship_icon != null:
+			ship_icon.transform.basis = Basis(Vector3.UP, heading) * _icon_base_basis
+	else:
+		var rot := Basis(Vector3.UP, -heading)
+		if _anchor != null:
+			_anchor.transform.basis = rot
+			_anchor.transform.origin = rot * (-sim_pos * hologram_scale)
+		if ship_icon != null:
+			ship_icon.transform.basis = _icon_base_basis
+	if radar_sweep != null:
+		radar_sweep.visible = false
+	if cardinal_ring != null:
+		if view_mode == ViewMode.WORLD_LOCKED:
+			cardinal_ring.transform.basis = Basis.IDENTITY
+		else:
+			cardinal_ring.transform.basis = Basis(Vector3.UP, -heading)
+
+
+func _tick_radar(delta: float) -> void:
+	if probe == null:
+		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
+	if probe == null or probe.navigation == null:
+		return
+	var heading: float = probe.navigation.heading
+	var sweep_rate: float = TAU / max(radar_period, 0.0001)
+	var slice_width: float = sweep_rate * delta
+	var directions := PackedVector3Array()
+	var count: int = max(1, radar_rays_per_frame)
+	for i in count:
+		var t_along: float = (float(i) + 0.5) / float(count)
+		var elev: float = PI * t_along - PI * 0.5
+		var azimuth: float = _radar_angle + heading + (randf() - 0.5) * slice_width
+		var dir := Vector3(sin(azimuth) * cos(elev), sin(elev), cos(azimuth) * cos(elev))
+		directions.append(dir)
+	var result: Dictionary = probe.scan_directions(directions)
+	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
+	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
+	var anomaly_hits_by_node: Dictionary = result.get("anomaly_hits_by_node", {})
+	display_points(hits, 11.0)
+	display_points(misses, 10.0)
+	for anomaly_node in anomaly_hits_by_node.keys():
+		display_points(anomaly_hits_by_node[anomaly_node], 12.0, anomaly_node)
+
+
+func toggle_view_mode() -> void:
+	if view_mode == ViewMode.RADAR_PING:
+		view_mode = _previous_non_radar_mode
+	elif view_mode == ViewMode.SHIP_LOCKED:
+		view_mode = ViewMode.WORLD_LOCKED
+	else:
+		view_mode = ViewMode.SHIP_LOCKED
+	_previous_non_radar_mode = view_mode
+
+
+func toggle_radar_mode() -> void:
+	if view_mode == ViewMode.RADAR_PING:
+		view_mode = _previous_non_radar_mode
+	else:
+		_previous_non_radar_mode = view_mode
+		view_mode = ViewMode.RADAR_PING
+
+
+func _recolor_recorded_anomalies() -> void:
+	for owner in _anomaly_point_indices.keys():
+		if _recolored_anomalies.has(owner):
+			continue
+		if not is_instance_valid(owner):
+			continue
+		if not owner.get("recorded"):
+			continue
+		var entries: Array = _anomaly_point_indices[owner]
+		for entry in entries:
+			var idx: int = entry["idx"]
+			var spawn_time: float = entry["spawn_time"]
+			var data: Color = _multi_mesh.get_instance_custom_data(idx)
+			if absf(data.r - spawn_time) < 0.001:
+				var new_kind: float = 11.0 if data.a >= 9.5 else 1.0
+				_multi_mesh.set_instance_custom_data(idx, Color(data.r, data.g, data.b, new_kind))
+		_recolored_anomalies[owner] = true
 
 
 func trigger_scan() -> void:
@@ -90,18 +297,25 @@ func trigger_scan() -> void:
 	var result: Dictionary = probe.scan()
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
 	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
-	var anomaly_hits: PackedVector3Array = result.get("anomaly_hits", PackedVector3Array())
-	display_points(hits, 1.0)
+	var anomaly_hits_by_node: Dictionary = result.get("anomaly_hits_by_node", {})
 	display_points(misses, 0.0)
-	display_points(anomaly_hits, 2.0)
+	for anomaly_node in anomaly_hits_by_node.keys():
+		display_points(anomaly_hits_by_node[anomaly_node], 2.0, anomaly_node)
+	display_points(hits, 1.0)
 
 
-func display_points(points: PackedVector3Array, hit_flag: float = 1.0) -> void:
+func display_points(points: PackedVector3Array, hit_flag: float = 1.0, owner: Node = null) -> void:
 	var incoming: int = points.size()
 	if incoming == 0:
 		return
 
 	var spawn_time := Time.get_ticks_msec() / 1000.0
+	var owner_entries: Array = []
+	if owner != null:
+		if not _anomaly_point_indices.has(owner):
+			_anomaly_point_indices[owner] = []
+		owner_entries = _anomaly_point_indices[owner]
+
 	for i in incoming:
 		var idx: int = _write_head
 		_write_head = (_write_head + 1) % max_points
@@ -111,6 +325,8 @@ func display_points(points: PackedVector3Array, hit_flag: float = 1.0) -> void:
 		t.origin = local_pos
 		_multi_mesh.set_instance_transform(idx, t)
 		_multi_mesh.set_instance_custom_data(idx, Color(spawn_time, randf(), local_pos.y, hit_flag))
+		if owner != null:
+			owner_entries.append({"idx": idx, "spawn_time": spawn_time})
 
 
 func clear() -> void:

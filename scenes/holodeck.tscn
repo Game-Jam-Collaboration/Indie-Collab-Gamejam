@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dgyuvv5vp071k" path="res://scripts/scan_button.gd" id="1_scan"]
 [ext_resource type="Script" uid="uid://douogsdtjl3jh" path="res://scripts/lidar_renderer.gd" id="2_lidar"]
 [ext_resource type="Shader" uid="uid://dx6oagqp4a4h" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
+[ext_resource type="Script" path="res://scripts/lidar_mode_button.gd" id="4_modebtn"]
+[ext_resource type="Script" path="res://scripts/lidar_radar_button.gd" id="5_radarbtn"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_pedestal"]
 albedo_color = Color(0.16, 0.18, 0.16, 1)
@@ -49,6 +51,26 @@ shader_parameter/flicker_speed = 14.0
 shader_parameter/glitch_chance = 0.04
 shader_parameter/glitch_rate = 8.0
 
+[sub_resource type="BoxMesh" id="Mesh_mode_button"]
+size = Vector3(0.1, 0.04, 0.1)
+
+[sub_resource type="BoxShape3D" id="Shape_mode_button"]
+size = Vector3(0.1, 0.04, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_radar_sweep"]
+albedo_color = Color(0.2, 1, 0.5, 0.65)
+emission_enabled = true
+emission = Color(0.3, 1, 0.55, 1)
+emission_energy_multiplier = 3.5
+transparency = 1
+
+[sub_resource type="TorusMesh" id="Mesh_radar_sweep"]
+material = SubResource("Mat_radar_sweep")
+inner_radius = 1.49
+outer_radius = 1.5
+ring_segments = 96
+rings = 8
+
 [sub_resource type="CylinderMesh" id="Mesh_ship_icon"]
 top_radius = 0.0
 bottom_radius = 0.025
@@ -88,17 +110,66 @@ mesh = SubResource("Mesh_button")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.29952216, -0.04204023, -0.3616333)
 shape = SubResource("Shape_button")
 
-[node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931 node_paths=PackedStringArray("ship_icon")]
+[node name="LidarRenderer" type="Node3D" parent="." unique_id=1285143931 node_paths=PackedStringArray("ship_icon", "radar_sweep", "cardinal_ring")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.3000001, 0)
 script = ExtResource("2_lidar")
 emission_energy = 1.6
 hologram_scale = 0.033
 ship_icon = NodePath("ShipIcon")
+radar_sweep = NodePath("RadarSweep")
+cardinal_ring = NodePath("CardinalRing")
+
+[node name="Anchor" type="Node3D" parent="LidarRenderer" unique_id=1010202001]
+
+[node name="CardinalRing" type="Node3D" parent="LidarRenderer" unique_id=1010202010]
+
+[node name="N" type="MeshInstance3D" parent="LidarRenderer/CardinalRing" unique_id=1010202011]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, -0.15)
+
+[node name="E" type="MeshInstance3D" parent="LidarRenderer/CardinalRing" unique_id=1010202012]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.15, 0, 0)
+
+[node name="S" type="MeshInstance3D" parent="LidarRenderer/CardinalRing" unique_id=1010202013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
+
+[node name="W" type="MeshInstance3D" parent="LidarRenderer/CardinalRing" unique_id=1010202014]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.15, 0, 0)
+
+[node name="RadarSweep" type="Node3D" parent="LidarRenderer" unique_id=1010202005]
+visible = false
+
+[node name="Ring" type="MeshInstance3D" parent="LidarRenderer/RadarSweep" unique_id=1010202006]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("Mesh_radar_sweep")
 
 [node name="ShipIcon" type="MeshInstance3D" parent="LidarRenderer" unique_id=1657139447]
 transform = Transform3D(-1, -8.742278e-08, 3.821371e-15, 0, -4.371139e-08, -1, 8.742278e-08, -1, 4.371139e-08, 0, 0, 0)
 material_override = SubResource("Mat_ship_icon")
 mesh = SubResource("Mesh_ship_icon")
+
+[node name="ModeButton" type="StaticBody3D" parent="." unique_id=1010202002 node_paths=PackedStringArray("lidar", "button_mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.025, -0.15)
+script = ExtResource("4_modebtn")
+lidar = NodePath("../LidarRenderer")
+button_mesh = NodePath("Mesh")
+
+[node name="Mesh" type="MeshInstance3D" parent="ModeButton" unique_id=1010202003]
+mesh = SubResource("Mesh_mode_button")
+
+[node name="Collision" type="CollisionShape3D" parent="ModeButton" unique_id=1010202004]
+shape = SubResource("Shape_mode_button")
+
+[node name="RadarButton" type="StaticBody3D" parent="." unique_id=1010202007 node_paths=PackedStringArray("lidar", "button_mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.025, -0.3)
+script = ExtResource("5_radarbtn")
+lidar = NodePath("../LidarRenderer")
+button_mesh = NodePath("Mesh")
+
+[node name="Mesh" type="MeshInstance3D" parent="RadarButton" unique_id=1010202008]
+mesh = SubResource("Mesh_mode_button")
+
+[node name="Collision" type="CollisionShape3D" parent="RadarButton" unique_id=1010202009]
+shape = SubResource("Shape_mode_button")
 
 [node name="GlowLight" type="OmniLight3D" parent="." unique_id=1476426615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)

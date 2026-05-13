@@ -53,7 +53,6 @@ func _interact() -> void:
 	recording = true
 	await anomaly.record()
 	recording = false
-	anomaly.queue_free()
 
 
 func _update_target() -> void:

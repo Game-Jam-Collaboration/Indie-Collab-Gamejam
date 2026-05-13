@@ -5,13 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="2_q2ovv"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="3_3m36u"]
 [ext_resource type="Script" uid="uid://c550a1nkjtliu" path="res://scripts/ship_dash_button.gd" id="3_bseor"]
-[ext_resource type="Script" uid="uid://qrnwp3ols8lw" path="res://scripts/ship_compass.gd" id="4_tlr80"]
 [ext_resource type="Script" uid="uid://cmukk110a2qof" path="res://scripts/ship_navigation.gd" id="5_shipnav"]
 [ext_resource type="PackedScene" uid="uid://bmq327un7la8u" path="res://scenes/holodeck.tscn" id="7_holodeck"]
-[ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
+[ext_resource type="Script" path="res://scenes/oxygen_handle.gd" id="10_bseor"]
 [ext_resource type="PackedScene" uid="uid://fobsv1w8dpmk" path="res://assets/blend_files/heater.blend" id="10_tlr80"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 [ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
+[ext_resource type="PackedScene" path="res://scenes/anomaly_map.tscn" id="13_anomap"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -176,26 +176,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_m6818")
-
-[sub_resource type="StandardMaterial3D" id="Mat_compass_base"]
-albedo_color = Color(0.85, 0.85, 0.8, 1)
-roughness = 0.4
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_03y04"]
-material = SubResource("Mat_compass_base")
-top_radius = 0.07
-bottom_radius = 0.07
-height = 0.01
-
-[sub_resource type="StandardMaterial3D" id="Mat_needle"]
-albedo_color = Color(0.9, 0.15, 0.15, 1)
-emission_enabled = true
-emission = Color(0.9, 0.15, 0.15, 1)
-emission_energy_multiplier = 1.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_48mkp"]
-material = SubResource("Mat_needle")
-size = Vector3(0.008, 0.006, 0.1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_indicator"]
 radius = 0.1
@@ -616,23 +596,6 @@ mesh = SubResource("ArrayMesh_dschd")
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, 0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="Compass" type="Node3D" parent="NavButtons" index="4" unique_id=1911711946 node_paths=PackedStringArray("navigation", "needle")]
-transform = Transform3D(-4.3711393e-07, 0, 10, 0, 10, 0, -10, 0, -4.3711393e-07, -2, -0.48, 0)
-script = ExtResource("4_tlr80")
-navigation = NodePath("../../ShipNavigation")
-needle = NodePath("Needle")
-
-[node name="Base" type="MeshInstance3D" parent="NavButtons/Compass" index="0" unique_id=1611895337]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4901161e-08, 0, -0.057216167)
-mesh = SubResource("CylinderMesh_03y04")
-
-[node name="Needle" type="Node3D" parent="NavButtons/Compass" index="1" unique_id=255670393]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4901161e-08, 0.012000024, -0.066836834)
-
-[node name="NeedleMesh" type="MeshInstance3D" parent="NavButtons/Compass/Needle" index="0" unique_id=2006930994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.033954144)
-mesh = SubResource("BoxMesh_48mkp")
-
 [node name="IndicatorForward" type="MeshInstance3D" parent="NavButtons" index="5" unique_id=1010101001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, -0.45, 0)
 material_override = SubResource("Mat_indicator_off")
@@ -763,3 +726,6 @@ light_color = Color(0.7963072, 0.5799591, 1.92523e-06, 1)
 
 [node name="heater_lever" parent="." index="13" unique_id=1986176028 instance=ExtResource("12_03y04")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8014779, 1.1949682, -2.0645995)
+
+[node name="AnomalyMap" parent="." index="14" unique_id=1010101010 instance=ExtResource("13_anomap")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8684014, 0.95, 5.06)
