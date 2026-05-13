@@ -14,8 +14,8 @@ var heater_element_off_material = load("res://assets/materials/heater_element_of
 			tween.tween_property(
 				$Mesh.get_surface_override_material(3),
 				"emission_energy_multiplier",
-				5,
-				1.3
+				15,
+				12
 			)
 			$PowerOn.play()
 		else:
