@@ -10,7 +10,7 @@ enum ViewMode { SHIP_LOCKED, WORLD_LOCKED, RADAR_PING }
 ## Seconds the radar scan line takes to complete a full rotation.
 @export var radar_period: float = 4.0
 ## Rays cast per frame along the radar's great-circle slice while in RADAR_PING.
-@export var radar_rays_per_frame: int = 56
+@export var radar_rays_per_frame: int = 96
 @export var radar_sweep: Node3D = null
 @export var cardinal_ring: Node3D = null
 @export var point_size: float = 0.003
@@ -28,6 +28,8 @@ enum ViewMode { SHIP_LOCKED, WORLD_LOCKED, RADAR_PING }
 @export var auto_scan_interval: float = 0.0
 @export var ship_icon: MeshInstance3D = null
 @export var ship_icon_brightness: float = 0.5
+
+var on := false
 
 const DEAD_CUSTOM := Color(-1.0e6, 0.0, 0.0, 0.0)
 

@@ -6,6 +6,7 @@ extends StaticBody3D
 @export var off_color: Color = Color(0.35, 0.35, 0.4, 1.0)
 @export var on_color: Color = Color(0.2, 1.0, 0.5, 1.0)
 @export var emission_energy: float = 2.5
+var on := false
 
 
 func _ready() -> void:
@@ -14,8 +15,13 @@ func _ready() -> void:
 
 
 func _interact() -> void:
-	if lidar == null:
-		return
+	if lidar == null: return
+	var tween = create_tween()
+	if on:
+		tween.tween_property(self, "position:y", position.y + 0.03, 0.2)
+	else:
+		tween.tween_property(self, "position:y", position.y - 0.03, 0.2)
+	on = not on
 	lidar.toggle_radar_mode()
 	_refresh_visual()
 

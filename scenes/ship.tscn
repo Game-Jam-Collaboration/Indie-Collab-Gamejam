@@ -525,7 +525,10 @@ data = PackedVector3Array(0, 0.81579995, 0.2056, 0.0233, 0.76199996, 0.17729999,
 
 [node name="ship_v3" unique_id=1070939438 instance=ExtResource("1_5qfr6")]
 
-[node name="NavButtons" type="Node3D" parent="." index="0" unique_id=903122595]
+[node name="Holodeck" parent="." index="0" unique_id=9200003 instance=ExtResource("7_holodeck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35614997, -0.0643301, 5.0614514)
+
+[node name="NavButtons" type="Node3D" parent="." index="1" unique_id=903122595]
 transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
 
 [node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "indicator")]
@@ -615,7 +618,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, -1.
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="RecordButton" type="Node3D" parent="." index="1" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover")]
+[node name="RecordButton" type="Node3D" parent="." index="2" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover")]
 transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.38994783, 0.91260415, 4.8517504)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
@@ -646,7 +649,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RecordButton/Interactor" index="0" unique_id=1010101005]
 shape = SubResource("BoxShape_record_interactor")
 
-[node name="FusePanelLight" type="MeshInstance3D" parent="." index="3" unique_id=1399412660]
+[node name="FusePanelLight" type="MeshInstance3D" parent="." index="4" unique_id=1399412660]
 transform = Transform3D(1.2175313e-08, 0.27853864, -0.9604252, 1, -4.3711385e-08, 1.7266417e-15, -4.198152e-08, -0.9604252, -0.27853864, 4.1481853, 2.0860069, 0.007068336)
 mesh = SubResource("ArrayMesh_5qfr6")
 
@@ -654,7 +657,7 @@ mesh = SubResource("ArrayMesh_5qfr6")
 transform = Transform3D(1, -2.4868996e-14, 8.881784e-16, -7.1054274e-15, 0.9999998, -2.9802322e-08, 8.881784e-16, 2.9802322e-08, 0.9999998, 0, -0.03210318, 0.11069465)
 light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 
-[node name="PowerPanel" parent="." index="4" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse") instance=ExtResource("2_q2ovv")]
+[node name="PowerPanel" parent="." index="5" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse") instance=ExtResource("2_q2ovv")]
 unique_name_in_owner = true
 transform = Transform3D(-0.2890486, 0, -0.95731455, 0, 1, 0, 0.95731455, 0, -0.2890486, 4.0945597, 1.1068584, -0.011977673)
 environment_light = NodePath("../FusePanelLight/OmniLight3D")
@@ -665,33 +668,30 @@ fuse = NodePath("Fuse")
 [node name="Fuse" parent="PowerPanel" index="4" unique_id=2062436736 instance=ExtResource("3_3m36u")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0, 1.7270491)
 
-[node name="ShipBody" type="StaticBody3D" parent="." index="5" unique_id=2052206692]
+[node name="ShipBody" type="StaticBody3D" parent="." index="6" unique_id=2052206692]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipBody" index="0" unique_id=1269668789]
 shape = SubResource("ConcavePolygonShape3D_5qfr6")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="." index="6" unique_id=936903499]
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="7" unique_id=936903499]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.0030103028, 3.9305787, 3.6)
 light_color = Color(0.43836457, 0.11912406, 0.18678921, 1)
 light_energy = 5.0
 
-[node name="SpotLight3D3" type="OmniLight3D" parent="." index="7" unique_id=89767274]
+[node name="SpotLight3D3" type="OmniLight3D" parent="." index="8" unique_id=89767274]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.0030103028, 3.7305787, 3.6)
 light_color = Color(0.43836457, 0.11912406, 0.18678921, 1)
 light_energy = 5.0
 
-[node name="SpotLight3D2" type="OmniLight3D" parent="." index="8" unique_id=850089665]
+[node name="SpotLight3D2" type="OmniLight3D" parent="." index="9" unique_id=850089665]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.36268616, 0.9534217, 5.058086)
 light_color = Color(0.41493195, 0.5654556, 0, 1)
 light_size = 1.0
 omni_range = 0.15
 omni_attenuation = -0.8
 
-[node name="ShipNavigation" type="Node3D" parent="." index="9" unique_id=9200001]
+[node name="ShipNavigation" type="Node3D" parent="." index="10" unique_id=9200001]
 script = ExtResource("5_shipnav")
-
-[node name="Holodeck" parent="." index="10" unique_id=9200003 instance=ExtResource("7_holodeck")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35614997, -0.0643301, 5.0614514)
 
 [node name="Oxygen" type="Node3D" parent="." index="11" unique_id=1492467593]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4994856, 0.908187, -1.552626)
@@ -708,6 +708,7 @@ script = ExtResource("10_bseor")
 [node name="Lever" type="MeshInstance3D" parent="Oxygen/StaticBody3D" index="0" unique_id=1701068746]
 unique_name_in_owner = true
 mesh = SubResource("ArrayMesh_vbj2c")
+"blend_shapes/Key 1" = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/StaticBody3D" index="1" unique_id=148553966]
 shape = SubResource("ConcavePolygonShape3D_dschd")
