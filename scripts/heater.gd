@@ -15,7 +15,7 @@ var heater_element_off_material = load("res://assets/materials/heater_element_of
 				$Mesh.get_surface_override_material(3),
 				"emission_energy_multiplier",
 				15,
-				12
+				5.6
 			)
 			$PowerOn.play()
 		else:

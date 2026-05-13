@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bngghcfsl433w" path="res://scripts/heater.gd" id="1_48368"]
 [ext_resource type="Material" uid="uid://ddgnhwtawloct" path="res://assets/materials/heater_element_on.tres" id="2_aqn0s"]
+[ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_cxm6o"]
 [ext_resource type="AudioStream" uid="uid://c4aye3mk3su1e" path="res://assets/sounds/heater_power_up_prototype.wav" id="3_y6etg"]
 [ext_resource type="AudioStream" uid="uid://bmtypaejgqeaf" path="res://assets/sounds/heater_power_down_prototype.wav" id="4_08v4r"]
-[ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="5_x8t85"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kd22n"]
 resource_name = "Trim"
@@ -184,6 +184,8 @@ shadow_mesh = SubResource("ArrayMesh_2apll")
 [node name="heater" type="Node3D" unique_id=976087777]
 script = ExtResource("1_48368")
 
+[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_cxm6o")]
+
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1650304087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008279085, 0, 0.0050029755)
 mesh = SubResource("ArrayMesh_t41lb")
@@ -194,6 +196,3 @@ stream = ExtResource("3_y6etg")
 
 [node name="PowerDown" type="AudioStreamPlayer3D" parent="." unique_id=1993653110]
 stream = ExtResource("4_08v4r")
-
-[node name="heater_lever" parent="." unique_id=1986176028 instance=ExtResource("5_x8t85")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8011785, 1.4148841, -1.8241284)
