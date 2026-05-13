@@ -9,6 +9,7 @@ extends Area3D
 @export var can_remove_fuse: bool = false
 @export var fuse:RigidBody3D = null
 @export var audio:AudioStreamPlayer3D = null
+@export var holodeck:Node3D = null
 
 var online := false
 
@@ -25,6 +26,7 @@ func assemble() -> void:
 	online = true
 	_change_lighting()
 	audio.play()
+	holodeck.get_node("%Powered").visible = true
 
 
 func disassemble() -> void:

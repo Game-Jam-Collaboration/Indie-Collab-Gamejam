@@ -4,6 +4,7 @@ extends Node3D
 @export var fuse_panel:FusePanel = null
 @export var heater_lever:HeaterLever = null
 @export var oxygen:Oxygen = null
+@export var holodeck:Node3D
 
 var count = 0
 var attacks = 0
@@ -19,6 +20,7 @@ func _attack() -> void:
 		await get_tree().create_timer(1.2).timeout
 		heater_lever._interact(true)
 		oxygen.release_pressure()
+		holodeck.get_node("%Powered").visible = false
 		fuse_panel.disassemble()
 		player._attack_camera_shake()
 		attacks += 1
