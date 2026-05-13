@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/pause_menu.gd" id="1_jvnd5"]
 [ext_resource type="Shader" uid="uid://3qtsesfwrqgi" path="res://scripts/shaders/menu_shader.gdshader" id="1_kukqi"]
-[ext_resource type="Texture2D" uid="uid://d1lv4i6t5gihx" path="res://assets/textures/main_menu.svg" id="2_g4jo0"]
-[ext_resource type="Texture2D" uid="uid://boddpibplvf42" path="res://assets/textures/continue.svg" id="2_komsw"]
+[ext_resource type="Texture2D" uid="uid://bnnfg7rxiyonq" path="res://assets/textures/play.png" id="3_5d2l8"]
+[ext_resource type="Texture2D" uid="uid://dg3q06mih7nvl" path="res://assets/textures/exit.png" id="4_7l7mv"]
 
 [sub_resource type="Gradient" id="Gradient_5d2l8"]
 offsets = PackedFloat32Array(0.060714304, 0.75, 1)
@@ -34,31 +34,25 @@ script = ExtResource("1_jvnd5")
 button_input_variation = ["Continue", null, "res://scenes/main_menu.tscn"]
 script_type = "Pause"
 
-[node name="Control" type="Control" parent="." unique_id=942911089]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=877173786]
+layout_mode = 2
+theme_override_constants/margin_right = 105
+
+[node name="Control" type="VBoxContainer" parent="MarginContainer" unique_id=1817025633]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/Control" unique_id=817432964]
+material = SubResource("ShaderMaterial_5d2l8")
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=817432964]
-material = SubResource("ShaderMaterial_5d2l8")
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="Button" type="Button" parent="Control" unique_id=1516844649]
-layout_mode = 0
-offset_left = 928.0
-offset_top = 150.0
-offset_right = 1101.0
-offset_bottom = 286.0
-pivot_offset = Vector2(86.5, 68)
-icon = ExtResource("2_komsw")
+[node name="Button" type="Button" parent="MarginContainer/Control" unique_id=1516844649]
+layout_mode = 2
+icon = ExtResource("3_5d2l8")
 flat = true
 
-[node name="Button3" type="Button" parent="Control" unique_id=1660551048]
-layout_mode = 0
-offset_left = 918.0
-offset_top = 352.0
-offset_right = 1094.0
-offset_bottom = 517.0
-pivot_offset = Vector2(88, 82)
-icon = ExtResource("2_g4jo0")
+[node name="Button3" type="Button" parent="MarginContainer/Control" unique_id=1660551048]
+layout_mode = 2
+icon = ExtResource("4_7l7mv")
 flat = true

@@ -18,14 +18,14 @@ func _ready() -> void:
 	#Connecting signals for buttons and mouse inputs.
 	
 	#Start or Continue in Pause
-	get_node("Control/Button").mouse_entered.connect(_mouse_entered.bind(""))
-	get_node("Control/Button").mouse_exited.connect(_mouse_exited.bind(""))
-	get_node("Control/Button").pressed.connect(_mouse_pressed.bind(0))
+	get_node("MarginContainer/Control/Button").mouse_entered.connect(_mouse_entered.bind(""))
+	get_node("MarginContainer/Control/Button").mouse_exited.connect(_mouse_exited.bind(""))
+	get_node("MarginContainer/Control/Button").pressed.connect(_mouse_pressed.bind(0))
 	
 	#Exit
-	get_node("Control/Button3").mouse_entered.connect(_mouse_entered.bind(3))
-	get_node("Control/Button3").mouse_exited.connect(_mouse_exited.bind(3))
-	get_node("Control/Button3").pressed.connect(_mouse_pressed.bind(2))
+	get_node("MarginContainer/Control/Button3").mouse_entered.connect(_mouse_entered.bind(3))
+	get_node("MarginContainer/Control/Button3").mouse_exited.connect(_mouse_exited.bind(3))
+	get_node("MarginContainer/Control/Button3").pressed.connect(_mouse_pressed.bind(2))
 	
 	
 
@@ -33,13 +33,13 @@ func _ready() -> void:
 func _mouse_entered(button_index):
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(get_node("Control/Button"+str(button_index)),"scale",Vector2(1.1,1.1),0.1)
+	tween.tween_property(get_node("MarginContainer/Control/Button"+str(button_index)),"scale",Vector2(1.1,1.1),0.1)
 	
 
 func _mouse_exited(button_index):
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(get_node("Control/Button"+str(button_index)),"scale",Vector2(1,1),0.1)
+	tween.tween_property(get_node("MarginContainer/Control/Button"+str(button_index)),"scale",Vector2(1,1),0.1)
 	
 
 

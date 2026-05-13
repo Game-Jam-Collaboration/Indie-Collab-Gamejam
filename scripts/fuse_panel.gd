@@ -1,3 +1,4 @@
+class_name FusePanel
 extends Area3D
 
 @export var environment_light:Light3D = null
@@ -7,6 +8,7 @@ extends Area3D
 @export var slot_index: int = 0
 @export var can_remove_fuse: bool = false
 @export var fuse:RigidBody3D = null
+@export var audio:AudioStreamPlayer3D = null
 
 var online := false
 
@@ -22,9 +24,11 @@ func assemble() -> void:
 		status_panel.mark_complete(slot_index)
 	online = true
 	_change_lighting()
+	audio.play()
 
 
 func disassemble() -> void:
+	if !online: return
 	if status_panel:
 		status_panel.mark_pending(slot_index)
 	online = false

@@ -29,9 +29,9 @@ func _interact() -> void:
 func _refresh_visual() -> void:
 	if button_mesh == null or lidar == null:
 		return
-	var on := lidar.view_mode == LidarRenderer.ViewMode.RADAR_PING
+	var _on := lidar.view_mode == LidarRenderer.ViewMode.RADAR_PING
 	var color := on_color if on else off_color
-	var energy := emission_energy if on else emission_energy * 0.25
+	var energy := emission_energy if _on else emission_energy * 0.25
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.emission_enabled = true

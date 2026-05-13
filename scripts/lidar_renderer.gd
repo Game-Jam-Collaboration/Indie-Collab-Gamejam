@@ -162,8 +162,8 @@ func _setup_cardinal_arrows() -> void:
 	var arrow_mesh := _build_cardinal_arrow_mesh()
 	var white_mat := _build_arrow_material(Color(1, 1, 1, 1))
 	var red_mat := _build_arrow_material(Color(1, 0.18, 0.18, 1))
-	for name in ["N", "E", "S", "W"]:
-		var node := cardinal_ring.get_node_or_null(name) as MeshInstance3D
+	for _name in ["N", "E", "S", "W"]:
+		var node := cardinal_ring.get_node_or_null(_name) as MeshInstance3D
 		if node == null:
 			continue
 		node.mesh = arrow_mesh
@@ -272,14 +272,14 @@ func toggle_radar_mode() -> void:
 
 
 func _recolor_recorded_anomalies() -> void:
-	for owner in _anomaly_point_indices.keys():
-		if _recolored_anomalies.has(owner):
+	for _owner in _anomaly_point_indices.keys():
+		if _recolored_anomalies.has(_owner):
 			continue
-		if not is_instance_valid(owner):
+		if not is_instance_valid(_owner):
 			continue
-		if not owner.get("recorded"):
+		if not _owner.get("recorded"):
 			continue
-		var entries: Array = _anomaly_point_indices[owner]
+		var entries: Array = _anomaly_point_indices[_owner]
 		for entry in entries:
 			var idx: int = entry["idx"]
 			var spawn_time: float = entry["spawn_time"]
@@ -287,7 +287,7 @@ func _recolor_recorded_anomalies() -> void:
 			if absf(data.r - spawn_time) < 0.001:
 				var new_kind: float = 11.0 if data.a >= 9.5 else 1.0
 				_multi_mesh.set_instance_custom_data(idx, Color(data.r, data.g, data.b, new_kind))
-		_recolored_anomalies[owner] = true
+		_recolored_anomalies[_owner] = true
 
 
 func trigger_scan() -> void:
@@ -306,17 +306,17 @@ func trigger_scan() -> void:
 	display_points(hits, 1.0)
 
 
-func display_points(points: PackedVector3Array, hit_flag: float = 1.0, owner: Node = null) -> void:
+func display_points(points: PackedVector3Array, hit_flag: float = 1.0, _owner: Node = null) -> void:
 	var incoming: int = points.size()
 	if incoming == 0:
 		return
 
 	var spawn_time := Time.get_ticks_msec() / 1000.0
 	var owner_entries: Array = []
-	if owner != null:
-		if not _anomaly_point_indices.has(owner):
-			_anomaly_point_indices[owner] = []
-		owner_entries = _anomaly_point_indices[owner]
+	if _owner != null:
+		if not _anomaly_point_indices.has(_owner):
+			_anomaly_point_indices[_owner] = []
+		owner_entries = _anomaly_point_indices[_owner]
 
 	for i in incoming:
 		var idx: int = _write_head

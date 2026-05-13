@@ -70,6 +70,8 @@ func _unhandled_input(event):
 			if event.button_index == 1:
 				if event.pressed:
 					if assembling:
+						%Selector.remove_exception(in_hand)
+						remove_collision_exception_with(in_hand)
 						assembling = false
 						in_hand = null
 						previous_pickup_parent = null
@@ -135,18 +137,12 @@ func _physics_process(delta):
 
 func _interact_with() -> void:
 	var collision:CollisionObject3D = %Selector.get_collider()
-	if collision == null:
-		return
+	if collision == null: return
 	if collision.is_in_group("Interactable"):
 		if collision.has_method("_interact"):
 			collision._interact()
 		else:
 			collision.get_parent()._interact()
-		return
-	if collision.is_in_group("AssemblyPoint") and collision.has_method("can_remove") and collision.can_remove():
-		var removed: CollisionObject3D = collision.release_assembled()
-		if removed != null:
-			_take_into_hand(removed, collision.get_parent())
 		return
 	if collision.is_in_group("Pickupable"):
 		_take_into_hand(collision, collision.get_parent())
@@ -189,3 +185,15 @@ func _end_hold() -> void:
 	if is_instance_valid(hold_target) and hold_target.has_method("on_press_end"):
 		hold_target.on_press_end()
 	hold_target = null
+
+
+func _attack_camera_shake() -> void:
+	var tween = create_tween()
+	var camera_position = camera_pivot.global_position
+	var offset = camera_position + Vector3(randf_range(0,.1),randf_range(0,.1),randf_range(0,.1))
+	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
+	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
+	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
+	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
+	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
+	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
