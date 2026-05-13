@@ -12,7 +12,7 @@ var attacks = 0
 func _attack() -> void:
 	if !fuse_panel.online or !heater_lever.heater.online: return
 	count += 1
-	var entity_attack:bool = (randi_range(0, 100) > 50)
+	var entity_attack:bool = (randi_range(0, 100) > 85)
 	if entity_attack:
 		%EntityAttack.play()
 		await get_tree().create_timer(1.2).timeout

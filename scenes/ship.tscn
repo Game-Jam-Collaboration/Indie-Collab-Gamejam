@@ -537,11 +537,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.320174, 0)
 stream = ExtResource("3_tbq4g")
 
 [node name="AttackInterval" type="Timer" parent="." index="1" unique_id=1385209361]
-wait_time = 3.0
+wait_time = 20.0
 autostart = true
 
 [node name="Holodeck" parent="." index="2" unique_id=9200003 instance=ExtResource("7_holodeck")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35614997, -0.0643301, 5.0614514)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36801034, -0.0643301, 5.077443)
 
 [node name="NavButtons" type="Node3D" parent="." index="3" unique_id=903122595]
 transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
