@@ -25,6 +25,7 @@ radius = 4.0
 
 [node name="ScanProbe" type="Node3D" parent="." unique_id=1620619773]
 script = ExtResource("1_probe")
+scan_range = 70.0
 
 [node name="Anomaly" type="StaticBody3D" parent="." unique_id=727074226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -36.4)
@@ -140,7 +141,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly7" type="StaticBody3D" parent="." unique_id=623922251]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.850811, 0, 23.954609)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.029617, 0, 23.954609)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-07"
 
@@ -157,4 +158,3 @@ mesh = SubResource("Mesh_anomaly_core")
 
 [node name="Collision" type="CollisionShape3D" parent="Anomaly7" unique_id=1296420790]
 shape = SubResource("Shape_anomaly")
-
