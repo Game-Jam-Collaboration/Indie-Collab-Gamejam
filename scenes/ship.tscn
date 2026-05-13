@@ -537,7 +537,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.320174, 0)
 stream = ExtResource("3_tbq4g")
 
 [node name="AttackInterval" type="Timer" parent="." index="1" unique_id=1385209361]
-wait_time = 20.0
+wait_time = 15.0
 autostart = true
 
 [node name="Holodeck" parent="." index="2" unique_id=9200003 instance=ExtResource("7_holodeck")]
