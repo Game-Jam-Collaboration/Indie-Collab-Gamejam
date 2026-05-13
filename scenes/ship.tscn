@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cmphbb56lmu11" path="res://assets/blend_files/ship.blend" id="1_5qfr6"]
 [ext_resource type="Material" uid="uid://nvgaox8j2t7b" path="res://assets/materials/offline_emissive.tres" id="2_8qiel"]
-[ext_resource type="Script" uid="uid://dpcq8rmmni7fw" path="res://scenes/ship.gd" id="2_48mkp"]
+[ext_resource type="Script" uid="uid://dpcq8rmmni7fw" path="res://scripts/ship.gd" id="2_48mkp"]
 [ext_resource type="PackedScene" uid="uid://84jij4m7xt2m" path="res://scenes/fuse_panel.tscn" id="2_q2ovv"]
 [ext_resource type="PackedScene" uid="uid://bx4fo5iwr8pgh" path="res://scenes/fuse.tscn" id="3_3m36u"]
 [ext_resource type="Script" uid="uid://c550a1nkjtliu" path="res://scripts/ship_dash_button.gd" id="3_bseor"]
@@ -14,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://cbfg3h2e36xpv" path="res://scenes/heater.tscn" id="11_48mkp"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 [ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
+[ext_resource type="Script" uid="uid://di50q216fh744" path="res://scripts/oxygen.gd" id="12_mx31c"]
+[ext_resource type="AudioStream" uid="uid://b3oxqm6ue0xqu" path="res://assets/sounds/OxygenSlot2.wav" id="13_vbj2c"]
+[ext_resource type="AudioStream" uid="uid://bqx1ub4anrbfw" path="res://assets/sounds/OxygenPump.wav" id="14_dschd"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -526,10 +529,11 @@ metadata/extras = {
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dschd"]
 data = PackedVector3Array(0, 0.81579995, 0.2056, 0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, 0.0233, 0.76199996, 0.17729999, 0, 0.81579995, 0.2056, 0, 0.84849995, 0.28239998, 0.0233, 0.76199996, 0.17729999, 0, 0.84849995, 0.28239998, 0.017099999, 0.84849995, 0.2807, 0.020499999, 0.85609996, 0.1489, 0, 0.9191, 0.242, 0, 0.8436, 0.1542, 0.020499999, 0.85609996, 0.1489, 0.015, 0.91749996, 0.2599, 0, 0.9191, 0.242, 0.015, 0.91749996, 0.2599, 0, 0.9514, 0.34809998, 0, 0.9191, 0.242, 0.015, 0.91749996, 0.2599, 0.015, 0.9465, 0.355, 0, 0.9514, 0.34809998, 0.017099999, 0.84849995, 0.2807, 0.015, 0.9465, 0.355, 0.015, 0.91749996, 0.2599, 0.017099999, 0.84849995, 0.2807, 0.017099999, 0.8775, 0.37579998, 0.015, 0.9465, 0.355, 0, 0.8436, 0.1542, -0.015, 0.91749996, 0.2599, -0.020499999, 0.85609996, 0.1489, 0, 0.8436, 0.1542, 0, 0.9191, 0.242, -0.015, 0.91749996, 0.2599, -0.017099999, 0.84849995, 0.2807, 0, 0.77459997, 0.1752, -0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, -0.017099999, 0.84849995, 0.2807, 0, 0.84849995, 0.28239998, 0, 0.77459997, 0.1752, 0, 0.84849995, 0.28239998, 0, 0.81579995, 0.2056, 0.015, 0.9465, 0.355, 0, 0.912, 0.5513, 0, 0.9514, 0.34809998, 0.015, 0.9465, 0.355, 0.015, 0.9112, 0.5239, 0, 0.912, 0.5513, 0, 0.8775, 0.3775, 0.017099999, 0.8422, 0.54469997, 0.017099999, 0.8775, 0.37579998, 0, 0.8775, 0.3775, 0, 0.835, 0.5747, 0.017099999, 0.8422, 0.54469997, -0.015, 0.91749996, 0.2599, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.84849995, 0.2807, -0.015, 0.91749996, 0.2599, -0.015, 0.9465, 0.355, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.84849995, 0.2807, 0, 0.8775, 0.3775, 0, 0.84849995, 0.28239998, -0.017099999, 0.84849995, 0.2807, -0.017099999, 0.8775, 0.37579998, 0, 0.8775, 0.3775, 0, 0.84849995, 0.28239998, 0.017099999, 0.8775, 0.37579998, 0.017099999, 0.84849995, 0.2807, 0, 0.84849995, 0.28239998, 0, 0.8775, 0.3775, 0.017099999, 0.8775, 0.37579998, 0, 0.9191, 0.242, -0.015, 0.9465, 0.355, -0.015, 0.91749996, 0.2599, 0, 0.9191, 0.242, 0, 0.9514, 0.34809998, -0.015, 0.9465, 0.355, 0.017099999, 0.8422, 0.54469997, 0, 0.912, 0.5513, 0.015, 0.9112, 0.5239, 0.017099999, 0.8422, 0.54469997, 0, 0.835, 0.5747, 0, 0.912, 0.5513, 0, 0.835, 0.5747, -0.015, 0.9112, 0.5239, 0, 0.912, 0.5513, 0, 0.835, 0.5747, -0.017099999, 0.8422, 0.54469997, -0.015, 0.9112, 0.5239, 0.017099999, 0.8775, 0.37579998, 0.015, 0.9112, 0.5239, 0.015, 0.9465, 0.355, 0.017099999, 0.8775, 0.37579998, 0.017099999, 0.8422, 0.54469997, 0.015, 0.9112, 0.5239, -0.015, 0.9465, 0.355, -0.017099999, 0.8422, 0.54469997, -0.017099999, 0.8775, 0.37579998, -0.015, 0.9465, 0.355, -0.015, 0.9112, 0.5239, -0.017099999, 0.8422, 0.54469997, -0.017099999, 0.8775, 0.37579998, 0, 0.835, 0.5747, 0, 0.8775, 0.3775, -0.017099999, 0.8775, 0.37579998, -0.017099999, 0.8422, 0.54469997, 0, 0.835, 0.5747, 0, 0.9514, 0.34809998, -0.015, 0.9112, 0.5239, -0.015, 0.9465, 0.355, 0, 0.9514, 0.34809998, 0, 0.912, 0.5513, -0.015, 0.9112, 0.5239, 0, 0.8436, 0.1542, 0.0233, 0.76199996, 0.17729999, 0.020499999, 0.85609996, 0.1489, 0, 0.8436, 0.1542, 0, 0.77459997, 0.1752, 0.0233, 0.76199996, 0.17729999, -0.020499999, 0.85609996, 0.1489, 0, 0.77459997, 0.1752, 0, 0.8436, 0.1542, -0.020499999, 0.85609996, 0.1489, -0.0233, 0.76199996, 0.17729999, 0, 0.77459997, 0.1752, -0.017099999, 0.84849995, 0.2807, -0.020499999, 0.85609996, 0.1489, -0.015, 0.91749996, 0.2599, -0.017099999, 0.84849995, 0.2807, -0.0233, 0.76199996, 0.17729999, -0.020499999, 0.85609996, 0.1489, 0.017099999, 0.84849995, 0.2807, 0.020499999, 0.85609996, 0.1489, 0.0233, 0.76199996, 0.17729999, 0.017099999, 0.84849995, 0.2807, 0.015, 0.91749996, 0.2599, 0.020499999, 0.85609996, 0.1489)
 
-[node name="Ship" unique_id=1070939438 node_paths=PackedStringArray("fuse_panel", "heater_lever") instance=ExtResource("1_5qfr6")]
+[node name="Ship" unique_id=1070939438 node_paths=PackedStringArray("fuse_panel", "heater_lever", "oxygen") instance=ExtResource("1_5qfr6")]
 script = ExtResource("2_48mkp")
 fuse_panel = NodePath("PowerPanel")
 heater_lever = NodePath("Heater/HeaterLever")
+oxygen = NodePath("Oxygen")
 
 [node name="EntityAttack" type="AudioStreamPlayer3D" parent="." index="0" unique_id=1653533031]
 unique_name_in_owner = true
@@ -537,7 +541,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.320174, 0)
 stream = ExtResource("3_tbq4g")
 
 [node name="AttackInterval" type="Timer" parent="." index="1" unique_id=1385209361]
-wait_time = 15.0
+wait_time = 20.0
 autostart = true
 
 [node name="Holodeck" parent="." index="2" unique_id=9200003 instance=ExtResource("7_holodeck")]
@@ -715,27 +719,40 @@ omni_attenuation = -0.8
 [node name="ShipNavigation" type="Node3D" parent="." index="12" unique_id=9200001]
 script = ExtResource("5_shipnav")
 
-[node name="Oxygen" type="Node3D" parent="." index="13" unique_id=1492467593]
+[node name="Oxygen" type="Node3D" parent="." index="13" unique_id=1492467593 node_paths=PackedStringArray("light")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4994856, 0.908187, -1.552626)
+script = ExtResource("12_mx31c")
+light = NodePath("PressureLight")
 
-[node name="Canister" type="MeshInstance3D" parent="Oxygen" index="0" unique_id=2069850239]
+[node name="Online" type="AudioStreamPlayer3D" parent="Oxygen" index="0" unique_id=2147077784]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.5526261, -0.908187, 1.4994855)
+stream = ExtResource("13_vbj2c")
+
+[node name="PumpAudio" type="AudioStreamPlayer3D" parent="Oxygen" index="1" unique_id=1795002933]
+stream = ExtResource("14_dschd")
+
+[node name="PressureLight" type="OmniLight3D" parent="Oxygen" index="2" unique_id=254991563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34188145, 0)
+light_energy = 0.0
+
+[node name="Canister" type="MeshInstance3D" parent="Oxygen" index="3" unique_id=2069850239]
 mesh = SubResource("ArrayMesh_03y04")
 
-[node name="Pin" type="MeshInstance3D" parent="Oxygen" index="1" unique_id=1154487391]
+[node name="Pin" type="MeshInstance3D" parent="Oxygen" index="4" unique_id=1154487391]
 mesh = SubResource("ArrayMesh_mx31c")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Oxygen" index="2" unique_id=677703671 groups=["Interactable"]]
+[node name="Pump" type="StaticBody3D" parent="Oxygen" index="5" unique_id=677703671 groups=["Interactable"]]
 script = ExtResource("10_bseor")
 
-[node name="Lever" type="MeshInstance3D" parent="Oxygen/StaticBody3D" index="0" unique_id=1701068746]
+[node name="Lever" type="MeshInstance3D" parent="Oxygen/Pump" index="0" unique_id=1701068746]
 unique_name_in_owner = true
 mesh = SubResource("ArrayMesh_vbj2c")
 "blend_shapes/Key 1" = 0.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/StaticBody3D" index="1" unique_id=148553966]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/Pump" index="1" unique_id=148553966]
 shape = SubResource("ConcavePolygonShape3D_dschd")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Oxygen" index="3" unique_id=1916200335]
+[node name="BackingLight" type="OmniLight3D" parent="Oxygen" index="6" unique_id=1916200335]
 light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
 
 [node name="Heater" parent="." index="14" unique_id=976087777 instance=ExtResource("11_48mkp")]
