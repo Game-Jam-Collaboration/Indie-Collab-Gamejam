@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cbfg3h2e36xpv" path="res://scenes/heater.tscn" id="11_48mkp"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 [ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
-[ext_resource type="PackedScene" path="res://scenes/anomaly_map.tscn" id="13_anomap"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -726,6 +725,3 @@ heater_light = NodePath("../OmniLight3D")
 [node name="OmniLight3D" type="OmniLight3D" parent="Heater" index="5" unique_id=1103265019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07510042, 1.7192373, -0.46632242)
 light_color = Color(0.7963072, 0.5799591, 1.92523e-06, 1)
-
-[node name="AnomalyMap" parent="." index="13" unique_id=1010101010 instance=ExtResource("13_anomap")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.8684014, 0.95, 5.06)
