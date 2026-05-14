@@ -718,11 +718,11 @@ unique_name_in_owner = true
 [node name="Ship" parent="." index="5" unique_id=259920592]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
+[node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7985253, 0)
 visible = false
 stream = ExtResource("7_dschd")
-volume_db = -24.935
+volume_db = -37.402
 autoplay = true
 
 [node name="FusePanelLight" type="MeshInstance3D" parent="." index="6" unique_id=1399412660]
