@@ -45,6 +45,8 @@ var _base_basis: Basis = Basis.IDENTITY
 var _icon_base_basis: Basis = Basis.IDENTITY
 var _radar_angle: float = 0.0
 var _previous_non_radar_mode: ViewMode = ViewMode.SHIP_LOCKED
+var _anomaly_arrow: MeshInstance3D = null
+var _anomaly_arrow_radius: float = 0.55
 
 
 func _ready() -> void:
@@ -69,6 +71,7 @@ func _ready() -> void:
 	_shader_material.set_shader_parameter("anomaly_color", Vector3(anomaly_color.r, anomaly_color.g, anomaly_color.b))
 	_shader_material.set_shader_parameter("emission_energy", emission_energy)
 	_shader_material.set_shader_parameter("lifetime", lifetime)
+	_shader_material.set_shader_parameter("clip_min_local_y", 0.0)
 	sphere.material = _shader_material
 
 	_multi_mesh = MultiMesh.new()
@@ -93,6 +96,7 @@ func _ready() -> void:
 
 	_setup_radar_arc()
 	_setup_cardinal_arrows()
+	_setup_anomaly_arrow()
 
 
 func _process(delta: float) -> void:
@@ -106,10 +110,12 @@ func _process(delta: float) -> void:
 	if _shader_material:
 		_shader_material.set_shader_parameter("current_time", t)
 		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
+		_shader_material.set_shader_parameter("clip_min_local_y", 0.0)
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
 
 	_recolor_recorded_anomalies()
+	_update_anomaly_arrow()
 
 	if auto_scan_interval > 0.0 and probe != null:
 		var now := Time.get_ticks_msec() / 1000.0
@@ -162,20 +168,20 @@ func _setup_cardinal_arrows() -> void:
 	var arrow_mesh := _build_cardinal_arrow_mesh()
 	var white_mat := _build_arrow_material(Color(1, 1, 1, 1))
 	var red_mat := _build_arrow_material(Color(1, 0.18, 0.18, 1))
-	for _name in ["N", "E", "S", "W"]:
-		var node := cardinal_ring.get_node_or_null(_name) as MeshInstance3D
+	for cardinal_name in ["N", "E", "S", "W"]:
+		var node := cardinal_ring.get_node_or_null(cardinal_name) as MeshInstance3D
 		if node == null:
 			continue
 		node.mesh = arrow_mesh
-		node.material_override = red_mat if name == "N" else white_mat
+		node.material_override = red_mat if cardinal_name == "N" else white_mat
 
 
 func _build_cardinal_arrow_mesh() -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	var vertices := PackedVector3Array([
-		Vector3(0.0, 0.0, 0.016),
-		Vector3(-0.009, 0.0, -0.006),
-		Vector3(0.009, 0.0, -0.006),
+		Vector3(0.0, 0.0, 0.064),
+		Vector3(-0.036, 0.0, -0.024),
+		Vector3(0.036, 0.0, -0.024),
 	])
 	var indices := PackedInt32Array([0, 1, 2])
 	var arrays := []
@@ -184,6 +190,78 @@ func _build_cardinal_arrow_mesh() -> ArrayMesh:
 	arrays[Mesh.ARRAY_INDEX] = indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
+
+
+func _sphere_radius_local() -> float:
+	var sr: float = 50.0
+	if probe != null:
+		sr = probe.scan_range
+	return sr * hologram_scale
+
+
+func _setup_anomaly_arrow() -> void:
+	if cardinal_ring == null:
+		return
+	_anomaly_arrow = MeshInstance3D.new()
+	_anomaly_arrow.name = "AnomalyArrow"
+	_anomaly_arrow.mesh = _build_anomaly_arrow_mesh()
+	_anomaly_arrow.material_override = _build_arrow_material(Color(1, 0.18, 0.18, 1))
+	_anomaly_arrow.visible = false
+	cardinal_ring.add_child(_anomaly_arrow)
+
+
+func _build_anomaly_arrow_mesh() -> ArrayMesh:
+	var mesh := ArrayMesh.new()
+	var vertices := PackedVector3Array([
+		Vector3(0.0, 0.0, 0.18),
+		Vector3(-0.09, 0.0, -0.06),
+		Vector3(0.09, 0.0, -0.06),
+	])
+	var indices := PackedInt32Array([0, 1, 2])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
+
+
+func _update_anomaly_arrow() -> void:
+	if _anomaly_arrow == null:
+		return
+	if probe == null:
+		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
+	if probe == null:
+		_anomaly_arrow.visible = false
+		return
+
+	var ship_pos: Vector3 = probe.global_position
+	var nearest: Node3D = null
+	var nearest_dist: float = INF
+	for a in get_tree().get_nodes_in_group("anomaly"):
+		if not is_instance_valid(a):
+			continue
+		if a.get("recorded"):
+			continue
+		var d: float = (a.global_position - ship_pos).length()
+		if d < nearest_dist:
+			nearest_dist = d
+			nearest = a
+
+	if nearest == null or nearest_dist <= probe.scan_range:
+		_anomaly_arrow.visible = false
+		return
+
+	var to_target: Vector3 = nearest.global_position - ship_pos
+	to_target.y = 0.0
+	if to_target.length() < 0.0001:
+		_anomaly_arrow.visible = false
+		return
+	var world_dir: Vector3 = to_target.normalized()
+	_anomaly_arrow.transform.origin = world_dir * _anomaly_arrow_radius
+	var x_axis: Vector3 = Vector3.UP.cross(world_dir).normalized()
+	_anomaly_arrow.transform.basis = Basis(x_axis, Vector3.UP, world_dir)
+	_anomaly_arrow.visible = true
 
 
 func _build_arrow_material(color: Color) -> StandardMaterial3D:

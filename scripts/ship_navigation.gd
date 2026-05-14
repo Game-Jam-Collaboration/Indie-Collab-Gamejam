@@ -4,7 +4,7 @@ extends Node3D
 signal heading_changed(new_heading: float)
 signal position_changed(new_position: Vector3)
 
-@export var translate_speed: float = 2.0
+@export var translate_speed: float = 4.0
 @export var rotate_speed_deg: float = 30.0
 
 var simulated_position: Vector3 = Vector3.ZERO:

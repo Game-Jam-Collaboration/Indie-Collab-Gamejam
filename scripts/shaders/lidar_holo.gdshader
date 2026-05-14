@@ -26,6 +26,10 @@ uniform float flicker_speed = 14.0;
 uniform float glitch_chance = 0.04;
 uniform float glitch_rate = 8.0;
 
+uniform float front_fade_min : hint_range(0.0, 1.0) = 0.0;
+uniform float clip_min_local_y = -1.0e9;
+uniform float anomaly_flash_speed = 9.0;
+
 varying float v_life;
 varying float v_seed;
 varying float v_local_y;
@@ -34,6 +38,7 @@ varying float v_effective_age;
 varying float v_is_hit;
 varying float v_is_anomaly;
 varying float v_arrived;
+varying float v_front_fade;
 
 void vertex() {
 	float spawn_time = INSTANCE_CUSTOM.r;
@@ -69,10 +74,20 @@ void vertex() {
 	v_arrival = mix(v_arrival, 0.0, no_anim);
 	v_arrived = step(travel_time, v_effective_age) * v_is_hit;
 	v_arrived = mix(v_arrived, v_is_hit, no_anim);
+
+	vec3 to_cam = CAMERA_POSITION_WORLD - lidar_origin_world;
+	float to_cam_len = max(length(to_cam), 0.0001);
+	vec3 cam_dir = to_cam / to_cam_len;
+	float radius_world = max(length(final_local), 0.0001);
+	float front_t = clamp(dot(final_local, cam_dir) / radius_world, 0.0, 1.0);
+	v_front_fade = mix(1.0, front_fade_min, front_t);
 }
 
 void fragment() {
 	if (v_effective_age < 0.0 || v_life <= 0.0) {
+		discard;
+	}
+	if (v_local_y < clip_min_local_y) {
 		discard;
 	}
 
@@ -85,11 +100,13 @@ void fragment() {
 	float glitch_seed = floor(current_time * glitch_rate) + v_seed * 100.0;
 	float glitch = step(glitch_chance, fract(sin(glitch_seed * 12.9898) * 43758.5453));
 
-	float alpha = v_life * flicker * glitch;
+	float alpha = mix(v_life * flicker * glitch * v_front_fade, 1.0, v_is_anomaly);
 	float hit_mult = mix(miss_brightness, 1.0, v_is_hit);
 	float intensity = emission_energy * hit_mult * (1.0 + band_factor * scan_band_strength + v_arrival * arrival_flash);
 
-	vec3 hit_color = mix(base_color, anomaly_color, v_is_anomaly);
+	float anomaly_flash = 0.5 + 0.5 * sin(current_time * anomaly_flash_speed);
+	vec3 anomaly_render_color = mix(anomaly_color, vec3(1.0), anomaly_flash);
+	vec3 hit_color = mix(base_color, anomaly_render_color, v_is_anomaly);
 	float trail_fade = clamp(v_effective_age / max(miss_trail_duration, 0.0001), 0.0, 1.0);
 	vec3 miss_color = mix(base_color, vec3(1.0), trail_fade);
 	vec3 color = mix(miss_color, hit_color, v_arrived);
