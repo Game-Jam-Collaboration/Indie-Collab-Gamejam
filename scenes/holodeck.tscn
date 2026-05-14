@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://douogsdtjl3jh" path="res://scripts/lidar_renderer.gd" id="2_lidar"]
 [ext_resource type="Shader" uid="uid://dx6oagqp4a4h" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
+[ext_resource type="AudioStream" uid="uid://bcxnk4cba3rhn" path="res://assets/sounds/SFX_Radar-MONO-135BPM-16BARLOOP.ogg" id="4_p1rtg"]
 [ext_resource type="Script" uid="uid://dld2dy2k57hpg" path="res://scripts/lidar_radar_button.gd" id="5_radarbtn"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_emitter"]
@@ -141,3 +142,10 @@ mesh = SubResource("Mesh_mode_button")
 [node name="Collision" type="CollisionShape3D" parent="RadarButton" unique_id=1010202009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.008237362, 0)
 shape = SubResource("Shape_mode_button")
+
+[node name="RadarSound" type="AudioStreamPlayer3D" parent="." unique_id=1602863636]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.10373473)
+stream = ExtResource("4_p1rtg")
+volume_db = -18.0
+unit_size = 4.72

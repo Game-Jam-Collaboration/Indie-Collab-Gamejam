@@ -27,6 +27,7 @@ func assemble() -> void:
 	_change_lighting()
 	audio.play()
 	holodeck.get_node("%Powered").visible = true
+	holodeck.get_node("%RadarSound").play()
 
 
 func disassemble() -> void:
@@ -36,6 +37,8 @@ func disassemble() -> void:
 	online = false
 	_change_lighting()
 	fuse.freeze = false
+	holodeck.get_node("%Powered").visible = false
+	holodeck.get_node("%RadarSound").stop()
 	fuse.apply_central_impulse(Vector3(-2, 0, 0))
 	fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0,0))
 

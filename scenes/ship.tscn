@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
 [ext_resource type="PackedScene" uid="uid://c1bb6qjxuvbkn" path="res://scenes/heater_lever.tscn" id="12_03y04"]
 [ext_resource type="Script" uid="uid://di50q216fh744" path="res://scripts/oxygen.gd" id="12_mx31c"]
-[ext_resource type="AudioStream" uid="uid://bcxnk4cba3rhn" path="res://assets/sounds/SFX_Radar-MONO-135BPM-16BARLOOP.ogg" id="12_xifwb"]
 [ext_resource type="AudioStream" uid="uid://b3oxqm6ue0xqu" path="res://assets/sounds/OxygenSlot2.wav" id="13_vbj2c"]
 [ext_resource type="AudioStream" uid="uid://bqx1ub4anrbfw" path="res://assets/sounds/OxygenPump.wav" id="14_dschd"]
 [ext_resource type="Material" uid="uid://60bgj38wipmr" path="res://assets/materials/oxygen_meter_material.tres" id="17_83dbu"]
@@ -732,7 +731,7 @@ shape = SubResource("BoxShape_record_interactor")
 [node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
 unique_name_in_owner = true
 
-[node name="Ship" parent="." index="5" unique_id=259920592]
+[node name="Ship" parent="." index="5" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
@@ -787,13 +786,6 @@ light_color = Color(0.41493195, 0.5654556, 0, 1)
 light_size = 1.0
 omni_range = 0.15
 omni_attenuation = -0.8
-
-[node name="RadarSound" type="AudioStreamPlayer3D" parent="RadarLight" index="0" unique_id=2112931069]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.10373473)
-stream = ExtResource("12_xifwb")
-volume_db = -18.862
-unit_size = 4.72
-autoplay = true
 
 [node name="ShipNavigation" type="Node3D" parent="." index="12" unique_id=9200001]
 script = ExtResource("5_shipnav")

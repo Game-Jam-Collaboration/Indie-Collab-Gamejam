@@ -45,53 +45,8 @@ func _ready():
 	if ship == null:
 		push_warning("There is no ship in this scene, player controller may not work properly.")
 	frozen = true
-	camera_pivot.rotation_degrees.x = -90
-	await get_tree().create_timer(5).timeout
-	var tween = create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.6)
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.0), .3)
-	%AudioStreamer.play()
-	
-	await get_tree().create_timer(1.2).timeout
-	
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(camera_pivot, "rotation_degrees:y", -60, 0.8)
-	
-	await get_tree().create_timer(1.8).timeout
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(camera_pivot, "rotation_degrees:y", -20, 0.7)
-	
-	await get_tree().create_timer(1).timeout
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(camera_pivot, "rotation_degrees:y", 15, 0.5)
-	
-	await get_tree().create_timer(1).timeout
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_parallel(true)
-	tween.tween_property(camera_pivot, "rotation_degrees:y", -45, 0.6)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", -20, 0.6)
-	
-	await get_tree().create_timer(1.6).timeout
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_parallel(true)
-	tween.tween_property(camera_pivot, "rotation_degrees:y", 0, 1)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 1)
-	
-	await tween.finished
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	%AudioStreamer.stream = intro_breath_two
-	%AudioStreamer.play()
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, 1.07)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, .45)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.98)
-	
+	await _intro_awaken()
+	await _intro_observe_broken_fixtures()
 	frozen = false
 
 
@@ -310,3 +265,78 @@ func _suffocate() -> void:
 		return
 	
 	get_tree().reload_current_scene()
+
+
+func _intro_awaken() -> void:
+	camera_pivot.rotation_degrees.x = -90
+	await get_tree().create_timer(3.25).timeout
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.6)
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.0), .3)
+	%AudioStreamer.play()
+	await get_tree().create_timer(1.2).timeout
+
+
+
+func _intro_observe_broken_fixtures() -> void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -60, 0.8)
+	
+	await get_tree().create_timer(1.8).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -20, 0.7)
+	
+	await get_tree().create_timer(1).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", 15, 0.5)
+	
+	await get_tree().create_timer(1).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -45, 0.6)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", -20, 0.6)
+	
+	await get_tree().create_timer(1.6).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", 0, 1)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 1)
+	
+	await tween.finished
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	%AudioStreamer.stream = intro_breath_two
+	%AudioStreamer.play()
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, 1.07)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, .45)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.98)
+	
+	frozen = false
+
+
+func first_anomaly_cutscene() -> void:
+	frozen = true
+	var original_rotation = camera_pivot.rotation_degrees
+	await get_tree().create_timer(4.5).timeout
+	var tween = create_tween()
+	# Initial reactionary look up
+	tween.tween_property(camera_pivot, "rotation_degrees", Vector3(22, 40, 0), .5)
+	# Reaction to upper right
+	tween.tween_property(camera_pivot, "rotation_degrees", Vector3(42, -38, 0), .5).set_delay(1.2)
+	# Look back at recording device
+	tween.tween_property(camera_pivot, "rotation_degrees", original_rotation, 1).set_delay(1.1)
+	# React to right strongly
+	tween.tween_property(camera_pivot, "rotation_degrees", Vector3(12, -69, 0), .38).set_delay(1.2)
+	# React to slight leftward to strong sound
+	tween.tween_property(camera_pivot, "rotation_degrees", Vector3(15, -11, 0), .38).set_delay(5)
+	# Look back, relieved that it's over
+	tween.tween_property(camera_pivot, "rotation_degrees", original_rotation, 1).set_delay(4)
+	
+	await tween.finished
+	frozen = false

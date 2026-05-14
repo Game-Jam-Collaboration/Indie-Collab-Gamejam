@@ -14,7 +14,12 @@ extends Node3D
 
 @onready var player:Player = get_parent().player
 
-var anomalies_record:int = 0
+var anomaly_tracks:Array[AudioStream] = [
+	load("res://assets/sounds/CJ26_SFX_Anomaly-1-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+]
+
+var anomalies_recorded:int = 0
 
 var _current_anomaly: Anomaly = null
 var _cover_rest_basis: Basis = Basis.IDENTITY
@@ -54,13 +59,13 @@ func _interact() -> void:
 	anomaly.recorded = true
 	await get_tree().process_frame
 	recording = true
-	%AnomalyRecording.stream = anomaly.track
+	%AnomalyRecording.stream = anomaly_tracks[anomalies_recorded]
 	%AnomalyRecording.play()
-	player.frozen = true
+	if anomalies_recorded == 1:
+		player.first_anomaly_cutscene()
 	await %AnomalyRecording.finished
-	player.frozen = false
 	recording = false
-	anomalies_record += 1
+	anomalies_recorded += 1
 
 
 func _update_target() -> void:
