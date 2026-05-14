@@ -17,7 +17,7 @@ func _attack() -> void:
 	#if record_button.anomalies_record < 3: return
 	if !fuse_panel.online or !heater_lever.heater.online and !oxygen.online: return
 	count += 1
-	var entity_attack:bool = (randi_range(0, 100) > 0)
+	var entity_attack:bool = (randi_range(0, 100) > 85)
 	if entity_attack:
 		%EntityAttack.play()
 		await get_tree().create_timer(1.2).timeout
