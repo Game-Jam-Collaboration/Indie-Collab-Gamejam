@@ -50,7 +50,7 @@ func _ready():
 		push_warning("There is no ship in this scene, player controller may not work properly.")
 	frozen = true
 	await _intro_awaken()
-	#await _intro_observe_broken_fixtures()
+	await _intro_observe_broken_fixtures()
 	frozen = false
 
 
@@ -109,12 +109,14 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	if frozen: return
+	if frozen or !focused: return
+	
 	if hold_target:
 		if not is_instance_valid(hold_target) or %Selector.get_collider() != hold_target:
 			_end_hold()
 		elif hold_target.has_method("on_held"):
 			hold_target.on_held(delta)
+
 	if in_hand:
 		assembly_mechanism = %Selector.get_collider()
 		if assembly_mechanism and assembly_mechanism.is_in_group("AssemblyPoint"):
@@ -132,7 +134,7 @@ func _physics_process(delta):
 				assembly_tween = create_tween()
 				assembly_tween.tween_property(in_hand, "position", Vector3.ZERO, .15)
 				assembly_tween.tween_property(in_hand, "rotation", Vector3.ZERO, .15)
-	if !focused: return
+
 	var input_dir := Input.get_vector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward")
 	
 	var direction := Vector3(input_dir.x, 0.0, input_dir.y)
@@ -145,11 +147,6 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, move_speed)
 		velocity.z = move_toward(velocity.z, 0.0, move_speed)
-
-	if not is_on_floor():
-		velocity.y -= 20.0 * delta
-	elif Input.is_action_pressed("Jump"):
-		velocity.y = jump_force
 
 	move_and_slide()
 
@@ -330,8 +327,7 @@ func _intro_observe_broken_fixtures() -> void:
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, 1.07)
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, .45)
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.98)
-	
-	frozen = false
+	await tween.finished
 
 
 func first_anomaly_cutscene() -> void:

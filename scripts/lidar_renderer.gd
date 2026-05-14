@@ -376,9 +376,7 @@ func trigger_scan() -> void:
 		return
 	var result: Dictionary = probe.scan()
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
-	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
 	var anomaly_hits_by_node: Dictionary = result.get("anomaly_hits_by_node", {})
-	display_points(misses, 0.0)
 	for anomaly_node in anomaly_hits_by_node.keys():
 		display_points(anomaly_hits_by_node[anomaly_node], 2.0, anomaly_node)
 	display_points(hits, 1.0)

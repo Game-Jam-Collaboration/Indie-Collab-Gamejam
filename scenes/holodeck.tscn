@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://douogsdtjl3jh" path="res://scripts/lidar_renderer.gd" id="2_lidar"]
 [ext_resource type="Shader" uid="uid://dx6oagqp4a4h" path="res://scripts/shaders/ship_icon_holo.gdshader" id="3_iconholo"]
 [ext_resource type="AudioStream" uid="uid://bcxnk4cba3rhn" path="res://assets/sounds/SFX_Radar-MONO-135BPM-16BARLOOP.ogg" id="4_p1rtg"]
-[ext_resource type="Script" uid="uid://dld2dy2k57hpg" path="res://scripts/lidar_radar_button.gd" id="5_radarbtn"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_emitter"]
 transparency = 1
@@ -54,20 +53,6 @@ height = 0.16
 radial_segments = 8
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_woxxu"]
-albedo_color = Color(0.4045111, 0.40451115, 0.4045111, 1)
-metallic = 0.2
-
-[sub_resource type="BoxMesh" id="BoxMesh_p1rtg"]
-material = SubResource("StandardMaterial3D_woxxu")
-size = Vector3(0.12, 0.04, 0.12)
-
-[sub_resource type="BoxMesh" id="Mesh_mode_button"]
-size = Vector3(0.1, 0.04, 0.1)
-
-[sub_resource type="BoxShape3D" id="Shape_mode_button"]
-size = Vector3(0.1, 0.04, 0.1)
-
 [node name="Holodeck" type="Node3D" unique_id=1634337371]
 
 [node name="Powered" type="Node3D" parent="." unique_id=455020539]
@@ -92,6 +77,7 @@ radar_sweep = NodePath("RadarSweep")
 cardinal_ring = NodePath("CardinalRing")
 emission_energy = 1.6
 hologram_scale = 0.033
+max_points = 30000
 ship_icon = NodePath("ShipIcon")
 
 [node name="Anchor" type="Node3D" parent="Powered/LidarRenderer" unique_id=1010202001]
@@ -121,27 +107,6 @@ mesh = SubResource("Mesh_radar_sweep")
 transform = Transform3D(-2, -3.019916e-07, 1.3200472e-14, 0, -8.742278e-08, -2, 3.019916e-07, -2, 8.742278e-08, 0, 0, 0)
 material_override = SubResource("Mat_ship_icon")
 mesh = SubResource("Mesh_ship_icon")
-
-[node name="Mesh2" type="MeshInstance3D" parent="." unique_id=1905991046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97080183, -0.25611007)
-visible = false
-mesh = SubResource("BoxMesh_p1rtg")
-
-[node name="RadarButton" type="StaticBody3D" parent="." unique_id=1010202007 node_paths=PackedStringArray("lidar", "button_mesh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0080923, -0.25611007)
-visible = false
-script = ExtResource("5_radarbtn")
-lidar = NodePath("../Powered/LidarRenderer")
-button_mesh = NodePath("Mesh")
-on_color = Color(0, 0.57087165, 0.25922668, 1)
-emission_energy = 1.0
-
-[node name="Mesh" type="MeshInstance3D" parent="RadarButton" unique_id=1010202008]
-mesh = SubResource("Mesh_mode_button")
-
-[node name="Collision" type="CollisionShape3D" parent="RadarButton" unique_id=1010202009]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.008237362, 0)
-shape = SubResource("Shape_mode_button")
 
 [node name="RadarSound" type="AudioStreamPlayer3D" parent="." unique_id=1602863636]
 unique_name_in_owner = true
