@@ -14,7 +14,7 @@ var attacks = 0
 
 
 func _attack() -> void:
-	if record_button.anomalies_record < 3: return
+	if record_button.anomalies_recorded < 3: return
 	if !fuse_panel.online or !heater_lever.heater.online and !oxygen.online: return
 	count += 1
 	var entity_attack:bool = (randi_range(0, 100) > 85)

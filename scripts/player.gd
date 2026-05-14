@@ -11,8 +11,12 @@ var suffocation_track = load("res://assets/sounds/suffocation.wav")
 @export var vertical_speed:float = 10.0
 @export var camera_pivot:Node3D
 @export var ship_movement_audio: AudioStreamPlayer3D = null
+@export var step_interval:Timer = null
 
 @onready var ship:Ship = null
+
+
+var step_side = 0 # 0 == left foot, 1 == right foot
 
 var first_person := true
 var frozen := false
@@ -46,7 +50,7 @@ func _ready():
 		push_warning("There is no ship in this scene, player controller may not work properly.")
 	frozen = true
 	await _intro_awaken()
-	await _intro_observe_broken_fixtures()
+	#await _intro_observe_broken_fixtures()
 	frozen = false
 
 
@@ -137,6 +141,7 @@ func _physics_process(delta):
 	if direction:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
+		_handle_step()
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, move_speed)
 		velocity.z = move_toward(velocity.z, 0.0, move_speed)
@@ -147,6 +152,17 @@ func _physics_process(delta):
 		velocity.y = jump_force
 
 	move_and_slide()
+
+
+func _handle_step()-> void:
+	if step_interval.time_left > 0: return
+	step_interval.start(0.34)
+	if step_side == 0:
+		%LeftFootstep.play()
+		step_side = 1
+	else:
+		%RightFootstep.play()
+		step_side = 0
 
 
 func _interact_with() -> void:

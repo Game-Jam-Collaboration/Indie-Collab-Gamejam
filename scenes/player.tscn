@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Shader" uid="uid://dufsum10fcd6f" path="res://scripts/shaders/crosshair.gdshader" id="2_g2els"]
 [ext_resource type="AudioStream" uid="uid://xwtbhm3j7nhv" path="res://assets/sounds/intro_breath.wav" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://bawiae338hqjf" path="res://assets/sounds/SFX_Footstep-6.wav" id="4_dqkch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kddj0"]
 
@@ -11,9 +12,10 @@ shader = ExtResource("2_g2els")
 shader_parameter/color = Color(0.4, 0.7, 0.15, 1)
 shader_parameter/radius = 0.12
 
-[node name="MrPillBody" type="CharacterBody3D" unique_id=1720547152 node_paths=PackedStringArray("camera_pivot")]
+[node name="MrPillBody" type="CharacterBody3D" unique_id=1720547152 node_paths=PackedStringArray("camera_pivot", "step_interval")]
 script = ExtResource("1_3vyb7")
 camera_pivot = NodePath("CameraPivot")
+step_interval = NodePath("FootstepInterval")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1420675210]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.39999992)
@@ -68,3 +70,19 @@ color = Color(0, 0, 0, 1)
 [node name="AudioStreamer" type="AudioStreamPlayer3D" parent="." unique_id=954393389]
 unique_name_in_owner = true
 stream = ExtResource("3_qhqgy")
+
+[node name="LeftFootstep" type="AudioStreamPlayer3D" parent="." unique_id=2099371108]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18814152, -0.8758676, 0)
+stream = ExtResource("4_dqkch")
+volume_db = -26.0
+
+[node name="RightFootstep" type="AudioStreamPlayer3D" parent="." unique_id=647931279]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19105813, -0.8617472, 0)
+stream = ExtResource("4_dqkch")
+volume_db = -26.0
+
+[node name="FootstepInterval" type="Timer" parent="." unique_id=204890695]
+wait_time = 0.5
+one_shot = true
