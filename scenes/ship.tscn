@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://c550a1nkjtliu" path="res://scripts/ship_dash_button.gd" id="3_bseor"]
 [ext_resource type="AudioStream" uid="uid://qiqjn1e4e3pr" path="res://assets/sounds/CJ26_SFX_GasAirExplosion_part_1.wav" id="3_tbq4g"]
 [ext_resource type="Script" uid="uid://cmukk110a2qof" path="res://scripts/ship_navigation.gd" id="5_shipnav"]
+[ext_resource type="AudioStream" uid="uid://bqn7y63jb0y6f" path="res://assets/sounds/CJ26_SFX_ambianceRoomTone-127 BPM - 15bar LOOP.ogg" id="7_dschd"]
 [ext_resource type="PackedScene" uid="uid://bmq327un7la8u" path="res://scenes/holodeck.tscn" id="7_holodeck"]
 [ext_resource type="AudioStream" uid="uid://bh5ety7ae0kms" path="res://assets/sounds/SFX_ActivationFusible.wav" id="8_03y04"]
 [ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
@@ -714,8 +715,15 @@ shape = SubResource("BoxShape_record_interactor")
 [node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
 unique_name_in_owner = true
 
-[node name="Ship" parent="." index="5" unique_id=1117057970]
+[node name="Ship" parent="." index="5" unique_id=259920592]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7985253, 0)
+visible = false
+stream = ExtResource("7_dschd")
+volume_db = -24.935
+autoplay = true
 
 [node name="FusePanelLight" type="MeshInstance3D" parent="." index="6" unique_id=1399412660]
 transform = Transform3D(1.2175313e-08, 0.27853864, -0.9604252, 1, -4.3711385e-08, 1.7266417e-15, -4.198152e-08, -0.9604252, -0.27853864, 4.1481853, 2.0860069, 0.007068336)
