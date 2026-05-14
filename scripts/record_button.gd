@@ -17,6 +17,11 @@ extends Node3D
 var anomaly_tracks:Array[AudioStream] = [
 	load("res://assets/sounds/CJ26_SFX_Anomaly-1-WithCrackle.mp3"),
 	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
 ]
 
 var anomalies_recorded:int = 0
