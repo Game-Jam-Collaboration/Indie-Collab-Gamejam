@@ -19,14 +19,22 @@ var tween:Tween = null
 
 var online := false
 
+var decay_rate := 0.01
+
 
 func _process(delta: float) -> void:
-	if !online:
-		if oxygen_meter.scale.y - 0.01 * delta < 0.001:
+	if !online and !ship.player.frozen:
+		var actual_decay := decay_rate * delta
+		var next_scale = oxygen_meter.scale.y - actual_decay
+		var next_energy = light.light_energy - actual_decay
+		if next_scale < 0.001:
 			if ship.player and ship.player and !ship.player.frozen:
 				ship.player._suffocate()
-			return
-		oxygen_meter.scale.y -= 0.01 * delta
+		else:
+			oxygen_meter.scale.y = next_scale
+			ship.player._relieve_suffocation()
+		if next_energy > 0.001:
+			light.light_energy = next_energy
 
 
 func _change_lighting() -> void:
@@ -46,15 +54,9 @@ func pump() -> void:
 	if online == true: return
 	if tween: tween.stop()
 	tween = create_tween()
-	if light.light_energy + .75 >= max_light:
-		online = true
-		$Online.play()
-		_change_lighting()
-		tween.tween_property(oxygen_meter, "scale:y", 1, 0.5)
-	else:
-		$PumpAudio.play()
-		tween.tween_property(oxygen_meter, "scale:y", .5, 0.5)
-	tween.tween_property(light, "light_energy", light.light_energy + .75, 0.1)
+	$PumpAudio.play()
+	tween.tween_property(oxygen_meter, "scale:y", clampf(oxygen_meter.scale.y + .2, .5, 1), 0.5)
+	tween.tween_property(light, "light_energy", clampf(light.light_energy + .2, 0, 1), 0.1)
 
 
 func release_pressure() -> void:

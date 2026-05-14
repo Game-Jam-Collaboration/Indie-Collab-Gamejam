@@ -807,7 +807,6 @@ stream = ExtResource("14_dschd")
 
 [node name="BackingLight" type="OmniLight3D" parent="Oxygen" index="2" unique_id=1916200335]
 light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
-light_energy = 0.0
 
 [node name="Canister" type="MeshInstance3D" parent="Oxygen" index="3" unique_id=2069850239]
 mesh = SubResource("ArrayMesh_03y04")
@@ -828,6 +827,7 @@ shape = SubResource("ConcavePolygonShape3D_dschd")
 
 [node name="OxygenLight" type="MeshInstance3D" parent="Oxygen" index="6" unique_id=377363330]
 transform = Transform3D(3.821371e-16, 8.742278e-09, 0.2, 0.2, -8.742278e-09, 0, 8.742278e-09, 0.2, -8.742278e-09, 0.16758347, 0.77707547, -0.0003476143)
+visible = false
 mesh = SubResource("ArrayMesh_83dbu")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Oxygen/OxygenLight" index="0" unique_id=140980012]
@@ -862,6 +862,7 @@ light_energy = 0.0
 
 [node name="HeaterLight" type="MeshInstance3D" parent="Heater" index="6" unique_id=83704944]
 transform = Transform3D(-2.2467898e-08, -0.51400554, 0.85778695, 1, -4.3711385e-08, 2.0561661e-15, 3.7495052e-08, 0.85778695, 0.51400554, 0.99040425, 2.694797, 0.5984336)
+visible = false
 mesh = SubResource("ArrayMesh_xifwb")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Heater/HeaterLight" index="0" unique_id=1942983639]

@@ -243,7 +243,7 @@ func _suffocate() -> void:
 	var tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.1), 0.5)
 	await get_tree().create_timer(3).timeout
-	if ship.oxygen.online or suffocating == false:
+	if suffocating == false:
 		_relieve_suffocation()
 		%AudioStreamer.stop()
 		return
@@ -251,7 +251,7 @@ func _suffocate() -> void:
 	tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.2), 0.5)
 	await get_tree().create_timer(3).timeout
-	if ship.oxygen.online or suffocating == false:
+	if suffocating == false:
 		_relieve_suffocation()
 		%AudioStreamer.stop()
 		return
@@ -259,23 +259,21 @@ func _suffocate() -> void:
 	tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.3), 0.5)
 	await get_tree().create_timer(3).timeout
-	if ship.oxygen.online or suffocating == false:
-		_relieve_suffocation()
+	if suffocating == false:
 		%AudioStreamer.stop()
 		return
 		
 	tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.4), 0.5)
 	await get_tree().create_timer(3).timeout
-	if ship.oxygen.online or suffocating == false:
-		_relieve_suffocation()
+	if suffocating == false:
 		%AudioStreamer.stop()
 		return
 		
 	tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 1.0), 0.5)
 	await get_tree().create_timer(3).timeout
-	if ship.oxygen.online or suffocating == false:
+	if suffocating == false:
 		_relieve_suffocation()
 		%AudioStreamer.stop()
 		return
