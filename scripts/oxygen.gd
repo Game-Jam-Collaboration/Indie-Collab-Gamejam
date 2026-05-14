@@ -22,11 +22,11 @@ var online := false
 
 func _process(delta: float) -> void:
 	if !online:
-		if oxygen_meter.scale.y - 1 * delta < 0.001:
+		if oxygen_meter.scale.y - 0.01 * delta < 0.001:
 			if ship.player and ship.player and !ship.player.frozen:
 				ship.player._suffocate()
 			return
-		oxygen_meter.scale.y -= 0.05 * delta
+		oxygen_meter.scale.y -= 0.01 * delta
 
 
 func _change_lighting() -> void:
