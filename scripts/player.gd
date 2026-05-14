@@ -1,6 +1,9 @@
 class_name Player
 extends CharacterBody3D
 
+var intro_breath_two = load("res://assets/sounds/intro_breath_2.wav")
+var suffocation_track = load("res://assets/sounds/suffocation.wav")
+
 
 @export var mouse_sensitivity:float = 0.002
 @export var move_speed:float = 5.0
@@ -9,10 +12,11 @@ extends CharacterBody3D
 @export var camera_pivot:Node3D
 @export var ship_movement_audio: AudioStreamPlayer3D = null
 
-@onready var ship:Node3D = null
+@onready var ship:Ship = null
 
 var first_person := true
 var frozen := false
+var suffocating := false
 
 var in_hand:CollisionObject3D = null
 var previous_pickup_parent:Node
@@ -40,6 +44,55 @@ func _ready():
 	ship = get_tree().root.get_node_or_null("Level/%Ship")
 	if ship == null:
 		push_warning("There is no ship in this scene, player controller may not work properly.")
+	frozen = true
+	camera_pivot.rotation_degrees.x = -90
+	await get_tree().create_timer(5).timeout
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.6)
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.0), .3)
+	%AudioStreamer.play()
+	
+	await get_tree().create_timer(1.2).timeout
+	
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -60, 0.8)
+	
+	await get_tree().create_timer(1.8).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -20, 0.7)
+	
+	await get_tree().create_timer(1).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", 15, 0.5)
+	
+	await get_tree().create_timer(1).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", -45, 0.6)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", -20, 0.6)
+	
+	await get_tree().create_timer(1.6).timeout
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(camera_pivot, "rotation_degrees:y", 0, 1)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 1)
+	
+	await tween.finished
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	%AudioStreamer.stream = intro_breath_two
+	%AudioStreamer.play()
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, 1.07)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, .45)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.98)
+	
+	frozen = false
 
 
 func _unhandled_input(event):
@@ -70,6 +123,20 @@ func _unhandled_input(event):
 						if assembly_mechanism:
 							assembly_mechanism.assemble()
 							assembly_mechanism = null
+						frozen = true
+						var tween = create_tween()
+						tween.set_ease(Tween.EASE_IN_OUT)
+						tween.set_parallel(true)
+						tween.tween_property(camera_pivot, "rotation_degrees:y", -140, 0.4)
+						tween.tween_property(camera_pivot, "rotation_degrees:x", -5, 0.4)
+						
+						await get_tree().create_timer(1.6).timeout
+						tween = create_tween()
+						tween.set_ease(Tween.EASE_IN_OUT)
+						tween.set_parallel(true)
+						tween.tween_property(camera_pivot, "rotation_degrees:y", 0, .2)
+						tween.tween_property(camera_pivot, "rotation_degrees:x", 0, .2)
+						frozen = false
 					elif %Holder.get_child_count() > 0:
 						_release_pickup()
 					else:
@@ -189,3 +256,57 @@ func _attack_camera_shake() -> void:
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
 	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
+
+
+func _relieve_suffocation() -> void:
+	suffocating = false
+	var tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.0), 0.2)
+
+
+func _suffocate() -> void:
+	if suffocating:return
+	suffocating = true
+	%AudioStreamer.stream = suffocation_track
+	%AudioStreamer.play()
+	var tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.1), 0.5)
+	await get_tree().create_timer(3).timeout
+	if ship.oxygen.online or suffocating == false:
+		_relieve_suffocation()
+		%AudioStreamer.stop()
+		return
+		
+	tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.2), 0.5)
+	await get_tree().create_timer(3).timeout
+	if ship.oxygen.online or suffocating == false:
+		_relieve_suffocation()
+		%AudioStreamer.stop()
+		return
+		
+	tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.3), 0.5)
+	await get_tree().create_timer(3).timeout
+	if ship.oxygen.online or suffocating == false:
+		_relieve_suffocation()
+		%AudioStreamer.stop()
+		return
+		
+	tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.4), 0.5)
+	await get_tree().create_timer(3).timeout
+	if ship.oxygen.online or suffocating == false:
+		_relieve_suffocation()
+		%AudioStreamer.stop()
+		return
+		
+	tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 1.0), 0.5)
+	await get_tree().create_timer(3).timeout
+	if ship.oxygen.online or suffocating == false:
+		_relieve_suffocation()
+		%AudioStreamer.stop()
+		return
+	
+	get_tree().reload_current_scene()

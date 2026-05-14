@@ -5,6 +5,8 @@ extends Node3D
 @export var environment_light:Light3D = null
 @export var emissive_object:MeshInstance3D
 @export var emissive_material_idx:int = 1
+@export var oxygen_meter:Node3D = null
+@onready var ship:Ship = get_parent()
 
 var offline_light_color:Color = Color.FIREBRICK
 var online_light_color:Color = Color.FOREST_GREEN
@@ -16,6 +18,15 @@ var max_light:float = 1.5
 var tween:Tween = null
 
 var online := false
+
+
+func _process(delta: float) -> void:
+	if !online:
+		if oxygen_meter.scale.y - 1 * delta < 0.001:
+			if ship.player and ship.player and !ship.player.frozen:
+				ship.player._suffocate()
+			return
+		oxygen_meter.scale.y -= 0.05 * delta
 
 
 func _change_lighting() -> void:
@@ -33,14 +44,16 @@ func _change_lighting() -> void:
 
 func pump() -> void:
 	if online == true: return
+	if tween: tween.stop()
+	tween = create_tween()
 	if light.light_energy + .75 >= max_light:
 		online = true
 		$Online.play()
 		_change_lighting()
+		tween.tween_property(oxygen_meter, "scale:y", 1, 0.5)
 	else:
 		$PumpAudio.play()
-	if tween: tween.stop()
-	tween = create_tween()
+		tween.tween_property(oxygen_meter, "scale:y", .5, 0.5)
 	tween.tween_property(light, "light_energy", light.light_energy + .75, 0.1)
 
 

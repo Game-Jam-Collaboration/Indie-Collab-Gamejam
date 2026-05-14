@@ -14,6 +14,8 @@ extends Node3D
 
 @onready var player:Player = get_parent().player
 
+var anomalies_record:int = 0
+
 var _current_anomaly: Anomaly = null
 var _cover_rest_basis: Basis = Basis.IDENTITY
 var _cover_open: float = 0.0
@@ -58,6 +60,7 @@ func _interact() -> void:
 	await %AnomalyRecording.finished
 	player.frozen = false
 	recording = false
+	anomalies_record += 1
 
 
 func _update_target() -> void:

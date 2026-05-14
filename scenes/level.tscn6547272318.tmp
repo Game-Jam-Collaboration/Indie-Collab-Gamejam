@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bcpp6xrjw0euf"]
+
+[ext_resource type="PackedScene" uid="uid://cct8ee5hjm8re" path="res://scenes/world_environment.tscn" id="2_ppgk2"]
+[ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_2r41h"]
+[ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="4_klq6b"]
+[ext_resource type="PackedScene" uid="uid://cjwba0yvou34q" path="res://scenes/exploration_world.tscn" id="5_explore"]
+[ext_resource type="AudioStream" uid="uid://cwt4110ly6goq" path="res://assets/sounds/CJ26_SFX_MovingShip-2.wav" id="5_ppgk2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
+size = Vector3(4, 1, 1)
+
+[node name="Level" type="Node3D" unique_id=1383991437]
+
+[node name="WorldEnvironment" parent="." unique_id=107833806 instance=ExtResource("2_ppgk2")]
+
+[node name="MrPillBody" parent="." unique_id=1720547152 node_paths=PackedStringArray("ship_movement_audio") instance=ExtResource("3_2r41h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20512843, 1.0000001, 2.5354738)
+ship_movement_audio = NodePath("../ShipMovement")
+
+[node name="Ship" parent="." unique_id=1009143488 node_paths=PackedStringArray("player") instance=ExtResource("4_klq6b")]
+unique_name_in_owner = true
+player = NodePath("../MrPillBody")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=549631702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.6000004)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1436563572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, -0.19999981)
+shape = SubResource("BoxShape3D_tfsc7")
+
+[node name="ExplorationWorld" parent="." unique_id=9300001 instance=ExtResource("5_explore")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, 0)
+
+[node name="ShipMovement" type="AudioStreamPlayer3D" parent="." unique_id=2057400972]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9310845, 6.731868)
+stream = ExtResource("5_ppgk2")
+volume_db = 24.182
+bus = &"ShipMovement"
