@@ -720,7 +720,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7985253, 0)
-visible = false
 stream = ExtResource("7_dschd")
 volume_db = -37.402
 autoplay = true
@@ -748,6 +747,7 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="PowerPanel" index="6" unique_id=387991950]
 stream = ExtResource("8_03y04")
+volume_db = -4.156
 
 [node name="ShipBody" type="StaticBody3D" parent="." index="8" unique_id=2052206692]
 

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dybsrrkgxqybf" path="res://scenes/player.tscn" id="3_2r41h"]
 [ext_resource type="PackedScene" uid="uid://bm3yh6ec4d54w" path="res://scenes/ship.tscn" id="4_klq6b"]
 [ext_resource type="PackedScene" uid="uid://cjwba0yvou34q" path="res://scenes/exploration_world.tscn" id="5_explore"]
-[ext_resource type="AudioStream" uid="uid://bxiq873p6ul6d" path="res://assets/sounds/SFX-MovingShip1_loop_cut.wav" id="5_ppgk2"]
+[ext_resource type="AudioStream" uid="uid://cwt4110ly6goq" path="res://assets/sounds/CJ26_SFX_MovingShip-2.wav" id="5_ppgk2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tfsc7"]
 size = Vector3(4, 1, 1)
@@ -33,6 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, 0)
 
 [node name="ShipMovement" type="AudioStreamPlayer3D" parent="." unique_id=2057400972]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9310845, 4.373867)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9310845, 6.731868)
 stream = ExtResource("5_ppgk2")
-volume_db = -34.0
+volume_db = 24.182
+bus = &"ShipMovement"
