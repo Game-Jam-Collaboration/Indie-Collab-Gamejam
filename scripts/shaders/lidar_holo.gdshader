@@ -25,6 +25,7 @@ uniform float flicker_speed = 14.0;
 
 uniform float glitch_chance = 0.04;
 uniform float glitch_rate = 8.0;
+uniform float glitch_burst : hint_range(0.0, 1.0) = 0.0;
 
 uniform float front_fade_min : hint_range(0.0, 1.0) = 0.0;
 uniform float clip_min_local_y = -1.0e9;
@@ -70,6 +71,15 @@ void vertex() {
 
 	vec4 world_pos = MODEL_MATRIX * vec4(VERTEX, 1.0);
 	world_pos.xyz += (g - 1.0) * final_local;
+	if (glitch_burst > 0.0) {
+		float gseed = floor(current_time * 18.0) + v_seed * 1234.5;
+		vec3 jitter = vec3(
+			fract(sin(gseed * 12.9898) * 43758.5453) - 0.5,
+			fract(sin(gseed * 78.233) * 23568.5453) - 0.5,
+			fract(sin(gseed * 45.164) * 13568.5453) - 0.5
+		);
+		world_pos.xyz += jitter * glitch_burst * 0.18;
+	}
 	POSITION = PROJECTION_MATRIX * VIEW_MATRIX * world_pos;
 
 	v_arrival = exp(-(v_effective_age - travel_time) * arrival_flash_decay);
@@ -104,12 +114,17 @@ void fragment() {
 	float glitch = step(glitch_chance, fract(sin(glitch_seed * 12.9898) * 43758.5453));
 
 	float alpha = mix(v_life * flicker * glitch * v_front_fade, anomaly_alpha * v_life, v_is_full_object);
+	alpha *= mix(1.0, glitch * flicker, glitch_burst);
 	float hit_mult = mix(miss_brightness, 1.0, v_is_hit);
 	float intensity = emission_energy * hit_mult * (1.0 + band_factor * scan_band_strength + v_arrival * arrival_flash);
 
 	float anomaly_flash = 0.08 + 0.08 * sin(current_time * anomaly_flash_speed);
 	vec3 anomaly_render_color = mix(anomaly_color, vec3(1.0), anomaly_flash);
 	vec3 hit_color = mix(base_color, anomaly_render_color, v_is_anomaly);
+	if (glitch_burst > 0.0) {
+		float color_jitter = fract(sin((floor(current_time * 12.0) + v_seed * 100.0) * 91.713) * 51234.123);
+		hit_color = mix(hit_color, vec3(color_jitter, 1.0 - color_jitter, 0.5 + 0.5 * sin(current_time * 30.0)), glitch_burst);
+	}
 	float trail_fade = clamp(v_effective_age / max(miss_trail_duration, 0.0001), 0.0, 1.0);
 	vec3 miss_color = mix(base_color, vec3(1.0), trail_fade);
 	vec3 color = mix(miss_color, hit_color, v_arrived);

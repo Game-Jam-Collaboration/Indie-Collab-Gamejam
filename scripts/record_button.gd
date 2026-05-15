@@ -73,6 +73,21 @@ func _interact() -> void:
 	await %AnomalyRecording.finished
 	recording = false
 	anomalies_recorded += 1
+	_on_anomalies_recorded_changed()
+
+
+func _on_anomalies_recorded_changed() -> void:
+	if anomalies_recorded == 3:
+		var lidar := get_tree().get_first_node_in_group("lidar_renderer")
+		if lidar != null and lidar.has_method("trigger_glitch_burst"):
+			lidar.trigger_glitch_burst(5.0)
+		else:
+			push_warning("RecordButton: lidar_renderer group missing; glitch burst skipped")
+	if anomalies_recorded == 4:
+		for node in get_tree().get_nodes_in_group("anomaly"):
+			var anom := node as Anomaly
+			if anom != null and not anom.recorded:
+				anom.chasing = true
 
 
 func _update_target() -> void:
