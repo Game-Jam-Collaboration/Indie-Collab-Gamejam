@@ -297,12 +297,43 @@ func _intro_awaken() -> void:
 
 func _intro_observe_broken_fixtures() -> void:
 	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "rotation_degrees:y", -39, 0.38)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", -22, 0.38)
+	await tween.finished
+	await get_tree().create_timer(1.2).timeout
+	
+	tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "rotation_degrees:y", -56, 0.6)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.6)
+	await tween.finished
+	await get_tree().create_timer(.8).timeout
+	
+	
+	tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "rotation_degrees:y", -39, 0.38)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", -22, 0.38)
+	await tween.finished
+	await get_tree().create_timer(.8).timeout
+
+
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, .7)
+	await tween.finished
+
+
+	tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	%AudioStreamer.stream = intro_breath_two
 	%AudioStreamer.play()
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, 1.07)
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 2, .45)
 	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.98)
+	yaw = rotation.y
+	pitch = camera_pivot.rotation.x
 	await tween.finished
 
 
