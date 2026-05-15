@@ -82,20 +82,6 @@ func _unhandled_input(event):
 						if assembly_mechanism:
 							assembly_mechanism.assemble()
 							assembly_mechanism = null
-						frozen = true
-						var tween = create_tween()
-						tween.set_ease(Tween.EASE_IN_OUT)
-						tween.set_parallel(true)
-						tween.tween_property(camera_pivot, "rotation_degrees:y", -140, 0.4)
-						tween.tween_property(camera_pivot, "rotation_degrees:x", -5, 0.4)
-						
-						await get_tree().create_timer(1.6).timeout
-						tween = create_tween()
-						tween.set_ease(Tween.EASE_IN_OUT)
-						tween.set_parallel(true)
-						tween.tween_property(camera_pivot, "rotation_degrees:y", 0, .2)
-						tween.tween_property(camera_pivot, "rotation_degrees:x", 0, .2)
-						frozen = false
 					elif %Holder.get_child_count() > 0:
 						_release_pickup()
 					else:

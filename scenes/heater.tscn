@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bngghcfsl433w" path="res://scripts/heater.gd" id="1_48368"]
 [ext_resource type="Material" uid="uid://ddgnhwtawloct" path="res://assets/materials/heater_element_on.tres" id="2_aqn0s"]
-[ext_resource type="AudioStream" uid="uid://c4aye3mk3su1e" path="res://assets/sounds/heater_power_up_prototype.wav" id="3_y6etg"]
+[ext_resource type="AudioStream" uid="uid://t34psacfkc2q" path="res://assets/sounds/SFX_ActivationLever-test.wav" id="3_08v4r"]
 [ext_resource type="AudioStream" uid="uid://bmtypaejgqeaf" path="res://assets/sounds/heater_power_down_prototype.wav" id="4_08v4r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kd22n"]
@@ -185,7 +185,7 @@ mesh = SubResource("ArrayMesh_t41lb")
 surface_material_override/3 = ExtResource("2_aqn0s")
 
 [node name="PowerOn" type="AudioStreamPlayer3D" parent="." unique_id=1916898804]
-stream = ExtResource("3_y6etg")
+stream = ExtResource("3_08v4r")
 
 [node name="PowerDown" type="AudioStreamPlayer3D" parent="." unique_id=1993653110]
 stream = ExtResource("4_08v4r")
