@@ -70,8 +70,6 @@ func _interact() -> void:
 	recording = true
 	%AnomalyRecording.stream = anomaly_tracks[anomalies_recorded]
 	%AnomalyRecording.play()
-	if anomalies_recorded == 1:
-		player.first_anomaly_cutscene()
 	await %AnomalyRecording.finished
 	recording = false
 	anomalies_recorded += 1
