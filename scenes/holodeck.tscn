@@ -84,18 +84,6 @@ ship_icon = NodePath("ShipIcon")
 
 [node name="CardinalRing" type="Node3D" parent="Powered/LidarRenderer" unique_id=1010202010]
 
-[node name="N" type="MeshInstance3D" parent="Powered/LidarRenderer/CardinalRing" unique_id=1010202011]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, -0.4)
-
-[node name="E" type="MeshInstance3D" parent="Powered/LidarRenderer/CardinalRing" unique_id=1010202012]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.4, 0, 0)
-
-[node name="S" type="MeshInstance3D" parent="Powered/LidarRenderer/CardinalRing" unique_id=1010202013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
-
-[node name="W" type="MeshInstance3D" parent="Powered/LidarRenderer/CardinalRing" unique_id=1010202014]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.4, 0, 0)
-
 [node name="RadarSweep" type="Node3D" parent="Powered/LidarRenderer" unique_id=1010202005]
 visible = false
 

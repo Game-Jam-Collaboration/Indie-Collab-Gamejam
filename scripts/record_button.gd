@@ -11,6 +11,9 @@ extends Node3D
 @export var cover_open_angle_deg: float = 100.0
 @export var cover_anim_speed: float = 5.0
 @export var flash_period: float = .8
+@export var progress_lights: Array[MeshInstance3D] = []
+@export var progress_light_off_material: Material = null
+@export var progress_light_on_material: Material = null
 
 @onready var player:Player = get_parent().player
 
@@ -55,6 +58,7 @@ func _process(delta: float) -> void:
 		_update_flash(delta)
 	else:
 		_set_light(want_open)
+	_update_progress_lights()
 
 
 func _interact() -> void:
@@ -113,3 +117,23 @@ func _set_light(on: bool) -> void:
 	if indicator_light == null: return
 	var mat := indicator_on_material if on else indicator_off_material
 	if mat != null: indicator_light.material_override = mat
+
+
+func _update_progress_lights() -> void:
+	if progress_lights.is_empty():
+		return
+	var progress: float = 0.0
+	if recording and is_inside_tree() and has_node("AnomalyRecording"):
+		var player_node: AudioStreamPlayer3D = %AnomalyRecording
+		if player_node.stream != null:
+			var length: float = player_node.stream.get_length()
+			if length > 0.0:
+				progress = clampf(player_node.get_playback_position() / length, 0.0, 1.0)
+	var lit_count: int = int(round(progress * progress_lights.size()))
+	for i in progress_lights.size():
+		var light: MeshInstance3D = progress_lights[i]
+		if light == null:
+			continue
+		var mat: Material = progress_light_on_material if i < lit_count else progress_light_off_material
+		if mat != null:
+			light.material_override = mat

@@ -16,22 +16,34 @@ var online := false
 
 
 func _ready() -> void:
-	heater.online = online
-	heater_light.light_energy = 0.0
+	if Engine.is_editor_hint():
+		return
+	if heater_light == null:
+		heater_light = get_parent().get_node_or_null("OmniLight3D") as OmniLight3D
+	if fuse_panel == null:
+		fuse_panel = get_node_or_null("../../PowerPanel") as FusePanel
+	if heater:
+		heater.online = online
+	if heater_light:
+		heater_light.light_energy = 0.0
 	%AnimationPlayer.play("heater_lever")
 
 
 func _interact(force:bool=false) -> void:
-	if online and !force or !fuse_panel.online: return
+	if online and !force: return
+	if fuse_panel == null or !fuse_panel.online: return
 	if light_tween:
 		light_tween.stop()
 	light_tween = create_tween()
 	if !online:
 		%AnimationPlayer.play_backwards("heater_lever")
 		%AudioStreamPlayer3D.play()
-		light_tween.tween_property(heater_light, "light_energy", 1.0, 5.6)
+		if heater_light:
+			light_tween.tween_property(heater_light, "light_energy", 1.0, 5.6)
 	else:
 		%AnimationPlayer.play("heater_lever")
-		light_tween.tween_property(heater_light, "light_energy", 0.0, .4)
+		if heater_light:
+			light_tween.tween_property(heater_light, "light_energy", 0.0, .4)
 	online = not online
-	heater.online = online
+	if heater:
+		heater.online = online

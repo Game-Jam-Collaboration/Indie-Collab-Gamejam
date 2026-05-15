@@ -47,6 +47,12 @@ var _radar_angle: float = 0.0
 var _previous_non_radar_mode: ViewMode = ViewMode.SHIP_LOCKED
 var _anomaly_arrow: MeshInstance3D = null
 var _anomaly_arrow_radius: float = 0.55
+var _anomaly_multi_mesh: MultiMesh
+var _anomaly_multi_mesh_instance: MultiMeshInstance3D
+var _anomaly_slot_assignments: Dictionary = {}
+
+const ANOMALY_DOTS_PER_NODE: int = 720
+const MAX_TRACKED_ANOMALIES: int = 16
 
 
 func _ready() -> void:
@@ -95,8 +101,8 @@ func _ready() -> void:
 		icon_mat.set_shader_parameter("emission_energy", emission_energy * ship_icon_brightness)
 
 	_setup_radar_arc()
-	_setup_cardinal_arrows()
 	_setup_anomaly_arrow()
+	_setup_anomaly_multi_mesh(sphere)
 
 
 func _process(delta: float) -> void:
@@ -114,6 +120,7 @@ func _process(delta: float) -> void:
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
 
+	_update_anomaly_clouds()
 	_recolor_recorded_anomalies()
 	_update_anomaly_arrow()
 
@@ -162,36 +169,6 @@ func _build_radar_arc_material() -> StandardMaterial3D:
 	return mat
 
 
-func _setup_cardinal_arrows() -> void:
-	if cardinal_ring == null:
-		return
-	var arrow_mesh := _build_cardinal_arrow_mesh()
-	var white_mat := _build_arrow_material(Color(1, 1, 1, 1))
-	var red_mat := _build_arrow_material(Color(1, 0.18, 0.18, 1))
-	for cardinal_name in ["N", "E", "S", "W"]:
-		var node := cardinal_ring.get_node_or_null(cardinal_name) as MeshInstance3D
-		if node == null:
-			continue
-		node.mesh = arrow_mesh
-		node.material_override = red_mat if cardinal_name == "N" else white_mat
-
-
-func _build_cardinal_arrow_mesh() -> ArrayMesh:
-	var mesh := ArrayMesh.new()
-	var vertices := PackedVector3Array([
-		Vector3(0.0, 0.0, 0.064),
-		Vector3(-0.036, 0.0, -0.024),
-		Vector3(0.036, 0.0, -0.024),
-	])
-	var indices := PackedInt32Array([0, 1, 2])
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = vertices
-	arrays[Mesh.ARRAY_INDEX] = indices
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return mesh
-
-
 func _sphere_radius_local() -> float:
 	var sr: float = 50.0
 	if probe != null:
@@ -224,6 +201,85 @@ func _build_anomaly_arrow_mesh() -> ArrayMesh:
 	arrays[Mesh.ARRAY_INDEX] = indices
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
+
+
+func _setup_anomaly_multi_mesh(point_mesh: Mesh) -> void:
+	_anomaly_multi_mesh = MultiMesh.new()
+	_anomaly_multi_mesh.transform_format = MultiMesh.TRANSFORM_3D
+	_anomaly_multi_mesh.use_custom_data = true
+	_anomaly_multi_mesh.mesh = point_mesh
+	_anomaly_multi_mesh.instance_count = ANOMALY_DOTS_PER_NODE * MAX_TRACKED_ANOMALIES
+	_anomaly_multi_mesh_instance = MultiMeshInstance3D.new()
+	_anomaly_multi_mesh_instance.multimesh = _anomaly_multi_mesh
+	_anchor.add_child(_anomaly_multi_mesh_instance)
+	var t_zero := Transform3D()
+	for i in _anomaly_multi_mesh.instance_count:
+		_anomaly_multi_mesh.set_instance_transform(i, t_zero)
+		_anomaly_multi_mesh.set_instance_custom_data(i, DEAD_CUSTOM)
+
+
+func _assign_anomaly_slot(a: Node) -> int:
+	if _anomaly_slot_assignments.has(a):
+		return _anomaly_slot_assignments[a]
+	var used := {}
+	for s in _anomaly_slot_assignments.values():
+		used[s] = true
+	for i in MAX_TRACKED_ANOMALIES:
+		var candidate: int = i * ANOMALY_DOTS_PER_NODE
+		if not used.has(candidate):
+			_anomaly_slot_assignments[a] = candidate
+			return candidate
+	return -1
+
+
+func _clear_anomaly_slot(slot_start: int) -> void:
+	for i in ANOMALY_DOTS_PER_NODE:
+		_anomaly_multi_mesh.set_instance_custom_data(slot_start + i, DEAD_CUSTOM)
+
+
+func _update_anomaly_clouds() -> void:
+	if _anomaly_multi_mesh == null:
+		return
+	if probe == null:
+		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
+	if probe == null or probe.navigation == null:
+		return
+	var ship_pos: Vector3 = probe.global_position
+	var sim_pos: Vector3 = probe.navigation.simulated_position
+	var now: float = Time.get_ticks_msec() / 1000.0
+	var seen := {}
+
+	for a in get_tree().get_nodes_in_group("anomaly"):
+		if not is_instance_valid(a):
+			continue
+		var d: float = (a.global_position - ship_pos).length()
+		if d > probe.scan_range:
+			continue
+		var slot_start: int = _assign_anomaly_slot(a)
+		if slot_start < 0:
+			continue
+		seen[a] = true
+		a.discovered = true
+		var world_points: PackedVector3Array = a.get_lidar_points()
+		var kind: float = 13.0 if a.recorded else 12.0
+		var n: int = min(world_points.size(), ANOMALY_DOTS_PER_NODE)
+		for i in n:
+			var sim_coords: Vector3 = sim_pos + (world_points[i] - ship_pos)
+			var local_pos: Vector3 = sim_coords * hologram_scale
+			var xform := Transform3D()
+			xform.origin = local_pos
+			_anomaly_multi_mesh.set_instance_transform(slot_start + i, xform)
+			_anomaly_multi_mesh.set_instance_custom_data(slot_start + i, Color(now, randf(), local_pos.y, kind))
+		for i in range(n, ANOMALY_DOTS_PER_NODE):
+			_anomaly_multi_mesh.set_instance_custom_data(slot_start + i, DEAD_CUSTOM)
+
+	var to_remove := []
+	for a in _anomaly_slot_assignments.keys():
+		if not seen.has(a):
+			to_remove.append(a)
+	for a in to_remove:
+		_clear_anomaly_slot(_anomaly_slot_assignments[a])
+		_anomaly_slot_assignments.erase(a)
 
 
 func _update_anomaly_arrow() -> void:
@@ -323,10 +379,8 @@ func _tick_radar(delta: float) -> void:
 		directions.append(dir)
 	var result: Dictionary = probe.scan_directions(directions)
 	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
-	var misses: PackedVector3Array = result.get("misses", PackedVector3Array())
 	var anomaly_hits_by_node: Dictionary = result.get("anomaly_hits_by_node", {})
 	display_points(hits, 11.0)
-	display_points(misses, 10.0)
 	for anomaly_node in anomaly_hits_by_node.keys():
 		display_points(anomaly_hits_by_node[anomaly_node], 12.0, anomaly_node)
 
@@ -363,7 +417,7 @@ func _recolor_recorded_anomalies() -> void:
 			var spawn_time: float = entry["spawn_time"]
 			var data: Color = _multi_mesh.get_instance_custom_data(idx)
 			if absf(data.r - spawn_time) < 0.001:
-				var new_kind: float = 11.0 if data.a >= 9.5 else 1.0
+				var new_kind: float = 13.0 if data.a >= 9.5 else 3.0
 				_multi_mesh.set_instance_custom_data(idx, Color(data.r, data.g, data.b, new_kind))
 		_recolored_anomalies[_owner] = true
 
@@ -405,6 +459,10 @@ func display_points(points: PackedVector3Array, hit_flag: float = 1.0, _owner: N
 		_multi_mesh.set_instance_custom_data(idx, Color(spawn_time, randf(), local_pos.y, hit_flag))
 		if owner != null:
 			owner_entries.append({"idx": idx, "spawn_time": spawn_time})
+
+	if _owner != null and owner_entries.size() > 8000:
+		var keep_start: int = owner_entries.size() - 4000
+		_anomaly_point_indices[_owner] = owner_entries.slice(keep_start)
 
 
 func clear() -> void:
