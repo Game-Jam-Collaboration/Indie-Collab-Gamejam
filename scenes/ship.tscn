@@ -30,6 +30,12 @@ emission_enabled = true
 emission = Color(0.25, 1, 0.35, 1)
 emission_energy_multiplier = 6.0
 
+[sub_resource type="StandardMaterial3D" id="Mat_indicator_disabled"]
+albedo_color = Color(1, 0.15, 0.15, 1)
+emission_enabled = true
+emission = Color(1, 0.15, 0.15, 1)
+emission_energy_multiplier = 4.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_me88x"]
 resource_name = "Buttons"
 cull_mode = 2
@@ -206,6 +212,16 @@ emission_enabled = true
 emission = Color(1, 0.3, 0.2, 1)
 emission_energy_multiplier = 8.0
 
+[sub_resource type="StandardMaterial3D" id="Mat_progress_off"]
+albedo_color = Color(0.04, 0.12, 0.06, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_progress_on"]
+albedo_color = Color(0.25, 1, 0.45, 1)
+emission_enabled = true
+emission = Color(0.3, 1, 0.5, 1)
+emission_energy_multiplier = 5.5
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqiwe"]
 resource_name = "BaseMaterial"
 cull_mode = 2
@@ -325,6 +341,12 @@ shadow_mesh = SubResource("ArrayMesh_fvjvs")
 [sub_resource type="SphereMesh" id="SphereMesh_alert"]
 radial_segments = 16
 rings = 8
+
+[sub_resource type="SphereMesh" id="SphereMesh_progress"]
+radius = 0.35
+height = 0.7
+radial_segments = 12
+rings = 6
 
 [sub_resource type="BoxShape3D" id="BoxShape_record_interactor"]
 size = Vector3(2.4, 0.6, 1.6)
@@ -566,15 +588,18 @@ autostart = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36801034, -0.0643301, 5.077443)
 
 [node name="NavButtons" type="Node3D" parent="." index="3" unique_id=903122595]
-transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -0.07495521, 0.9454718, 4.883774)
+transform = Transform3D(-3.2783543e-09, 0, 0.075, 0, 0.075, 0, -0.075, 0, -3.2783543e-09, 0.35997385, 0.9454718, 4.805387)
 
-[node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 navigation = NodePath("../../ShipNavigation")
+fuse_panel = NodePath("../../PowerPanel")
+record_button = NodePath("../../RecordButton")
 indicator = NodePath("../IndicatorForward")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+indicator_disabled_material = SubResource("Mat_indicator_disabled")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/Forward" index="0" unique_id=1053655108]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -584,14 +609,17 @@ mesh = SubResource("ArrayMesh_tbq4g")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045888685, 0.23313332, 0.6126938)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="Backward" type="StaticBody3D" parent="NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="Backward" type="StaticBody3D" parent="NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 1
 navigation = NodePath("../../ShipNavigation")
+fuse_panel = NodePath("../../PowerPanel")
+record_button = NodePath("../../RecordButton")
 indicator = NodePath("../IndicatorReverse")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+indicator_disabled_material = SubResource("Mat_indicator_disabled")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/Backward" index="0" unique_id=1485384229]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -601,14 +629,17 @@ mesh = SubResource("ArrayMesh_tlr80")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045886817, 0.222332, -0.6267204)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 2
 navigation = NodePath("../../ShipNavigation")
+fuse_panel = NodePath("../../PowerPanel")
+record_button = NodePath("../../RecordButton")
 indicator = NodePath("../IndicatorLeft")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+indicator_disabled_material = SubResource("Mat_indicator_disabled")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateLeft" index="0" unique_id=1467204394]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -618,14 +649,17 @@ mesh = SubResource("ArrayMesh_fs4we")
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, -0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "indicator")]
+[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 3
 navigation = NodePath("../../ShipNavigation")
+fuse_panel = NodePath("../../PowerPanel")
+record_button = NodePath("../../RecordButton")
 indicator = NodePath("../IndicatorRight")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
+indicator_disabled_material = SubResource("Mat_indicator_disabled")
 
 [node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateRight" index="0" unique_id=440499520]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -655,7 +689,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, -1.
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="RecordButton" type="Node3D" parent="." index="4" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover")]
+[node name="RecordButton" type="Node3D" parent="." index="4" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
 transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.38994783, 0.91260415, 4.8517504)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
@@ -664,6 +698,9 @@ indicator_off_material = SubResource("Mat_alert_off")
 indicator_on_material = SubResource("Mat_alert_on")
 indicator_recording_material = SubResource("StandardMaterial3D_03y04")
 cover = NodePath("Cover")
+progress_lights = [NodePath("ProgressBar/Light0"), NodePath("ProgressBar/Light1"), NodePath("ProgressBar/Light2"), NodePath("ProgressBar/Light3"), NodePath("ProgressBar/Light4")]
+progress_light_off_material = SubResource("Mat_progress_off")
+progress_light_on_material = SubResource("Mat_progress_on")
 
 [node name="Base" type="MeshInstance3D" parent="RecordButton" index="0" unique_id=172497734]
 mesh = SubResource("ArrayMesh_8qiel")
@@ -680,16 +717,44 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.496, -0.446, 0)
 material_override = SubResource("Mat_alert_off")
 mesh = SubResource("SphereMesh_alert")
 
-[node name="Interactor" type="StaticBody3D" parent="RecordButton" index="4" unique_id=1010101004 groups=["Interactable"]]
+[node name="ProgressBar" type="Node3D" parent="RecordButton" index="4" unique_id=1714703030]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.1302795, 0.44299698, 0)
+
+[node name="Light0" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="0" unique_id=870185161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
+material_override = SubResource("Mat_progress_off")
+mesh = SubResource("SphereMesh_progress")
+
+[node name="Light1" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="1" unique_id=1206988082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+material_override = SubResource("Mat_progress_off")
+mesh = SubResource("SphereMesh_progress")
+
+[node name="Light2" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="2" unique_id=279541586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+material_override = SubResource("Mat_progress_off")
+mesh = SubResource("SphereMesh_progress")
+
+[node name="Light3" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="3" unique_id=1593176621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+material_override = SubResource("Mat_progress_off")
+mesh = SubResource("SphereMesh_progress")
+
+[node name="Light4" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="4" unique_id=1158164224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 2)
+material_override = SubResource("Mat_progress_off")
+mesh = SubResource("SphereMesh_progress")
+
+[node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
+unique_name_in_owner = true
+
+[node name="Interactor" type="StaticBody3D" parent="RecordButton" index="6" unique_id=1010101004 groups=["Interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RecordButton/Interactor" index="0" unique_id=1010101005]
 shape = SubResource("BoxShape_record_interactor")
 
-[node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
-unique_name_in_owner = true
-
-[node name="Ship" parent="." index="5" unique_id=1117057970]
+[node name="Ship" parent="." index="5" unique_id=1479839687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
@@ -719,7 +784,7 @@ holodeck = NodePath("../Holodeck")
 [node name="Fuse" parent="PowerPanel" index="4" unique_id=2062436736 instance=ExtResource("3_3m36u")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0, 1.7270491)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="PowerPanel" index="6" unique_id=387991950]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="PowerPanel" index="5" unique_id=387991950]
 stream = ExtResource("8_03y04")
 volume_db = -4.156
 
@@ -795,10 +860,8 @@ mesh = SubResource("CylinderMesh_dschd")
 [node name="Heater" parent="." index="14" unique_id=976087777 instance=ExtResource("11_48mkp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.831487, -0.2799909, -0.28434968)
 
-[node name="HeaterLever" parent="Heater" index="3" unique_id=1986176028 node_paths=PackedStringArray("heater_light", "fuse_panel") instance=ExtResource("12_03y04")]
+[node name="HeaterLever" parent="Heater" index="3" unique_id=1986176028 instance=ExtResource("12_03y04")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030009, 1.4749591, -1.7802498)
-heater_light = NodePath("../OmniLight3D")
-fuse_panel = NodePath("../../PowerPanel")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Heater" index="4" unique_id=1103265019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07510042, 1.7192373, -0.46632242)

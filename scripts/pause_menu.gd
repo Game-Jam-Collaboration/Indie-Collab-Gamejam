@@ -1,9 +1,12 @@
 extends PanelContainer
 
+const VOLUME_LEVELS: Array = [1.0, 0.75, 0.5, 0.25, 0.0]
+
 @export var button_input_variation : Array = []
 
 @export var script_type : String
 var current_scene = ""
+var _volume_index: int = 0
 
 var focused:bool:
 	get:
@@ -55,11 +58,25 @@ func _mouse_pressed(button_index):
 ##Keyboard inputs. Such as escape to show and hide its PauseMenu.
 func _unhandled_input(event):
 	if script_type == "Pause":
+		if event is InputEventKey and event.pressed and not event.echo:
+			if event.physical_keycode == KEY_QUOTELEFT:
+				_cycle_volume()
 		#print(current_scene)
 		if current_scene == "ship":
 			if event is InputEventKey and event.pressed:
 				if event.keycode == KEY_ESCAPE:
 					visible = !focused
+
+
+func _cycle_volume() -> void:
+	_volume_index = (_volume_index + 1) % VOLUME_LEVELS.size()
+	var v: float = VOLUME_LEVELS[_volume_index]
+	var bus_idx: int = AudioServer.get_bus_index("Master")
+	if bus_idx < 0:
+		return
+	AudioServer.set_bus_mute(bus_idx, v <= 0.0)
+	if v > 0.0:
+		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(v))
 				
 
 ##It makes the input calls.

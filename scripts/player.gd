@@ -114,6 +114,8 @@ func _physics_process(delta):
 	if hold_target:
 		if not is_instance_valid(hold_target) or %Selector.get_collider() != hold_target:
 			_end_hold()
+		elif hold_target.has_method("can_press") and not hold_target.can_press():
+			_end_hold()
 		elif hold_target.has_method("on_held"):
 			hold_target.on_held(delta)
 
@@ -199,7 +201,10 @@ func _release_pickup() -> void:
 
 
 func _start_hold(target: Node) -> void:
-	if !ship_movement_audio.playing:
+	var can_interact := true
+	if target.has_method("can_press"):
+		can_interact = target.can_press()
+	if can_interact and !ship_movement_audio.playing:
 		ship_movement_audio.play()
 	hold_target = target
 	if target.has_method("on_press_start"):

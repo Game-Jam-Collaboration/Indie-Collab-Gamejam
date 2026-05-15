@@ -54,12 +54,7 @@ func scan() -> Dictionary:
 			var hit_pos: Vector3 = result["position"]
 			var hit_local: Vector3 = sim_pos + (hit_pos - origin)
 			var collider = result.get("collider")
-			if collider != null and collider.is_in_group("anomaly") and not collider.recorded:
-				if not anomaly_hits_by_node.has(collider):
-					anomaly_hits_by_node[collider] = PackedVector3Array()
-				anomaly_hits_by_node[collider].append(hit_local)
-				collider.discovered = true
-			else:
+			if collider == null or not collider.is_in_group("anomaly"):
 				hits.append(hit_local)
 		else:
 			misses.append(sim_pos + dir * scan_range)
@@ -89,12 +84,7 @@ func scan_directions(directions: PackedVector3Array) -> Dictionary:
 			var hit_pos: Vector3 = result["position"]
 			var hit_local: Vector3 = sim_pos + (hit_pos - origin)
 			var collider = result.get("collider")
-			if collider != null and collider.is_in_group("anomaly") and not collider.recorded:
-				if not anomaly_hits_by_node.has(collider):
-					anomaly_hits_by_node[collider] = PackedVector3Array()
-				anomaly_hits_by_node[collider].append(hit_local)
-				collider.discovered = true
-			else:
+			if collider == null or not collider.is_in_group("anomaly"):
 				hits.append(hit_local)
 		else:
 			misses.append(sim_pos + dir * scan_range)

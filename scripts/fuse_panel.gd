@@ -32,15 +32,26 @@ func assemble() -> void:
 
 func disassemble() -> void:
 	if !online: return
+	_power_off()
+	fuse.freeze = false
+	fuse.apply_central_impulse(Vector3(-2, 0, 0))
+	fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0, 0))
+
+
+func _power_off() -> void:
+	if !online: return
 	if status_panel:
 		status_panel.mark_pending(slot_index)
 	online = false
 	_change_lighting()
-	fuse.freeze = false
-	holodeck.get_node("%Powered").visible = false
-	holodeck.get_node("%RadarSound").stop()
-	fuse.apply_central_impulse(Vector3(-2, 0, 0))
-	fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0,0))
+	if holodeck:
+		holodeck.get_node("%Powered").visible = false
+		holodeck.get_node("%RadarSound").stop()
+
+
+func _process(_delta: float) -> void:
+	if online and not _has_assembled_fuse():
+		_power_off()
 
 
 func _change_lighting() -> void:

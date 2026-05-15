@@ -28,7 +28,8 @@ uniform float glitch_rate = 8.0;
 
 uniform float front_fade_min : hint_range(0.0, 1.0) = 0.0;
 uniform float clip_min_local_y = -1.0e9;
-uniform float anomaly_flash_speed = 9.0;
+uniform float anomaly_flash_speed = 4.0;
+uniform float anomaly_alpha : hint_range(0.0, 1.0) = 0.4;
 
 varying float v_life;
 varying float v_seed;
@@ -37,6 +38,7 @@ varying float v_arrival;
 varying float v_effective_age;
 varying float v_is_hit;
 varying float v_is_anomaly;
+varying float v_is_full_object;
 varying float v_arrived;
 varying float v_front_fade;
 
@@ -47,7 +49,8 @@ void vertex() {
 	float raw_kind = INSTANCE_CUSTOM.a;
 	float no_anim = step(9.5, raw_kind);
 	float kind = raw_kind - no_anim * 10.0;
-	v_is_anomaly = step(1.5, kind);
+	v_is_anomaly = step(1.5, kind) - step(2.5, kind);
+	v_is_full_object = step(1.5, kind);
 	v_is_hit = step(0.5, kind);
 	float age = current_time - spawn_time;
 	float launch_delay = mix(v_seed * max_launch_delay, 0.0, no_anim);
@@ -87,7 +90,7 @@ void fragment() {
 	if (v_effective_age < 0.0 || v_life <= 0.0) {
 		discard;
 	}
-	if (v_local_y < clip_min_local_y) {
+	if (v_local_y < clip_min_local_y && v_is_full_object < 0.5) {
 		discard;
 	}
 
@@ -100,11 +103,11 @@ void fragment() {
 	float glitch_seed = floor(current_time * glitch_rate) + v_seed * 100.0;
 	float glitch = step(glitch_chance, fract(sin(glitch_seed * 12.9898) * 43758.5453));
 
-	float alpha = mix(v_life * flicker * glitch * v_front_fade, 1.0, v_is_anomaly);
+	float alpha = mix(v_life * flicker * glitch * v_front_fade, anomaly_alpha * v_life, v_is_full_object);
 	float hit_mult = mix(miss_brightness, 1.0, v_is_hit);
 	float intensity = emission_energy * hit_mult * (1.0 + band_factor * scan_band_strength + v_arrival * arrival_flash);
 
-	float anomaly_flash = 0.5 + 0.5 * sin(current_time * anomaly_flash_speed);
+	float anomaly_flash = 0.08 + 0.08 * sin(current_time * anomaly_flash_speed);
 	vec3 anomaly_render_color = mix(anomaly_color, vec3(1.0), anomaly_flash);
 	vec3 hit_color = mix(base_color, anomaly_render_color, v_is_anomaly);
 	float trail_fade = clamp(v_effective_age / max(miss_trail_duration, 0.0001), 0.0, 1.0);
