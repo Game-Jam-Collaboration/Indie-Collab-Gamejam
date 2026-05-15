@@ -690,7 +690,7 @@ material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
 [node name="RecordButton" type="Node3D" parent="." index="4" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
-transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.38994783, 0.91260415, 4.8517504)
+transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.08017923, 0.91550624, 4.9034142)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")

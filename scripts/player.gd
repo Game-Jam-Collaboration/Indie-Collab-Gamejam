@@ -287,12 +287,12 @@ func _intro_observe_broken_fixtures() -> void:
 	tween.tween_property(self, "rotation_degrees:y", -39, 0.38)
 	tween.tween_property(camera_pivot, "rotation_degrees:x", -22, 0.38)
 	await tween.finished
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(.8).timeout
 	
 	tween = create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(self, "rotation_degrees:y", -56, 0.6)
-	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.6)
+	tween.tween_property(self, "rotation_degrees:y", -56, 0.38)
+	tween.tween_property(camera_pivot, "rotation_degrees:x", 0, 0.38)
 	await tween.finished
 	await get_tree().create_timer(.8).timeout
 	
