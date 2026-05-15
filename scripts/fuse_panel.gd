@@ -26,20 +26,23 @@ func assemble() -> void:
 		status_panel.mark_complete(slot_index)
 	online = true
 	_change_lighting()
-	audio.play()
-	heater.online = true
-	holodeck.get_node("%Powered").visible = true
-	holodeck.get_node("%RadarSound").play()
-	holodeck.get_node("%LidarRenderer").update_lidar()
+	if audio:
+		audio.play()
+	if heater:
+		heater.online = true
+	if holodeck:
+		holodeck.get_node("%Powered").visible = true
+		holodeck.get_node("%RadarSound").play()
+		holodeck.get_node("%LidarRenderer").update_lidar()
 
 
 func disassemble() -> void:
 	if !online: return
 	_power_off()
-	fuse.freeze = false
-	heater.online = false
-	fuse.apply_central_impulse(Vector3(-2, 0, 0))
-	fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0, 0))
+	if fuse:
+		fuse.freeze = false
+		fuse.apply_central_impulse(Vector3(-2, 0, 0))
+		fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0, 0))
 
 
 func _power_off() -> void:
@@ -48,6 +51,8 @@ func _power_off() -> void:
 		status_panel.mark_pending(slot_index)
 	online = false
 	_change_lighting()
+	if heater:
+		heater.online = false
 	if holodeck:
 		holodeck.get_node("%Powered").visible = false
 		holodeck.get_node("%RadarSound").stop()

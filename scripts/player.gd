@@ -36,6 +36,7 @@ var assembly_tween:Tween = null:
 
 var yaw := 0.0
 var pitch := 0.0
+var _suffocate_chain_id: int = 0
 var focused:bool:
 	get:
 		return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
@@ -219,54 +220,42 @@ func _attack_camera_shake() -> void:
 
 func _relieve_suffocation() -> void:
 	suffocating = false
+	_suffocate_chain_id += 1
+	if %AudioStreamer.playing:
+		%AudioStreamer.stop()
 	var tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.0), 0.2)
 
 
 func _suffocate() -> void:
-	if suffocating:return
+	if suffocating: return
 	suffocating = true
+	_suffocate_chain_id += 1
+	var my_id: int = _suffocate_chain_id
 	%AudioStreamer.stream = suffocation_track
 	%AudioStreamer.play()
-	var tween = create_tween()
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.1), 0.5)
-	await get_tree().create_timer(3).timeout
-	if suffocating == false:
+	if not await _suffocate_stage(my_id, 0.1): return
+	if not await _suffocate_stage(my_id, 0.2): return
+	if not await _suffocate_stage(my_id, 0.3): return
+	if not await _suffocate_stage(my_id, 0.4): return
+	if not await _suffocate_stage(my_id, 1.0): return
+	if not suffocating or my_id != _suffocate_chain_id:
 		_relieve_suffocation()
-		%AudioStreamer.stop()
 		return
-		
-	tween = create_tween()
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.2), 0.5)
-	await get_tree().create_timer(3).timeout
-	if suffocating == false:
-		_relieve_suffocation()
-		%AudioStreamer.stop()
-		return
-		
-	tween = create_tween()
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.3), 0.5)
-	await get_tree().create_timer(3).timeout
-	if suffocating == false:
-		%AudioStreamer.stop()
-		return
-		
-	tween = create_tween()
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 0.4), 0.5)
-	await get_tree().create_timer(3).timeout
-	if suffocating == false:
-		%AudioStreamer.stop()
-		return
-		
-	tween = create_tween()
-	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 1.0), 0.5)
-	await get_tree().create_timer(3).timeout
-	if suffocating == false:
-		_relieve_suffocation()
-		%AudioStreamer.stop()
-		return
-	
 	get_tree().reload_current_scene()
+
+
+func _suffocate_stage(my_id: int, fade_alpha: float) -> bool:
+	var tween: Tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, fade_alpha), 0.5)
+	var elapsed: float = 0.0
+	while elapsed < 3.0:
+		await get_tree().create_timer(0.1).timeout
+		elapsed += 0.1
+		if not suffocating or my_id != _suffocate_chain_id:
+			_relieve_suffocation()
+			return false
+	return true
 
 
 func _intro_awaken() -> void:

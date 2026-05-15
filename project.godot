@@ -20,7 +20,7 @@ config/icon="res://assets/textures/godot_icon.svg"
 
 [audio]
 
-buses/default_bus_layout="uid://c04w8uyaeo3qf"
+buses/default_bus_layout="res://default_bus_layout.tres"
 
 [autoload]
 

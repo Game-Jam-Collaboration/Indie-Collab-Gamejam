@@ -14,9 +14,13 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 @export var indicator_disabled_material: Material = null
 @export var ship_movement_audio: AudioStreamPlayer3D = null
 
+const REENABLE_FLASH_DURATION: float = 1.2
+const REENABLE_FLASH_PERIOD: float = 0.3
+
 var _rest_position: Vector3
 var _is_pressed: bool = false
 var _enabled: bool = false
+var _flash_remaining: float = 0.0
 
 
 func _ready() -> void:
@@ -25,13 +29,32 @@ func _ready() -> void:
 	_refresh_indicator()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var power_on := fuse_panel != null and fuse_panel.online
 	var locked := record_button != null and record_button.recording
 	var enabled := power_on and not locked
 	if enabled != _enabled:
+		var newly_enabled := enabled and not _enabled
 		_enabled = enabled
+		if newly_enabled:
+			_flash_remaining = REENABLE_FLASH_DURATION
+		else:
+			_flash_remaining = 0.0
 		_refresh_indicator()
+
+	if _flash_remaining > 0.0:
+		_flash_remaining -= delta
+		if _flash_remaining <= 0.0:
+			_flash_remaining = 0.0
+			_refresh_indicator()
+		else:
+			var elapsed: float = REENABLE_FLASH_DURATION - _flash_remaining
+			var phase: float = fmod(elapsed, REENABLE_FLASH_PERIOD) / REENABLE_FLASH_PERIOD
+			var flash_on: bool = phase < 0.5
+			if indicator != null:
+				var mat: Material = indicator_on_material if flash_on else indicator_off_material
+				if mat != null:
+					indicator.material_override = mat
 
 
 func can_press() -> bool:

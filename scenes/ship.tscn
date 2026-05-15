@@ -754,8 +754,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RecordButton/Interactor" index="0" unique_id=1010101005]
 shape = SubResource("BoxShape_record_interactor")
 
-[node name="Ship" parent="." index="5" unique_id=1117057970]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011009216, 0, 0.01271224)
+[node name="Ship" parent="." index="5" unique_id=1479839687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7985253, 0)

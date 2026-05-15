@@ -46,12 +46,16 @@ var _icon_base_basis: Basis = Basis.IDENTITY
 var _anomaly_multi_mesh: MultiMesh
 var _anomaly_multi_mesh_instance: MultiMeshInstance3D
 var _anomaly_slot_assignments: Dictionary = {}
+var _glitch_burst_remaining: float = 0.0
+var _glitch_burst_total: float = 0.0
+var _radar_retrigger_timer: float = 0.0
 
 const ANOMALY_DOTS_PER_NODE: int = 720
 const MAX_TRACKED_ANOMALIES: int = 16
 
 
 func _ready() -> void:
+	add_to_group("lidar_renderer")
 	_base_basis = transform.basis
 	_anchor = get_node_or_null("Anchor") as Node3D
 	if _anchor == null:
@@ -99,7 +103,7 @@ func _ready() -> void:
 	_setup_anomaly_multi_mesh(sphere)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var t := Time.get_ticks_msec() / 1000.0
 	if _shader_material:
 		_shader_material.set_shader_parameter("current_time", t)
@@ -107,7 +111,30 @@ func _process(_delta: float) -> void:
 		_shader_material.set_shader_parameter("clip_min_local_y", 0.0)
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
+	_update_glitch_burst(delta)
 	update_lidar()
+	_update_radar_retrigger(delta)
+
+
+func trigger_glitch_burst(duration: float = 3.5) -> void:
+	_glitch_burst_remaining = duration
+	_glitch_burst_total = duration
+
+
+func _update_glitch_burst(delta: float) -> void:
+	if _shader_material == null:
+		return
+	if _glitch_burst_remaining > 0.0:
+		_glitch_burst_remaining = max(0.0, _glitch_burst_remaining - delta)
+		var t: float = _glitch_burst_remaining / max(_glitch_burst_total, 0.0001)
+		_shader_material.set_shader_parameter("glitch_chance", lerp(0.04, 0.88, t))
+		_shader_material.set_shader_parameter("flicker_strength", lerp(0.35, 0.98, t))
+		_shader_material.set_shader_parameter("glitch_burst", t)
+	elif _glitch_burst_total > 0.0:
+		_shader_material.set_shader_parameter("glitch_chance", 0.04)
+		_shader_material.set_shader_parameter("flicker_strength", 0.35)
+		_shader_material.set_shader_parameter("glitch_burst", 0.0)
+		_glitch_burst_total = 0.0
 
 
 func update_lidar() -> void:
@@ -115,12 +142,61 @@ func update_lidar() -> void:
 	_update_view_transform()
 	_update_anomaly_clouds(t)
 	_recolor_recorded_anomalies()
+	_update_radar_pitch()
 
 	if auto_scan_interval > 0.0 and probe != null:
 		var now := Time.get_ticks_msec() / 1000.0
 		if now >= _next_scan_time:
 			trigger_scan()
 			_next_scan_time = now + auto_scan_interval
+
+
+func _update_radar_pitch() -> void:
+	var radar: AudioStreamPlayer3D = get_node_or_null("%RadarSound") as AudioStreamPlayer3D
+	if radar == null or probe == null or probe.navigation == null:
+		return
+	var ship_pos: Vector3 = probe.global_position
+	var min_d: float = INF
+	for a in get_tree().get_nodes_in_group("anomaly"):
+		if not is_instance_valid(a):
+			continue
+		if a.get("recorded"):
+			continue
+		var d: float = (a.global_position - ship_pos).length()
+		if d < min_d:
+			min_d = d
+	var pitch: float = 1.0
+	if min_d <= probe.scan_range:
+		var closeness: float = 1.0 - clampf(min_d / probe.scan_range, 0.0, 1.0)
+		pitch = 1.0 + closeness * 2.0
+	radar.pitch_scale = pitch
+
+
+func _update_radar_retrigger(delta: float) -> void:
+	var radar: AudioStreamPlayer3D = get_node_or_null("%RadarSound") as AudioStreamPlayer3D
+	if radar == null or not radar.playing or probe == null or probe.navigation == null:
+		_radar_retrigger_timer = 0.0
+		return
+	var ship_pos: Vector3 = probe.global_position
+	var min_d: float = INF
+	for a in get_tree().get_nodes_in_group("anomaly"):
+		if not is_instance_valid(a):
+			continue
+		if a.get("recorded"):
+			continue
+		var d: float = (a.global_position - ship_pos).length()
+		if d < min_d:
+			min_d = d
+	if min_d > probe.scan_range:
+		_radar_retrigger_timer = 0.0
+		return
+	var closeness: float = 1.0 - clampf(min_d / probe.scan_range, 0.0, 1.0)
+	# Beep retrigger interval shrinks from 2.0s (just in range) to 0.4s (touching).
+	var interval: float = lerp(2.0, 0.4, closeness)
+	_radar_retrigger_timer += delta
+	if _radar_retrigger_timer >= interval:
+		_radar_retrigger_timer = 0.0
+		radar.play()
 
 
 func _sphere_radius_local() -> float:

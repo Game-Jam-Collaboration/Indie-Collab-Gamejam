@@ -2,6 +2,8 @@ class_name Anomaly
 extends Node3D
 
 @export var anomaly_id:String = "ANOM-01"
+@export var chase_speed: float = 5.5
+@export var chase_stop_distance: float = 1.0
 
 const SPHERE_RADIUS: float = 4.5
 const SPHERE_POINTS: int = 60
@@ -16,6 +18,7 @@ const RING_SPEED_MAX: float = 1.6
 
 var recorded: bool = false
 var discovered: bool = false
+var chasing: bool = false
 
 var _sphere_template: PackedVector3Array = PackedVector3Array()
 var _base_orientation: Basis = Basis.IDENTITY
@@ -28,6 +31,18 @@ func _ready() -> void:
 	add_to_group("anomaly")
 	_sphere_template = _fibonacci_sphere(SPHERE_RADIUS, SPHERE_POINTS)
 	_randomize_motion()
+
+
+func _physics_process(delta: float) -> void:
+	if not chasing or recorded:
+		return
+	var nav := get_tree().get_first_node_in_group("ship_navigation") as ShipNavigation
+	if nav == null:
+		return
+	var to_target: Vector3 = nav.simulated_position - position
+	var dist: float = to_target.length()
+	if dist > chase_stop_distance:
+		position += to_target.normalized() * chase_speed * delta
 
 
 func get_lidar_points() -> PackedVector3Array:
