@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://sjlmws803fko"]
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/pause_menu.gd" id="1_yqorp"]
-[ext_resource type="Texture2D" uid="uid://bnnfg7rxiyonq" path="res://assets/textures/play.png" id="2_wu84c"]
 [ext_resource type="Texture2D" uid="uid://dg3q06mih7nvl" path="res://assets/textures/exit.png" id="3_8ln24"]
+[ext_resource type="Texture2D" uid="uid://cmowv7tnnkw7" path="res://assets/textures/PlayButton.png" id="4_8ln24"]
 [ext_resource type="AudioStream" uid="uid://bhx044jv2s03y" path="res://assets/sounds/CJ26_MUS_LightAmbient-demo.mp3" id="4_wu84c"]
+[ext_resource type="Texture2D" uid="uid://cwcbjs0blecva" path="res://assets/textures/blue_nebulae_1.png" id="5_8ln24"]
 
 [sub_resource type="Gradient" id="Gradient_5d2l8"]
 offsets = PackedFloat32Array(0.060714304, 0.75, 1)
@@ -14,6 +15,15 @@ gradient = SubResource("Gradient_5d2l8")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqqt6"]
 texture = SubResource("GradientTexture2D_7l7mv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ln24"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 24
+border_width_top = 24
+border_width_right = 24
+border_width_bottom = 24
+border_color = Color(0, 0, 0, 0.41568628)
+border_blend = true
 
 [node name="MainMenu" type="PanelContainer" unique_id=47972032]
 anchors_preset = 15
@@ -26,27 +36,48 @@ script = ExtResource("1_yqorp")
 button_input_variation = ["res://scenes/level.tscn", null, "Quit"]
 script_type = "Main Menu"
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1481865121]
-layout_mode = 2
-theme_override_constants/margin_right = 50
-
-[node name="Control" type="VBoxContainer" parent="MarginContainer" unique_id=756867926]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-theme_override_constants/separation = 64
-
-[node name="Button" type="Button" parent="MarginContainer/Control" unique_id=1700068839]
-layout_mode = 2
-icon = ExtResource("2_wu84c")
-flat = true
-
-[node name="Button3" type="Button" parent="MarginContainer/Control" unique_id=1840031564]
-layout_mode = 2
-icon = ExtResource("3_8ln24")
-flat = true
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer2D" parent="." unique_id=621654112]
 stream = ExtResource("4_wu84c")
-volume_db = 3.0
+volume_db = 6.0
 autoplay = true
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=222214918]
+scroll_offset = Vector2(-8859, -237)
+repeat_size = Vector2(8192, 0)
+autoscroll = Vector2(25, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1460904475]
+position = Vector2(-473, -355)
+texture = ExtResource("5_8ln24")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1481865121]
+layout_mode = 2
+
+[node name="Control" type="HBoxContainer" parent="MarginContainer" unique_id=328674731]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 160
+
+[node name="Button" type="TextureButton" parent="MarginContainer/Control" unique_id=1244487744]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_8ln24")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Button3" type="TextureButton" parent="MarginContainer/Control" unique_id=1269076972]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_8ln24")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Panel" type="Panel" parent="." unique_id=602744932]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ln24")
