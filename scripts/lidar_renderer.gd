@@ -43,10 +43,6 @@ var _recolored_anomalies: Dictionary = {}
 var _anchor: Node3D = null
 var _base_basis: Basis = Basis.IDENTITY
 var _icon_base_basis: Basis = Basis.IDENTITY
-var _radar_angle: float = 0.0
-var _previous_non_radar_mode: ViewMode = ViewMode.SHIP_LOCKED
-var _anomaly_arrow: MeshInstance3D = null
-var _anomaly_arrow_radius: float = 0.55
 var _anomaly_multi_mesh: MultiMesh
 var _anomaly_multi_mesh_instance: MultiMeshInstance3D
 var _anomaly_slot_assignments: Dictionary = {}
@@ -100,29 +96,25 @@ func _ready() -> void:
 		icon_mat.set_shader_parameter("base_color", Vector3(ship_color.r, ship_color.g, ship_color.b))
 		icon_mat.set_shader_parameter("emission_energy", emission_energy * ship_icon_brightness)
 
-	_setup_radar_arc()
-	_setup_anomaly_arrow()
 	_setup_anomaly_multi_mesh(sphere)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var t := Time.get_ticks_msec() / 1000.0
-	if view_mode == ViewMode.RADAR_PING:
-		var sweep_rate: float = TAU / max(radar_period, 0.0001)
-		_radar_angle = fposmod(_radar_angle + sweep_rate * delta, TAU)
-	_update_view_transform()
-	if view_mode == ViewMode.RADAR_PING:
-		_tick_radar(delta)
 	if _shader_material:
 		_shader_material.set_shader_parameter("current_time", t)
 		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
 		_shader_material.set_shader_parameter("clip_min_local_y", 0.0)
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
+	update_lidar()
 
-	_update_anomaly_clouds()
+
+func update_lidar() -> void:
+	var t := Time.get_ticks_msec() / 1000.0
+	_update_view_transform()
+	_update_anomaly_clouds(t)
 	_recolor_recorded_anomalies()
-	_update_anomaly_arrow()
 
 	if auto_scan_interval > 0.0 and probe != null:
 		var now := Time.get_ticks_msec() / 1000.0
@@ -131,76 +123,11 @@ func _process(delta: float) -> void:
 			_next_scan_time = now + auto_scan_interval
 
 
-func _setup_radar_arc() -> void:
-	if radar_sweep == null:
-		return
-	var ring := radar_sweep.get_node_or_null("Ring") as MeshInstance3D
-	if ring == null:
-		return
-	ring.transform = Transform3D.IDENTITY
-	ring.mesh = _build_radar_arc_mesh()
-	ring.material_override = _build_radar_arc_material()
-
-
-func _build_radar_arc_mesh() -> ArrayMesh:
-	var mesh := ArrayMesh.new()
-	var segments := 48
-	var radius := 1.5
-	var vertices := PackedVector3Array()
-	for i in segments + 1:
-		var t_along: float = float(i) / float(segments)
-		var angle: float = -PI * 0.5 + t_along * PI
-		vertices.append(Vector3(0.0, sin(angle) * radius, cos(angle) * radius))
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = vertices
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINE_STRIP, arrays)
-	return mesh
-
-
-func _build_radar_arc_material() -> StandardMaterial3D:
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(0.35, 1.0, 0.55, 0.55)
-	mat.emission_enabled = true
-	mat.emission = Color(0.45, 1.0, 0.6, 1.0)
-	mat.emission_energy_multiplier = 1.0
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	return mat
-
-
 func _sphere_radius_local() -> float:
 	var sr: float = 50.0
 	if probe != null:
 		sr = probe.scan_range
 	return sr * hologram_scale
-
-
-func _setup_anomaly_arrow() -> void:
-	if cardinal_ring == null:
-		return
-	_anomaly_arrow = MeshInstance3D.new()
-	_anomaly_arrow.name = "AnomalyArrow"
-	_anomaly_arrow.mesh = _build_anomaly_arrow_mesh()
-	_anomaly_arrow.material_override = _build_arrow_material(Color(1, 0.18, 0.18, 1))
-	_anomaly_arrow.visible = false
-	cardinal_ring.add_child(_anomaly_arrow)
-
-
-func _build_anomaly_arrow_mesh() -> ArrayMesh:
-	var mesh := ArrayMesh.new()
-	var vertices := PackedVector3Array([
-		Vector3(0.0, 0.0, 0.18),
-		Vector3(-0.09, 0.0, -0.06),
-		Vector3(0.09, 0.0, -0.06),
-	])
-	var indices := PackedInt32Array([0, 1, 2])
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = vertices
-	arrays[Mesh.ARRAY_INDEX] = indices
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return mesh
 
 
 func _setup_anomaly_multi_mesh(point_mesh: Mesh) -> void:
@@ -237,16 +164,14 @@ func _clear_anomaly_slot(slot_start: int) -> void:
 		_anomaly_multi_mesh.set_instance_custom_data(slot_start + i, DEAD_CUSTOM)
 
 
-func _update_anomaly_clouds() -> void:
-	if _anomaly_multi_mesh == null:
-		return
+func _update_anomaly_clouds(now:float) -> void:
+	if _anomaly_multi_mesh == null: return
 	if probe == null:
 		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
 	if probe == null or probe.navigation == null:
 		return
 	var ship_pos: Vector3 = probe.global_position
 	var sim_pos: Vector3 = probe.navigation.simulated_position
-	var now: float = Time.get_ticks_msec() / 1000.0
 	var seen := {}
 
 	for a in get_tree().get_nodes_in_group("anomaly"):
@@ -282,55 +207,6 @@ func _update_anomaly_clouds() -> void:
 		_anomaly_slot_assignments.erase(a)
 
 
-func _update_anomaly_arrow() -> void:
-	if _anomaly_arrow == null:
-		return
-	if probe == null:
-		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
-	if probe == null:
-		_anomaly_arrow.visible = false
-		return
-
-	var ship_pos: Vector3 = probe.global_position
-	var nearest: Node3D = null
-	var nearest_dist: float = INF
-	for a in get_tree().get_nodes_in_group("anomaly"):
-		if not is_instance_valid(a):
-			continue
-		if a.get("recorded"):
-			continue
-		var d: float = (a.global_position - ship_pos).length()
-		if d < nearest_dist:
-			nearest_dist = d
-			nearest = a
-
-	if nearest == null or nearest_dist <= probe.scan_range:
-		_anomaly_arrow.visible = false
-		return
-
-	var to_target: Vector3 = nearest.global_position - ship_pos
-	to_target.y = 0.0
-	if to_target.length() < 0.0001:
-		_anomaly_arrow.visible = false
-		return
-	var world_dir: Vector3 = to_target.normalized()
-	_anomaly_arrow.transform.origin = world_dir * _anomaly_arrow_radius
-	var x_axis: Vector3 = Vector3.UP.cross(world_dir).normalized()
-	_anomaly_arrow.transform.basis = Basis(x_axis, Vector3.UP, world_dir)
-	_anomaly_arrow.visible = true
-
-
-func _build_arrow_material(color: Color) -> StandardMaterial3D:
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = color
-	mat.emission_enabled = true
-	mat.emission = color
-	mat.emission_energy_multiplier = 2.5
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	return mat
-
-
 func _update_view_transform() -> void:
 	if probe == null:
 		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
@@ -359,48 +235,6 @@ func _update_view_transform() -> void:
 			cardinal_ring.transform.basis = Basis.IDENTITY
 		else:
 			cardinal_ring.transform.basis = Basis(Vector3.UP, -heading)
-
-
-func _tick_radar(delta: float) -> void:
-	if probe == null:
-		probe = get_tree().get_first_node_in_group("scan_probe") as ScanProbe
-	if probe == null or probe.navigation == null:
-		return
-	var heading: float = probe.navigation.heading
-	var sweep_rate: float = TAU / max(radar_period, 0.0001)
-	var slice_width: float = sweep_rate * delta
-	var directions := PackedVector3Array()
-	var count: int = max(1, radar_rays_per_frame)
-	for i in count:
-		var t_along: float = (float(i) + 0.5) / float(count)
-		var elev: float = PI * t_along - PI * 0.5
-		var azimuth: float = _radar_angle + heading + (randf() - 0.5) * slice_width
-		var dir := Vector3(sin(azimuth) * cos(elev), sin(elev), cos(azimuth) * cos(elev))
-		directions.append(dir)
-	var result: Dictionary = probe.scan_directions(directions)
-	var hits: PackedVector3Array = result.get("hits", PackedVector3Array())
-	var anomaly_hits_by_node: Dictionary = result.get("anomaly_hits_by_node", {})
-	display_points(hits, 11.0)
-	for anomaly_node in anomaly_hits_by_node.keys():
-		display_points(anomaly_hits_by_node[anomaly_node], 12.0, anomaly_node)
-
-
-func toggle_view_mode() -> void:
-	if view_mode == ViewMode.RADAR_PING:
-		view_mode = _previous_non_radar_mode
-	elif view_mode == ViewMode.SHIP_LOCKED:
-		view_mode = ViewMode.WORLD_LOCKED
-	else:
-		view_mode = ViewMode.SHIP_LOCKED
-	_previous_non_radar_mode = view_mode
-
-
-func toggle_radar_mode() -> void:
-	if view_mode == ViewMode.RADAR_PING:
-		view_mode = _previous_non_radar_mode
-	else:
-		_previous_non_radar_mode = view_mode
-		view_mode = ViewMode.RADAR_PING
 
 
 func _recolor_recorded_anomalies() -> void:

@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cdsje4fnckphp" path="res://scripts/scan_probe.gd" id="1_probe"]
 [ext_resource type="Script" uid="uid://bxwjq8sm0wpvy" path="res://scripts/anomaly.gd" id="2_anomaly"]
-[ext_resource type="AudioStream" uid="uid://td4ku0uecfgc" path="res://assets/sounds/CJ26_SFX_Anomaly-1-WithCrackle.mp3" id="3_fn8it"]
-[ext_resource type="AudioStream" uid="uid://b1nqbevfrq4tl" path="res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3" id="4_7mogt"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_anomaly_spike"]
 albedo_color = Color(0.25, 0.95, 1, 1)
@@ -27,12 +25,12 @@ radius = 4.0
 
 [node name="ScanProbe" type="Node3D" parent="." unique_id=1620619773]
 script = ExtResource("1_probe")
-scan_range = 80.0
+ray_count = 10000
+scan_range = 120.0
 
 [node name="Anomaly" type="StaticBody3D" parent="." unique_id=727074226]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -36.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9, 0, -52.2)
 script = ExtResource("2_anomaly")
-track = ExtResource("3_fn8it")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly" unique_id=343972280]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
@@ -49,10 +47,9 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly2" type="StaticBody3D" parent="." unique_id=281220114]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.596436, 0, -20.77639)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.196434, 0, -20.77639)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-02"
-track = ExtResource("4_7mogt")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly2" unique_id=992341845]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
@@ -69,7 +66,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly3" type="StaticBody3D" parent="." unique_id=1433025767]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.98285, 0, 36.500618)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.38285, 0, 63.000614)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-03"
 
@@ -88,7 +85,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly4" type="StaticBody3D" parent="." unique_id=1516595198]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.754517, 0, 37.31492)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.954517, 0, 83.71492)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-04"
 
@@ -145,7 +142,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly7" type="StaticBody3D" parent="." unique_id=623922251]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.130928, 0, 28.413433)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99.01482, 0, 0.3219452)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-07"
 
@@ -162,4 +159,3 @@ mesh = SubResource("Mesh_anomaly_core")
 
 [node name="Collision" type="CollisionShape3D" parent="Anomaly7" unique_id=1296420790]
 shape = SubResource("Shape_anomaly")
-

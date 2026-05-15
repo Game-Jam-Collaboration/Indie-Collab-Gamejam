@@ -2,9 +2,8 @@ class_name ScanProbe
 extends Node3D
 
 @export var navigation: ShipNavigation = null
-@export var ray_count: int = 120000
+@export var ray_count: int = 20000
 @export var scan_range: float = 50.0
-@export var jitter_radians: float = 0.025
 
 
 func _ready() -> void:
@@ -33,27 +32,24 @@ func scan() -> Dictionary:
 		return {"hits": hits, "misses": misses, "anomaly_hits_by_node": anomaly_hits_by_node}
 
 	var origin := global_position
-	var phi := PI * (sqrt(5.0) - 1.0)
 	var sim_pos: Vector3 = Vector3.ZERO
-	if navigation:
-		sim_pos = navigation.simulated_position
+	if navigation: sim_pos = navigation.simulated_position
 
 	for i in ray_count:
-		var t := float(i) / float(max(1, ray_count - 1))
-		var y := 1.0 - 2.0 * t
-		var r := sqrt(max(0.0, 1.0 - y * y))
-		var theta := phi * float(i)
-		var dir := Vector3(cos(theta) * r, y, sin(theta) * r)
-		dir = dir.rotated(Vector3.UP, randf_range(-jitter_radians, jitter_radians))
-		dir = dir.rotated(Vector3.RIGHT, randf_range(-jitter_radians, jitter_radians))
+		var angle := TAU * float(i) / float(ray_count)
+
+		# Flat circle on X/Y plane. No Z.
+		var dir := Vector3(cos(angle), sin(angle), 0.0).normalized()
 
 		var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * scan_range)
 		query.hit_from_inside = true
+
 		var result := space_state.intersect_ray(query)
 		if result and result.has("position"):
 			var hit_pos: Vector3 = result["position"]
 			var hit_local: Vector3 = sim_pos + (hit_pos - origin)
 			var collider = result.get("collider")
+
 			if collider == null or not collider.is_in_group("anomaly"):
 				hits.append(hit_local)
 		else:

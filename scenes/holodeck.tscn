@@ -70,6 +70,7 @@ light_energy = 0.1875
 omni_range = 2.5
 
 [node name="LidarRenderer" type="Node3D" parent="Powered" unique_id=1285143931 node_paths=PackedStringArray("radar_sweep", "cardinal_ring", "ship_icon")]
+unique_name_in_owner = true
 transform = Transform3D(-0.2, 0, -3.019916e-08, 0, 0.2, 0, 3.019916e-08, 0, -0.2, 0, 1.1720031, 0)
 script = ExtResource("2_lidar")
 view_mode = 2

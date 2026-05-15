@@ -28,6 +28,7 @@ func assemble() -> void:
 	audio.play()
 	holodeck.get_node("%Powered").visible = true
 	holodeck.get_node("%RadarSound").play()
+	holodeck.get_node("%LidarRenderer").update_lidar()
 
 
 func disassemble() -> void:
