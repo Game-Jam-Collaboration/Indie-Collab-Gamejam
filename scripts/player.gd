@@ -76,6 +76,7 @@ func _unhandled_input(event):
 					if assembling:
 						%Selector.remove_exception(in_hand)
 						remove_collision_exception_with(in_hand)
+						in_hand.remove_from_group("Pickupable")
 						assembling = false
 						in_hand = null
 						previous_pickup_parent = null
@@ -207,6 +208,7 @@ func _end_hold() -> void:
 
 
 func _attack_camera_shake() -> void:
+	frozen = true
 	var tween = create_tween()
 	var camera_position = camera_pivot.global_position
 	var offset = camera_position + Vector3(randf_range(0,.1),randf_range(0,.1),randf_range(0,.1))
@@ -216,6 +218,7 @@ func _attack_camera_shake() -> void:
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
 	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
+	frozen = false
 
 
 func _relieve_suffocation() -> void:
