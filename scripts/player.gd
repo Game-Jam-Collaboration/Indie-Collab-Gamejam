@@ -51,7 +51,7 @@ func _ready():
 		push_warning("There is no ship in this scene, player controller may not work properly.")
 	frozen = true
 	await _intro_awaken()
-	await _intro_observe_broken_fixtures()
+	#await _intro_observe_broken_fixtures()
 	frozen = false
 
 

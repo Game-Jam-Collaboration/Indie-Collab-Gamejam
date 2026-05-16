@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cugar7hcyc5o3"]
+
+[resource]
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_color = Color(0.09238184, 0.42645258, 0.25081533, 1)
+uv1_triplanar_sharpness = 2.3128052e-05
+stencil_flags = 2

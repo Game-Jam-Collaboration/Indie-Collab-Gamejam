@@ -18,6 +18,10 @@ config/custom_user_dir_name="SOS_RepairNeeded"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/textures/godot_icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://c04w8uyaeo3qf"
+
 [autoload]
 
 PauseMenu="*uid://55dmktoqux5o"

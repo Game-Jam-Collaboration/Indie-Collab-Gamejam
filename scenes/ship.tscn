@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://bqn7y63jb0y6f" path="res://assets/sounds/CJ26_SFX_ambianceRoomTone-127 BPM - 15bar LOOP.ogg" id="7_dschd"]
 [ext_resource type="PackedScene" uid="uid://bmq327un7la8u" path="res://scenes/holodeck.tscn" id="7_holodeck"]
 [ext_resource type="AudioStream" uid="uid://bh5ety7ae0kms" path="res://assets/sounds/SFX_ActivationFusible.wav" id="8_03y04"]
+[ext_resource type="PackedScene" uid="uid://oeqsgjf7mirb" path="res://assets/screen/screen.tscn" id="8_swuwe"]
 [ext_resource type="Script" uid="uid://ladr60r1673b" path="res://scripts/oxygen_handle.gd" id="10_bseor"]
 [ext_resource type="PackedScene" uid="uid://cbfg3h2e36xpv" path="res://scenes/heater.tscn" id="11_48mkp"]
 [ext_resource type="Script" uid="uid://c4v6g6s3cfb0n" path="res://scripts/record_button.gd" id="11_recordbtn"]
@@ -19,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://b3oxqm6ue0xqu" path="res://assets/sounds/OxygenSlot2.wav" id="13_vbj2c"]
 [ext_resource type="AudioStream" uid="uid://bqx1ub4anrbfw" path="res://assets/sounds/OxygenPump.wav" id="14_dschd"]
 [ext_resource type="Material" uid="uid://60bgj38wipmr" path="res://assets/materials/oxygen_meter_material.tres" id="17_83dbu"]
+[ext_resource type="Script" uid="uid://c37cngehrkoiu" path="res://scripts/audio_spectrum.gd" id="20_xifwb"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -690,7 +692,7 @@ material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
 [node name="RecordButton" type="Node3D" parent="." index="4" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
-transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.08017923, 0.91550624, 4.9034142)
+transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.066706724, 0.91550624, 4.7880855)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")
@@ -713,12 +715,13 @@ transform = Transform3D(0.98836446, 0, 0, 0, 0.98836446, 0, 0, 0, 0.98836446, -2
 mesh = SubResource("ArrayMesh_bseor")
 
 [node name="AlertLight" type="MeshInstance3D" parent="RecordButton" index="3" unique_id=1010101003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.496, -0.446, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9706192, 0, -1.1920929e-07)
 material_override = SubResource("Mat_alert_off")
 mesh = SubResource("SphereMesh_alert")
 
 [node name="ProgressBar" type="Node3D" parent="RecordButton" index="4" unique_id=1714703030]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.1302795, 0.44299698, 0)
+visible = false
 
 [node name="Light0" type="MeshInstance3D" parent="RecordButton/ProgressBar" index="0" unique_id=870185161]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
@@ -748,6 +751,7 @@ mesh = SubResource("SphereMesh_progress")
 [node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
 unique_name_in_owner = true
 volume_db = 12.0
+bus = &"Recordings"
 
 [node name="Interactor" type="StaticBody3D" parent="RecordButton" index="6" unique_id=1010101004 groups=["Interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
@@ -755,7 +759,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RecordButton/Interactor" index="0" unique_id=1010101005]
 shape = SubResource("BoxShape_record_interactor")
 
-[node name="Ship" parent="." index="5" unique_id=1327114296]
+[node name="AudioModule" parent="RecordButton" index="7" unique_id=2003646045 instance=ExtResource("8_swuwe")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6.092, 0.031, 0)
+
+[node name="AudioSpectrum" type="MeshInstance3D" parent="RecordButton/AudioModule" index="4" unique_id=284379104]
+transform = Transform3D(20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07, 0, 0.012, 0.2)
+script = ExtResource("20_xifwb")
+screen_width = 0.3
+screen_height = 0.1
+
+[node name="Ship" parent="." index="5" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
