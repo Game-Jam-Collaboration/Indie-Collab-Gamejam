@@ -2,7 +2,7 @@ class_name Anomaly
 extends Node3D
 
 @export var anomaly_id:String = "ANOM-01"
-@export var chase_speed: float = 5.5
+@export var chase_speed: float = 16
 @export var chase_stop_distance: float = 1.0
 
 const SPHERE_RADIUS: float = 4.5

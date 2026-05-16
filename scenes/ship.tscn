@@ -754,7 +754,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RecordButton/Interactor" index="0" unique_id=1010101005]
 shape = SubResource("BoxShape_record_interactor")
 
-[node name="Ship" parent="." index="5" unique_id=1479839687]
+[node name="Ship" parent="." index="5" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
@@ -858,8 +858,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625131, 0.7311899, 0.8554
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033, 0.3, 0)
 mesh = SubResource("CylinderMesh_dschd")
 
-[node name="Heater" parent="." index="14" unique_id=976087777 instance=ExtResource("11_48mkp")]
+[node name="Heater" parent="." index="14" unique_id=976087777 node_paths=PackedStringArray("heater_light") instance=ExtResource("11_48mkp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.831487, -0.2799909, -0.28434968)
+heater_light = NodePath("OmniLight3D")
 
 [node name="HeaterLever" parent="Heater" index="3" unique_id=1986176028 instance=ExtResource("12_03y04")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030009, 1.4749591, -1.7802498)

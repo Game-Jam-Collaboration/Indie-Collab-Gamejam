@@ -20,11 +20,9 @@ extends Node3D
 var anomaly_tracks:Array[AudioStream] = [
 	load("res://assets/sounds/CJ26_SFX_Anomaly-1-WithCrackle.mp3"),
 	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-ShipContact-1.wav"),
+	load("res://assets/sounds/CJ26_SFX_AnomalyEncounter-5.wav"),
+	load("res://assets/sounds/CJ26_SFX_Anomaly-ShipContact_proto_mix.wav"),
 ]
 
 var anomalies_recorded:int = 0
@@ -87,6 +85,7 @@ func _on_anomalies_recorded_changed() -> void:
 		for node in get_tree().get_nodes_in_group("anomaly"):
 			var anom := node as Anomaly
 			if anom != null and not anom.recorded:
+				await get_tree().create_timer(2).timeout
 				anom.chasing = true
 
 

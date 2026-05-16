@@ -29,7 +29,7 @@ ray_count = 10000
 scan_range = 120.0
 
 [node name="Anomaly" type="StaticBody3D" parent="." unique_id=727074226]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9, 0, -52.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9, 0, -26.30605)
 script = ExtResource("2_anomaly")
 
 [node name="Spike1" type="MeshInstance3D" parent="Anomaly" unique_id=343972280]
@@ -47,7 +47,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly2" type="StaticBody3D" parent="." unique_id=281220114]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.196434, 0, -20.77639)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.55762, 0, -0.9282799)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-02"
 
@@ -66,7 +66,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly3" type="StaticBody3D" parent="." unique_id=1433025767]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.38285, 0, 63.000614)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.138103, 0, 63.000614)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-03"
 
@@ -85,7 +85,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly4" type="StaticBody3D" parent="." unique_id=1516595198]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.954517, 0, 83.71492)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.991352, 0, 32.652992)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-04"
 
@@ -104,7 +104,7 @@ mesh = SubResource("Mesh_anomaly_core")
 shape = SubResource("Shape_anomaly")
 
 [node name="Anomaly5" type="StaticBody3D" parent="." unique_id=801647816]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.746178, 0, -41.224907)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.765297, 0, -9.911266)
 script = ExtResource("2_anomaly")
 anomaly_id = "ANOM-05"
 
@@ -121,4 +121,3 @@ mesh = SubResource("Mesh_anomaly_core")
 
 [node name="Collision" type="CollisionShape3D" parent="Anomaly5" unique_id=439455170]
 shape = SubResource("Shape_anomaly")
-
