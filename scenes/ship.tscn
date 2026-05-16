@@ -775,6 +775,7 @@ transform = Transform3D(20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07,
 script = ExtResource("20_xifwb")
 screen_width = 0.3
 screen_height = 0.1
+sensitivity = 20.0
 
 [node name="Ship" parent="." index="4" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)

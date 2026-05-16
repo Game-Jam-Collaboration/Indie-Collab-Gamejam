@@ -66,6 +66,8 @@ func _interact() -> void:
 	anomaly.recorded = true
 	await get_tree().process_frame
 	recording = true
+	if anomalies_recorded == 4:
+		get_tree().create_timer(19.8).timeout.connect(player.end_game)
 	%AnomalyRecording.stream = anomaly_tracks[anomalies_recorded]
 	%AnomalyRecording.play()
 	await %AnomalyRecording.finished

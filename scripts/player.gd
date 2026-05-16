@@ -228,6 +228,7 @@ func _relieve_suffocation() -> void:
 
 
 func _suffocate() -> void:
+	if ship.record_button.anomalies_recorded == 4: return
 	if suffocating: return
 	suffocating = true
 	_suffocate_chain_id += 1
@@ -246,6 +247,7 @@ func _suffocate() -> void:
 
 
 func _suffocate_stage(my_id: int, fade_alpha: float) -> bool:
+	if ship.record_button.anomalies_recorded == 4: return false
 	var tween: Tween = create_tween()
 	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, fade_alpha), 0.5)
 	var elapsed: float = 0.0
@@ -310,3 +312,12 @@ func _intro_observe_broken_fixtures() -> void:
 	yaw = rotation.y
 	pitch = camera_pivot.rotation.x
 	await tween.finished
+
+
+func end_game():
+	var tween = create_tween()
+	tween.tween_property(%FadeIn, "color", Color(0.0, 0.0, 0.0, 1.0), .3)
+	await tween.finished
+	get_tree().paused = true
+	await get_tree().create_timer(3).timeout
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
