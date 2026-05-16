@@ -589,110 +589,114 @@ autostart = true
 [node name="Holodeck" parent="." index="2" unique_id=9200003 instance=ExtResource("7_holodeck")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36801034, -0.0643301, 5.077443)
 
-[node name="NavButtons" type="Node3D" parent="." index="3" unique_id=903122595]
-transform = Transform3D(-3.2783543e-09, 0, 0.075, 0, 0.075, 0, -0.075, 0, -3.2783543e-09, 0.35997385, 0.9454718, 4.805387)
+[node name="NavButtons" type="Node3D" parent="Holodeck" index="2" unique_id=903122595]
+transform = Transform3D(-3.2783543e-09, 0, 0.075, 0, 0.075, 0, -0.075, 0, -3.2783543e-09, 0, 0.9948585, -0.26722956)
 
-[node name="Forward" type="StaticBody3D" parent="NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
+[node name="Forward" type="StaticBody3D" parent="Holodeck/NavButtons" index="0" unique_id=33899671 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator", "mesh")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
-navigation = NodePath("../../ShipNavigation")
-fuse_panel = NodePath("../../PowerPanel")
-record_button = NodePath("../../RecordButton")
+navigation = NodePath("../../../ShipNavigation")
+fuse_panel = NodePath("../../../PowerPanel")
+record_button = NodePath("../../../RecordButton")
 indicator = NodePath("../IndicatorForward")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
 indicator_disabled_material = SubResource("Mat_indicator_disabled")
+mesh = NodePath("Mesh")
 
-[node name="Mesh" type="MeshInstance3D" parent="NavButtons/Forward" index="0" unique_id=1053655108]
+[node name="Mesh" type="MeshInstance3D" parent="Holodeck/NavButtons/Forward" index="0" unique_id=1053655108]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_tbq4g")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavButtons/Forward" index="1" unique_id=111885814]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holodeck/NavButtons/Forward" index="1" unique_id=111885814]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045888685, 0.23313332, 0.6126938)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="Backward" type="StaticBody3D" parent="NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
+[node name="Backward" type="StaticBody3D" parent="Holodeck/NavButtons" index="1" unique_id=1688439521 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator", "mesh")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 1
-navigation = NodePath("../../ShipNavigation")
-fuse_panel = NodePath("../../PowerPanel")
-record_button = NodePath("../../RecordButton")
+navigation = NodePath("../../../ShipNavigation")
+fuse_panel = NodePath("../../../PowerPanel")
+record_button = NodePath("../../../RecordButton")
 indicator = NodePath("../IndicatorReverse")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
 indicator_disabled_material = SubResource("Mat_indicator_disabled")
+mesh = NodePath("Mesh")
 
-[node name="Mesh" type="MeshInstance3D" parent="NavButtons/Backward" index="0" unique_id=1485384229]
+[node name="Mesh" type="MeshInstance3D" parent="Holodeck/NavButtons/Backward" index="0" unique_id=1485384229]
 transform = Transform3D(1, 0, 0, -1.6940659e-21, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_tlr80")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavButtons/Backward" index="1" unique_id=2123117640]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holodeck/NavButtons/Backward" index="1" unique_id=2123117640]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0045886817, 0.222332, -0.6267204)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateLeft" type="StaticBody3D" parent="NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
+[node name="RotateLeft" type="StaticBody3D" parent="Holodeck/NavButtons" index="2" unique_id=2056161994 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator", "mesh")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 2
-navigation = NodePath("../../ShipNavigation")
-fuse_panel = NodePath("../../PowerPanel")
-record_button = NodePath("../../RecordButton")
+navigation = NodePath("../../../ShipNavigation")
+fuse_panel = NodePath("../../../PowerPanel")
+record_button = NodePath("../../../RecordButton")
 indicator = NodePath("../IndicatorLeft")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
 indicator_disabled_material = SubResource("Mat_indicator_disabled")
+mesh = NodePath("Mesh")
 
-[node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateLeft" index="0" unique_id=1467204394]
+[node name="Mesh" type="MeshInstance3D" parent="Holodeck/NavButtons/RotateLeft" index="0" unique_id=1467204394]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_fs4we")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavButtons/RotateLeft" index="1" unique_id=607702493]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holodeck/NavButtons/RotateLeft" index="1" unique_id=607702493]
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, -0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="RotateRight" type="StaticBody3D" parent="NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator")]
+[node name="RotateRight" type="StaticBody3D" parent="Holodeck/NavButtons" index="3" unique_id=999272292 node_paths=PackedStringArray("navigation", "fuse_panel", "record_button", "indicator", "mesh")]
 transform = Transform3D(-1.07284414e-07, -8.742278e-08, -1, 1.3200474e-14, -1, 8.742278e-08, -1, -3.8213714e-15, 1.07284414e-07, 0, -0.48509312, 0)
 script = ExtResource("3_bseor")
 direction = 3
-navigation = NodePath("../../ShipNavigation")
-fuse_panel = NodePath("../../PowerPanel")
-record_button = NodePath("../../RecordButton")
+navigation = NodePath("../../../ShipNavigation")
+fuse_panel = NodePath("../../../PowerPanel")
+record_button = NodePath("../../../RecordButton")
 indicator = NodePath("../IndicatorRight")
 indicator_off_material = SubResource("Mat_indicator_off")
 indicator_on_material = SubResource("Mat_indicator_on")
 indicator_disabled_material = SubResource("Mat_indicator_disabled")
+mesh = NodePath("Mesh")
 
-[node name="Mesh" type="MeshInstance3D" parent="NavButtons/RotateRight" index="0" unique_id=440499520]
+[node name="Mesh" type="MeshInstance3D" parent="Holodeck/NavButtons/RotateRight" index="0" unique_id=440499520]
 transform = Transform3D(1, 0, 0, -8.4703295e-22, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_dschd")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavButtons/RotateRight" index="1" unique_id=435936233]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holodeck/NavButtons/RotateRight" index="1" unique_id=435936233]
 transform = Transform3D(1, 0, 0, -2.5410988e-21, 1, 0, 0, 0, 1, 0.60321116, 0.2184515, -0.013969421)
 shape = SubResource("BoxShape3D_bseor")
 
-[node name="IndicatorForward" type="MeshInstance3D" parent="NavButtons" index="4" unique_id=1010101001]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, -0.45, 0)
+[node name="IndicatorForward" type="MeshInstance3D" parent="Holodeck/NavButtons" index="4" unique_id=1010101001]
+transform = Transform3D(0.99999994, 0, -3.5527137e-15, 0, 0.99999994, 0, 3.5527137e-15, 0, 0.99999994, -1.1199036, -0.4499998, 0)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorReverse" type="MeshInstance3D" parent="NavButtons" index="5" unique_id=1010101002]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -0.45, 0)
+[node name="IndicatorReverse" type="MeshInstance3D" parent="Holodeck/NavButtons" index="5" unique_id=1010101002]
+transform = Transform3D(0.99999994, 0, -3.5527137e-15, 0, 0.99999994, 0, 3.5527137e-15, 0, 0.99999994, 1.1489716, -0.4499998, 0)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorLeft" type="MeshInstance3D" parent="NavButtons" index="6" unique_id=2070938011]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, 1.1915972)
+[node name="IndicatorLeft" type="MeshInstance3D" parent="Holodeck/NavButtons" index="6" unique_id=2070938011]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0.013473511, -0.45000076, 1.1333547)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="IndicatorRight" type="MeshInstance3D" parent="NavButtons" index="7" unique_id=586624335]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013473511, -0.45000076, -1.2007501)
+[node name="IndicatorRight" type="MeshInstance3D" parent="Holodeck/NavButtons" index="7" unique_id=586624335]
+transform = Transform3D(0.99999994, 0, -3.5527137e-15, 0, 0.99999994, 0, 3.5527137e-15, 0, 0.99999994, 0.013473511, -0.45000076, -1.1315866)
 material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
-[node name="RecordButton" type="Node3D" parent="." index="4" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
-transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.066706724, 0.91550624, 4.7880855)
+[node name="RecordButton" type="Node3D" parent="." index="3" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
+transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.2139352, 0.91550624, 4.7880855)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")
@@ -768,7 +772,7 @@ script = ExtResource("20_xifwb")
 screen_width = 0.3
 screen_height = 0.1
 
-[node name="Ship" parent="." index="5" unique_id=1117057970]
+[node name="Ship" parent="." index="4" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
@@ -777,7 +781,7 @@ stream = ExtResource("7_dschd")
 volume_db = -29.0
 autoplay = true
 
-[node name="FusePanelLight" type="MeshInstance3D" parent="." index="6" unique_id=1399412660]
+[node name="FusePanelLight" type="MeshInstance3D" parent="." index="5" unique_id=1399412660]
 transform = Transform3D(1.2175313e-08, 0.27853864, -0.9604252, 1, -4.3711385e-08, 1.7266417e-15, -4.198152e-08, -0.9604252, -0.27853864, 4.1481853, 2.0860069, 0.007068336)
 mesh = SubResource("ArrayMesh_5qfr6")
 
@@ -785,7 +789,7 @@ mesh = SubResource("ArrayMesh_5qfr6")
 transform = Transform3D(1, -2.4868996e-14, 8.881784e-16, -7.1054274e-15, 0.9999998, -2.9802322e-08, 8.881784e-16, 2.9802322e-08, 0.9999998, 0, -0.03210318, 0.11069465)
 light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 
-[node name="PowerPanel" parent="." index="7" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse", "audio", "holodeck", "heater") instance=ExtResource("2_q2ovv")]
+[node name="PowerPanel" parent="." index="6" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse", "audio", "holodeck", "heater") instance=ExtResource("2_q2ovv")]
 unique_name_in_owner = true
 transform = Transform3D(-0.2890486, 0, -0.95731455, 0, 1, 0, 0.95731455, 0, -0.2890486, 4.0945597, 1.1068584, -0.011977673)
 environment_light = NodePath("../FusePanelLight/OmniLight3D")
@@ -803,32 +807,32 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0
 stream = ExtResource("8_03y04")
 volume_db = -4.156
 
-[node name="ShipBody" type="StaticBody3D" parent="." index="8" unique_id=2052206692]
+[node name="ShipBody" type="StaticBody3D" parent="." index="7" unique_id=2052206692]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipBody" index="0" unique_id=1269668789]
 shape = SubResource("ConcavePolygonShape3D_5qfr6")
 
-[node name="TopLightSpotLight" type="SpotLight3D" parent="." index="9" unique_id=936903499]
+[node name="TopLightSpotLight" type="SpotLight3D" parent="." index="8" unique_id=936903499]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.0030103028, 3.9305787, 3.6)
 light_color = Color(0.43836457, 0.11912406, 0.18678921, 1)
 light_energy = 5.0
 
-[node name="TopLightOmniLight" type="OmniLight3D" parent="." index="10" unique_id=89767274]
+[node name="TopLightOmniLight" type="OmniLight3D" parent="." index="9" unique_id=89767274]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.0030103028, 3.7305787, 3.6)
 light_color = Color(0.43836457, 0.11912406, 0.18678921, 1)
 light_energy = 5.0
 
-[node name="RadarLight" type="OmniLight3D" parent="." index="11" unique_id=850089665]
+[node name="RadarLight" type="OmniLight3D" parent="." index="10" unique_id=850089665]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.36268616, 0.9534217, 5.058086)
 light_color = Color(0.41493195, 0.5654556, 0, 1)
 light_size = 1.0
 omni_range = 0.15
 omni_attenuation = -0.8
 
-[node name="ShipNavigation" type="Node3D" parent="." index="12" unique_id=9200001]
+[node name="ShipNavigation" type="Node3D" parent="." index="11" unique_id=9200001]
 script = ExtResource("5_shipnav")
 
-[node name="Oxygen" type="Node3D" parent="." index="13" unique_id=1492467593 node_paths=PackedStringArray("light", "oxygen_meter")]
+[node name="Oxygen" type="Node3D" parent="." index="12" unique_id=1492467593 node_paths=PackedStringArray("light", "oxygen_meter")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4994856, 0.908187, -1.552626)
 script = ExtResource("12_mx31c")
 light = NodePath("BackingLight")
@@ -872,7 +876,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625131, 0.7311899, 0.8554
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033, 0.3, 0)
 mesh = SubResource("CylinderMesh_dschd")
 
-[node name="Heater" parent="." index="14" unique_id=976087777 node_paths=PackedStringArray("heater_light") instance=ExtResource("11_48mkp")]
+[node name="Heater" parent="." index="13" unique_id=976087777 node_paths=PackedStringArray("heater_light") instance=ExtResource("11_48mkp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.831487, -0.2799909, -0.28434968)
 heater_light = NodePath("OmniLight3D")
 

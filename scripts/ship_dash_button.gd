@@ -13,6 +13,7 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 @export var indicator_on_material: Material = null
 @export var indicator_disabled_material: Material = null
 @export var ship_movement_audio: AudioStreamPlayer3D = null
+@export var mesh:MeshInstance3D = null
 
 const REENABLE_FLASH_DURATION: float = 1.2
 const REENABLE_FLASH_PERIOD: float = 0.3
@@ -25,7 +26,7 @@ var _flash_remaining: float = 0.0
 
 func _ready() -> void:
 	add_to_group("HoldInteractable")
-	_rest_position = position
+	_rest_position = mesh.position
 	_refresh_indicator()
 
 
@@ -65,13 +66,13 @@ func on_press_start() -> void:
 	if not _enabled:
 		return
 	_is_pressed = true
-	position = _rest_position + press_offset
+	mesh.position = _rest_position + press_offset
 	_refresh_indicator()
 
 
 func on_press_end() -> void:
 	_is_pressed = false
-	position = _rest_position
+	mesh.position = _rest_position
 	_refresh_indicator()
 
 
