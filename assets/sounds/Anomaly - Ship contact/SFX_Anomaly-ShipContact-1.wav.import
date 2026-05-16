@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ceks1lp5vhjuy"
+path="res://.godot/imported/SFX_Anomaly-ShipContact-1.wav-ca4e3fa901040b3e10ab5660f82e5bf6.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Anomaly - Ship contact/SFX_Anomaly-ShipContact-1.wav"
+dest_files=["res://.godot/imported/SFX_Anomaly-ShipContact-1.wav-ca4e3fa901040b3e10ab5660f82e5bf6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

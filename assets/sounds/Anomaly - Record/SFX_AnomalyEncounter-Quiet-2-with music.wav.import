@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://kx82f78r6so7"
+path="res://.godot/imported/SFX_AnomalyEncounter-Quiet-2-with music.wav-1b1657f964185fd066ebdaffa94c1c80.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Anomaly - Record/SFX_AnomalyEncounter-Quiet-2-with music.wav"
+dest_files=["res://.godot/imported/SFX_AnomalyEncounter-Quiet-2-with music.wav-1b1657f964185fd066ebdaffa94c1c80.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
