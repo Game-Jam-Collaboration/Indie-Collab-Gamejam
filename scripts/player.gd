@@ -218,6 +218,7 @@ func _attack_camera_shake() -> void:
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
 	tween.tween_property(camera_pivot, "global_position", offset, 0.01)
 	tween.tween_property(camera_pivot, "global_position", camera_position, 0.1)
+	await tween.finished
 	frozen = false
 
 
