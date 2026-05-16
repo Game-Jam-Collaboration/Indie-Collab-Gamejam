@@ -18,8 +18,8 @@ extends Node3D
 @onready var player:Player = get_parent().player
 
 var anomaly_tracks:Array[AudioStream] = [
-	load("res://assets/sounds/CJ26_SFX_Anomaly-1-WithCrackle.mp3"),
-	load("res://assets/sounds/CJ26_SFX_Anomaly-2-WithCrackle.mp3"),
+	load("res://assets/sounds/Anomaly - Record/SFX_AnomalyEncounter-mid-3.wav"),
+	load("res://assets/sounds/Anomaly - Ship contact/SFX_Anomaly-ShipContact-0.wav"),
 	load("res://assets/sounds/CJ26_SFX_Anomaly-ShipContact-1.wav"),
 	load("res://assets/sounds/CJ26_SFX_AnomalyEncounter-5.wav"),
 	load("res://assets/sounds/CJ26_SFX_Anomaly-ShipContact_proto_mix.wav"),

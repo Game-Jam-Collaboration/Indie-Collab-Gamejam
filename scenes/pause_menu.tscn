@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://55dmktoqux5o"]
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/pause_menu.gd" id="1_jvnd5"]
-[ext_resource type="Shader" uid="uid://3qtsesfwrqgi" path="res://scripts/shaders/menu_shader.gdshader" id="1_kukqi"]
-[ext_resource type="Texture2D" uid="uid://bnnfg7rxiyonq" path="res://assets/textures/play.png" id="3_5d2l8"]
-[ext_resource type="Texture2D" uid="uid://dg3q06mih7nvl" path="res://assets/textures/exit.png" id="4_7l7mv"]
+[ext_resource type="Texture2D" uid="uid://dombammx5v2uf" path="res://assets/textures/PlayButtonV2.png" id="2_kukqi"]
+[ext_resource type="Texture2D" uid="uid://bud0w5qt0piyk" path="res://assets/textures/ExitV2.png" id="3_5d2l8"]
 
 [sub_resource type="Gradient" id="Gradient_5d2l8"]
 offsets = PackedFloat32Array(0.060714304, 0.75, 1)
@@ -14,14 +13,6 @@ gradient = SubResource("Gradient_5d2l8")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4r4p"]
 texture = SubResource("GradientTexture2D_7l7mv")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5d2l8"]
-shader = ExtResource("1_kukqi")
-shader_parameter/shake_power = 0.03
-shader_parameter/shake_rate = 0.2
-shader_parameter/shake_speed = 3.0
-shader_parameter/shake_block_size = 30.5
-shader_parameter/shake_color_rate = 0.0
 
 [node name="PauseMenu" type="PanelContainer" unique_id=1837155855]
 anchors_preset = 15
@@ -36,23 +27,29 @@ script_type = "Pause"
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=877173786]
 layout_mode = 2
-theme_override_constants/margin_right = 105
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
 [node name="Control" type="VBoxContainer" parent="MarginContainer" unique_id=1817025633]
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 50
+
+[node name="Button" type="TextureButton" parent="MarginContainer/Control" unique_id=2027795600]
+custom_minimum_size = Vector2(156, 156)
+layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
+texture_normal = ExtResource("2_kukqi")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/Control" unique_id=817432964]
-material = SubResource("ShaderMaterial_5d2l8")
+[node name="Button3" type="TextureButton" parent="MarginContainer/Control" unique_id=265249075]
+custom_minimum_size = Vector2(156, 156)
 layout_mode = 2
-
-[node name="Button" type="Button" parent="MarginContainer/Control" unique_id=1516844649]
-layout_mode = 2
-icon = ExtResource("3_5d2l8")
-flat = true
-
-[node name="Button3" type="Button" parent="MarginContainer/Control" unique_id=1660551048]
-layout_mode = 2
-icon = ExtResource("4_7l7mv")
-flat = true
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_5d2l8")
+ignore_texture_size = true
+stretch_mode = 0

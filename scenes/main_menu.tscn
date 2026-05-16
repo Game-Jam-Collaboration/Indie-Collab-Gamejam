@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://sjlmws803fko"]
 
 [ext_resource type="Script" uid="uid://clttwvxd2vhj6" path="res://scripts/pause_menu.gd" id="1_yqorp"]
-[ext_resource type="Texture2D" uid="uid://dg3q06mih7nvl" path="res://assets/textures/exit.png" id="3_8ln24"]
-[ext_resource type="Texture2D" uid="uid://cmowv7tnnkw7" path="res://assets/textures/PlayButton.png" id="4_8ln24"]
+[ext_resource type="Texture2D" uid="uid://dombammx5v2uf" path="res://assets/textures/PlayButtonV2.png" id="4_8ln24"]
 [ext_resource type="AudioStream" uid="uid://bhx044jv2s03y" path="res://assets/sounds/CJ26_MUS_LightAmbient-demo.mp3" id="4_wu84c"]
 [ext_resource type="Texture2D" uid="uid://cwcbjs0blecva" path="res://assets/textures/blue_nebulae_1.png" id="5_8ln24"]
+[ext_resource type="Texture2D" uid="uid://bud0w5qt0piyk" path="res://assets/textures/ExitV2.png" id="5_rtw2f"]
 
 [sub_resource type="Gradient" id="Gradient_5d2l8"]
 offsets = PackedFloat32Array(0.060714304, 0.75, 1)
@@ -73,7 +73,7 @@ custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("3_8ln24")
+texture_normal = ExtResource("5_rtw2f")
 ignore_texture_size = true
 stretch_mode = 4
 
