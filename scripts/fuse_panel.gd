@@ -24,6 +24,7 @@ var online_emissive:StandardMaterial3D = load("res://assets/materials/online_emi
 func assemble() -> void:
 	if status_panel:
 		status_panel.mark_complete(slot_index)
+	print("power on")
 	online = true
 	_change_lighting()
 	if audio:
@@ -43,12 +44,14 @@ func disassemble() -> void:
 		fuse.freeze = false
 		fuse.apply_central_impulse(Vector3(-2, 0, 0))
 		fuse.apply_torque_impulse(Vector3(randf_range(-.5, .5), 0, 0))
+		fuse.add_to_group("Pickupable")
 
 
 func _power_off() -> void:
 	if !online: return
 	if status_panel:
 		status_panel.mark_pending(slot_index)
+	print("power off")
 	online = false
 	_change_lighting()
 	if heater:
@@ -56,11 +59,6 @@ func _power_off() -> void:
 	if holodeck:
 		holodeck.get_node("%Powered").visible = false
 		holodeck.get_node("%RadarSound").stop()
-
-
-func _process(_delta: float) -> void:
-	if online and not _has_assembled_fuse():
-		_power_off()
 
 
 func _change_lighting() -> void:
@@ -74,25 +72,3 @@ func _change_lighting() -> void:
 			environment_light.light_color = online_light_color
 		if emissive_object:
 			emissive_object.mesh.surface_set_material(emissive_material_idx, online_emissive)
-
-
-func can_remove() -> bool:
-	return can_remove_fuse and _has_assembled_fuse()
-
-
-func _has_assembled_fuse() -> bool:
-	var ap := get_node_or_null("AssemblyPoint")
-	return ap != null and ap.get_child_count() > 0
-
-
-func release_assembled() -> CollisionObject3D:
-	var ap := get_node_or_null("AssemblyPoint")
-	if ap == null or ap.get_child_count() == 0:
-		return null
-	var _fuse := ap.get_child(0) as CollisionObject3D
-	if _fuse == null:
-		return null
-	if status_panel:
-		status_panel.mark_pending(slot_index)
-	_change_lighting()
-	return _fuse

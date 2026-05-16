@@ -17,14 +17,11 @@ func _attack() -> void:
 	if record_button.anomalies_recorded < 2: return
 	if !fuse_panel.online or !heater_lever.heater.online and !oxygen.online: return
 	count += 1
-	var entity_attack:bool = (randi_range(0, 100) > 70)
+	var entity_attack:bool = (randi_range(0, 100) > 80)
 	if entity_attack:
 		%EntityAttack.play()
 		await get_tree().create_timer(1.2).timeout
-		heater_lever._interact(true)
-		oxygen.release_pressure()
 		holodeck.get_node("%Powered").visible = false
 		fuse_panel.disassemble()
 		player._attack_camera_shake()
 		attacks += 1
-		print("Entity has attacked: %d times out of %d rolls!" % [attacks, count])

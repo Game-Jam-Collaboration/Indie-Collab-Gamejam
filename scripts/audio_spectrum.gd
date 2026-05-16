@@ -6,6 +6,7 @@ extends MeshInstance3D
 @export var screen_height := .5
 @export var z_offset := 0.01
 @export var sensitivity := 40.0
+@export var audio_player:AudioStreamPlayer3D = null
 
 var spectrum: AudioEffectSpectrumAnalyzerInstance
 var values := PackedFloat32Array()
@@ -29,21 +30,22 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if spectrum == null:
-		return
+	if spectrum == null: return
+	
+	var magnitude := Vector2.ZERO
+	if audio_player.playing:
+		magnitude = spectrum.get_magnitude_for_frequency_range(
+			80.0,
+			600.0,
+			AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE
+		)
 
-	var magnitude := spectrum.get_magnitude_for_frequency_range(
-		80.0,
-		600.0,
-		AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE
-	)
-
-	var v: float = clamp((magnitude.x + magnitude.y) * 0.5 * sensitivity, 0.0, 1.0)
+	var value: float = clamp((magnitude.x + magnitude.y) * 0.5 * sensitivity, 0.0, 1.0)
 
 	for i in range(point_count - 1):
 		values[i] = values[i + 1]
 		
-	values[point_count - 1] = (v - 0.5) * 2.0
+	values[point_count - 1] = (value - 0.5) * 2.0
 	_rebuild_line()
 
 

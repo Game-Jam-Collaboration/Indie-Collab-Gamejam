@@ -770,12 +770,13 @@ shape = SubResource("BoxShape_record_interactor")
 [node name="AudioModule" parent="RecordButton" index="7" unique_id=2003646045 instance=ExtResource("8_swuwe")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6.092, 0.031, 0)
 
-[node name="AudioSpectrum" type="MeshInstance3D" parent="RecordButton/AudioModule" index="4" unique_id=284379104]
-transform = Transform3D(20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07, 0, 0.012, 0.2)
+[node name="AudioSpectrum" type="MeshInstance3D" parent="RecordButton/AudioModule" index="4" unique_id=284379104 node_paths=PackedStringArray("audio_player")]
+transform = Transform3D(20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07, 0, 0.01199913, -0.20753479)
 script = ExtResource("20_xifwb")
 screen_width = 0.3
-screen_height = 0.1
-sensitivity = 20.0
+screen_height = 0.05
+sensitivity = 28.0
+audio_player = NodePath("../../AnomalyRecording")
 
 [node name="Ship" parent="." index="4" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
