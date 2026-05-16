@@ -1,5 +1,7 @@
 [gd_scene format=4 uid="uid://bx4fo5iwr8pgh"]
 
+[ext_resource type="AudioStream" uid="uid://bhi0rrxca1nw0" path="res://assets/sounds/SFX_IdleFusible.ogg" id="1_k3e4o"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1d4p7"]
 resource_name = "Base"
 cull_mode = 2
@@ -141,3 +143,9 @@ mesh = SubResource("ArrayMesh_k3e4o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1865491746]
 shape = SubResource("CylinderShape3D_legyg")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1731817499]
+stream = ExtResource("1_k3e4o")
+unit_size = 1.84
+autoplay = true
+max_distance = 2.0
