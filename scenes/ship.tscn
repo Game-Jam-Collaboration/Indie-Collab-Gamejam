@@ -482,6 +482,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_fra1p")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_swuwe"]
+height = 1.8636969
+radius = 0.27749825
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkc32"]
 resource_name = "Pin"
 cull_mode = 2
@@ -850,6 +854,12 @@ light_color = Color(0.26892242, 0.50102, 0.49443907, 1)
 
 [node name="Canister" type="MeshInstance3D" parent="Oxygen" index="3" unique_id=2069850239]
 mesh = SubResource("ArrayMesh_03y04")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Oxygen/Canister" index="0" unique_id=397290757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0, 0.0045872927)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Oxygen/Canister/StaticBody3D" index="0" unique_id=1269773925]
+shape = SubResource("CylinderShape3D_swuwe")
 
 [node name="Pin" type="MeshInstance3D" parent="Oxygen" index="4" unique_id=1154487391]
 mesh = SubResource("ArrayMesh_mx31c")
