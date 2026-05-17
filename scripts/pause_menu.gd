@@ -1,7 +1,6 @@
 extends PanelContainer
 
 const VOLUME_LEVELS: Array = [1.0, 0.75, 0.5, 0.25, 0.0]
-const SPEED_MULTIPLIERS: Array = [1.0, 2.0, 5.0, 10.0]
 
 @export var button_input_variation : Array = []
 
@@ -9,7 +8,6 @@ const SPEED_MULTIPLIERS: Array = [1.0, 2.0, 5.0, 10.0]
 var current_scene = ""
 var skip_menu_intro: bool = false
 var _volume_index: int = 0
-var _speed_index: int = 0
 const MENU_MUSIC_SKIP_SECONDS: float = 13.0
 
 var focused:bool:
@@ -105,11 +103,7 @@ func _mouse_pressed(button_index):
 func _unhandled_input(event):
 	if script_type == "Pause":
 		if event is InputEventKey and event.pressed and not event.echo:
-			if event.physical_keycode == KEY_QUOTELEFT:
-				_cycle_speed()
-			elif event.physical_keycode == KEY_BACKSLASH:
-				_debug_skip_to_endgame()
-			elif event.keycode == KEY_ESCAPE and current_scene == "ship":
+			if event.keycode == KEY_ESCAPE and current_scene == "ship":
 				_toggle_pause()
 
 
@@ -135,23 +129,6 @@ func _notification(what: int) -> void:
 		_apply_cursor_for_pause_state()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-
-func _debug_skip_to_endgame() -> void:
-	var rb: Node = get_tree().get_first_node_in_group("record_button")
-	if rb != null and rb.has_method("debug_skip_to_endgame"):
-		rb.debug_skip_to_endgame()
-
-
-func _cycle_speed() -> void:
-	_speed_index = (_speed_index + 1) % SPEED_MULTIPLIERS.size()
-	var m: float = SPEED_MULTIPLIERS[_speed_index]
-	var nav: Node = get_tree().get_first_node_in_group("ship_navigation")
-	if nav != null:
-		nav.speed_multiplier = m
-	var rb: Node = get_tree().get_first_node_in_group("record_button")
-	if rb != null:
-		rb.speed_multiplier = m
 
 
 func _cycle_volume() -> void:

@@ -94,21 +94,6 @@ func _apply_speed_to_recording() -> void:
 	%AnomalyRecording.pitch_scale = max(speed_multiplier, 0.01)
 
 
-func debug_skip_to_endgame() -> void:
-	# Mark the first 4 anomalies as fully recorded, leave the 5th idle.
-	var marked: int = 0
-	for node in get_tree().get_nodes_in_group("anomaly"):
-		var anom := node as Anomaly
-		if anom == null:
-			continue
-		if marked < 4:
-			anom.being_recorded = false
-			anom.recorded = true
-			marked += 1
-	anomalies_recorded = 4
-	_on_anomalies_recorded_changed()
-
-
 func play_end_game_audio() -> void:
 	if not is_inside_tree() or not has_node("AnomalyRecording"):
 		return
