@@ -528,7 +528,7 @@ func _angel_reveal() -> void:
 		streamer.pitch_scale = 1.35
 		streamer.play()
 		var breath_tween: Tween = create_tween()
-		breath_tween.tween_property(streamer, "volume_db", 0.0, 18.0)
+		breath_tween.tween_property(streamer, "volume_db", 0.0, 15.0)
 
 	await blur_tween.finished
 

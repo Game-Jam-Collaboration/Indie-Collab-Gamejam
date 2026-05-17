@@ -791,7 +791,7 @@ script = ExtResource("21_anomscr")
 screen_width = 2.0
 screen_height = 2.0
 
-[node name="Ship" parent="." index="4" unique_id=1479839687]
+[node name="Ship" parent="." index="4" unique_id=1117057970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
