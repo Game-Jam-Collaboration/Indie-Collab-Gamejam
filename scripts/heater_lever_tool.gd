@@ -37,6 +37,7 @@ func _interact(force:bool=false) -> void:
 	light_tween = create_tween()
 	if !online:
 		%AnimationPlayer.play_backwards("heater_lever")
+		%AudioStreamPlayer3D.pitch_scale = randf_range(0.95, 1.05)
 		%AudioStreamPlayer3D.play()
 		if heater_light:
 			light_tween.tween_property(heater_light, "light_energy", 1.0, 5.6)

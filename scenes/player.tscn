@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b42d6co62gklj" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Shader" uid="uid://dufsum10fcd6f" path="res://scripts/shaders/crosshair.gdshader" id="2_g2els"]
+[ext_resource type="Shader" path="res://scripts/shaders/suffocation_vignette.gdshader" id="9_sufvig"]
 [ext_resource type="AudioStream" uid="uid://xwtbhm3j7nhv" path="res://assets/sounds/intro_breath.wav" id="3_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://bawiae338hqjf" path="res://assets/sounds/SFX_Footstep-6.wav" id="4_dqkch"]
 [ext_resource type="AudioStream" uid="uid://cosr0sulcd7ke" path="res://assets/sounds/SFX_Footstep-1.wav" id="4_ur7pv"]
@@ -17,15 +18,22 @@ shader = ExtResource("2_g2els")
 shader_parameter/color = Color(0.4, 0.7, 0.15, 1)
 shader_parameter/radius = 0.12
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sufvig"]
+shader = ExtResource("9_sufvig")
+shader_parameter/intensity = 0.0
+shader_parameter/vignette_color = Color(0.85, 0.05, 0.05, 1)
+shader_parameter/inner_radius = 0.22
+shader_parameter/outer_radius = 0.75
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f1ej7"]
-random_pitch = 1.0334128
+random_pitch = 1.05
 streams_count = 3
 stream_0/stream = ExtResource("4_ur7pv")
 stream_1/stream = ExtResource("5_y4r1p")
 stream_2/stream = ExtResource("6_d2wvv")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oprun"]
-random_pitch = 1.0390991
+random_pitch = 1.05
 streams_count = 3
 stream_0/stream = ExtResource("7_3v2ag")
 stream_1/stream = ExtResource("8_jej6c")
@@ -75,6 +83,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.57729274, 0.04510989, 1.4439226e-07, 1)
+
+[node name="SuffocationVignette" type="ColorRect" parent="UI" unique_id=2014777010]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sufvig")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 1)
 
 [node name="FadeIn" type="ColorRect" parent="UI" unique_id=375334134]
 unique_name_in_owner = true

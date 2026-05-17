@@ -5,7 +5,8 @@ signal heading_changed(new_heading: float)
 signal position_changed(new_position: Vector3)
 
 @export var translate_speed: float = 3.5
-@export var rotate_speed_deg: float = 30.0
+@export var rotate_speed_deg: float = 10.0
+var speed_multiplier: float = 1.0
 
 var simulated_position: Vector3 = Vector3.ZERO:
 	set(value):
@@ -27,11 +28,11 @@ func _ready() -> void:
 
 func translate_forward(amount: float) -> void:
 	var forward := Vector3(-sin(heading), 0.0, -cos(heading))
-	simulated_position = simulated_position + forward * amount
+	simulated_position = simulated_position + forward * amount * speed_multiplier
 
 
 func rotate_yaw(radians: float) -> void:
-	heading = heading + radians
+	heading = heading + radians * speed_multiplier
 
 
 func get_simulated_transform() -> Transform3D:

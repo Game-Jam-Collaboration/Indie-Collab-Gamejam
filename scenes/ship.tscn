@@ -21,6 +21,8 @@
 [ext_resource type="AudioStream" uid="uid://bqx1ub4anrbfw" path="res://assets/sounds/OxygenPump.wav" id="14_dschd"]
 [ext_resource type="Material" uid="uid://60bgj38wipmr" path="res://assets/materials/oxygen_meter_material.tres" id="17_83dbu"]
 [ext_resource type="Script" uid="uid://c37cngehrkoiu" path="res://scripts/audio_spectrum.gd" id="20_xifwb"]
+[ext_resource type="Script" uid="uid://b7sbw7oqufruw" path="res://scripts/anomaly_screen.gd" id="21_anomscr"]
+[ext_resource type="Script" uid="uid://ba70uud20pt36" path="res://scripts/scan_progress_bar.gd" id="22_scanbar"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_indicator_off"]
 albedo_color = Color(0.06, 0.18, 0.07, 1)
@@ -700,7 +702,7 @@ material_override = SubResource("Mat_indicator_off")
 mesh = SubResource("SphereMesh_indicator")
 
 [node name="RecordButton" type="Node3D" parent="." index="3" unique_id=2080668071 node_paths=PackedStringArray("navigation", "indicator_light", "cover", "progress_lights")]
-transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, -0.2139352, 0.91550624, 4.7880855)
+transform = Transform3D(-2.1855695e-09, 0, 0.05, 0, 0.05, 0, -0.05, 0, -2.1855695e-09, 0.02010423, 0.91550624, 4.8130417)
 script = ExtResource("11_recordbtn")
 navigation = NodePath("../ShipNavigation")
 indicator_light = NodePath("AlertLight")
@@ -759,7 +761,6 @@ mesh = SubResource("SphereMesh_progress")
 [node name="AnomalyRecording" type="AudioStreamPlayer3D" parent="RecordButton" index="5" unique_id=1488657087]
 unique_name_in_owner = true
 volume_db = 12.0
-bus = &"Recordings"
 
 [node name="Interactor" type="StaticBody3D" parent="RecordButton" index="6" unique_id=1010101004 groups=["Interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
@@ -768,17 +769,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 0)
 shape = SubResource("BoxShape_record_interactor")
 
 [node name="AudioModule" parent="RecordButton" index="7" unique_id=2003646045 instance=ExtResource("8_swuwe")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6.092, 0.031, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.9896393, 0.031000137, -5.8612933)
 
-[node name="AudioSpectrum" type="MeshInstance3D" parent="RecordButton/AudioModule" index="4" unique_id=284379104 node_paths=PackedStringArray("audio_player")]
+[node name="AudioSpectrum" type="MeshInstance3D" parent="RecordButton/AudioModule" index="4" unique_id=284379104 node_paths=PackedStringArray("audio_player", "extra_audio_players")]
 transform = Transform3D(20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07, 0, 0.01199913, -0.20753479)
 script = ExtResource("20_xifwb")
 screen_width = 0.3
 screen_height = 0.05
 sensitivity = 28.0
 audio_player = NodePath("../../AnomalyRecording")
+extra_audio_players = [NodePath("../../../Holodeck/RadarSound")]
 
-[node name="Ship" parent="." index="4" unique_id=1117057970]
+[node name="ScanProgressBar" type="MeshInstance3D" parent="RecordButton/AudioModule" index="5" unique_id=1010100001]
+transform = Transform3D(-20, 0, 0, 0, -8.7422785e-07, -20, 0, 20, -8.7422785e-07, 2.1517887, -0.15475845, 0.69999695)
+script = ExtResource("22_scanbar")
+
+[node name="AnomalyScreen" type="Node3D" parent="RecordButton/AudioModule" index="6" unique_id=1010111110]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -2, -0.18, 0)
+script = ExtResource("21_anomscr")
+screen_width = 2.0
+screen_height = 2.0
+
+[node name="Ship" parent="." index="4" unique_id=1479839687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012263298, -0.004789114, 0.015007973)
 
 [node name="RoomTone - Machinery Ambient" type="AudioStreamPlayer3D" parent="Ship" index="0" unique_id=983002566]
@@ -795,7 +808,7 @@ mesh = SubResource("ArrayMesh_5qfr6")
 transform = Transform3D(1, -2.4868996e-14, 8.881784e-16, -7.1054274e-15, 0.9999998, -2.9802322e-08, 8.881784e-16, 2.9802322e-08, 0.9999998, 0, -0.03210318, 0.11069465)
 light_color = Color(0.4392157, 0.11764706, 0.1882353, 1)
 
-[node name="PowerPanel" parent="." index="6" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse", "audio", "holodeck", "heater") instance=ExtResource("2_q2ovv")]
+[node name="PowerPanel" parent="." index="6" unique_id=1958303086 node_paths=PackedStringArray("environment_light", "emissive_object", "fuse", "audio", "holodeck", "heater", "cabin_lights", "chaos_flicker_lights", "entity_attack_audio") instance=ExtResource("2_q2ovv")]
 unique_name_in_owner = true
 transform = Transform3D(-0.2890486, 0, -0.95731455, 0, 1, 0, 0.95731455, 0, -0.2890486, 4.0945597, 1.1068584, -0.011977673)
 environment_light = NodePath("../FusePanelLight/OmniLight3D")
@@ -805,6 +818,9 @@ fuse = NodePath("Fuse")
 audio = NodePath("AudioStreamPlayer3D")
 holodeck = NodePath("../Holodeck")
 heater = NodePath("../Heater")
+cabin_lights = [NodePath("../TopLightSpotLight"), NodePath("../TopLightOmniLight")]
+chaos_flicker_lights = [NodePath("../TopLightSpotLight"), NodePath("../TopLightOmniLight"), NodePath("../FusePanelLight/OmniLight3D"), NodePath("../RadarLight"), NodePath("../Oxygen/BackingLight")]
+entity_attack_audio = NodePath("../EntityAttack")
 
 [node name="Fuse" parent="PowerPanel" index="4" unique_id=2062436736 instance=ExtResource("3_3m36u")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.50725037, 0, 1.7270491)

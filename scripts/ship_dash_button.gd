@@ -7,7 +7,7 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 @export var navigation: ShipNavigation = null
 @export var fuse_panel: FusePanel = null
 @export var record_button: RecordButton = null
-@export var press_offset: Vector3 = Vector3(0, -0.016, 0)
+@export var press_offset: Vector3 = Vector3(0, 0.016, 0)
 @export var indicator: MeshInstance3D = null
 @export var indicator_off_material: Material = null
 @export var indicator_on_material: Material = null
@@ -17,11 +17,14 @@ enum Direction { FORWARD, REVERSE, TURN_LEFT, TURN_RIGHT }
 
 const REENABLE_FLASH_DURATION: float = 1.2
 const REENABLE_FLASH_PERIOD: float = 0.3
+const PRESS_DEPRESS_DURATION: float = 0.08
+const PRESS_RELEASE_DURATION: float = 0.14
 
 var _rest_position: Vector3
 var _is_pressed: bool = false
 var _enabled: bool = false
 var _flash_remaining: float = 0.0
+var _press_tween: Tween = null
 
 
 func _ready() -> void:
@@ -66,14 +69,24 @@ func on_press_start() -> void:
 	if not _enabled:
 		return
 	_is_pressed = true
-	mesh.position = _rest_position + press_offset
+	_tween_mesh_to(_rest_position + press_offset, PRESS_DEPRESS_DURATION, Tween.EASE_OUT)
 	_refresh_indicator()
 
 
 func on_press_end() -> void:
 	_is_pressed = false
-	mesh.position = _rest_position
+	_tween_mesh_to(_rest_position, PRESS_RELEASE_DURATION, Tween.EASE_OUT, Tween.TRANS_BACK)
 	_refresh_indicator()
+
+
+func _tween_mesh_to(target: Vector3, duration: float, ease_kind: int, trans: int = Tween.TRANS_QUAD) -> void:
+	if mesh == null:
+		return
+	if _press_tween != null and _press_tween.is_running():
+		_press_tween.kill()
+	_press_tween = create_tween()
+	_press_tween.set_trans(trans).set_ease(ease_kind)
+	_press_tween.tween_property(mesh, "position", target, duration)
 
 
 func on_held(delta: float) -> void:

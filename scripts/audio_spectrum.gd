@@ -7,6 +7,9 @@ extends MeshInstance3D
 @export var z_offset := 0.01
 @export var sensitivity := 40.0
 @export var audio_player:AudioStreamPlayer3D = null
+## Additional audio sources whose playback should also drive the spectrum
+## (e.g. radar beeps). The spectrum runs whenever any of these is playing.
+@export var extra_audio_players: Array[AudioStreamPlayer3D] = []
 
 var spectrum: AudioEffectSpectrumAnalyzerInstance
 var values := PackedFloat32Array()
@@ -31,22 +34,44 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if spectrum == null: return
-	
+
 	var magnitude := Vector2.ZERO
-	if audio_player.playing:
+	if _any_player_playing():
 		magnitude = spectrum.get_magnitude_for_frequency_range(
 			80.0,
 			600.0,
 			AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE
 		)
 
-	var value: float = clamp((magnitude.x + magnitude.y) * 0.5 * sensitivity, 0.0, 1.0)
+	var value: float = clamp((magnitude.x + magnitude.y) * 0.5 * _effective_sensitivity(), 0.0, 1.0)
 
 	for i in range(point_count - 1):
 		values[i] = values[i + 1]
 		
 	values[point_count - 1] = (value - 0.5) * 2.0
 	_rebuild_line()
+
+
+func _any_player_playing() -> bool:
+	if audio_player != null and audio_player.playing:
+		return true
+	for p in extra_audio_players:
+		if p != null and p.playing:
+			return true
+	return false
+
+
+func _effective_sensitivity() -> float:
+	# Sensitivity scales with game state: 2x while an anomaly scan is in
+	# progress, 3x once we're in the end-game chase/reveal (anomalies_recorded
+	# reaches 4 the moment the chase is armed and stays there through the end).
+	var rb: Node = get_tree().get_first_node_in_group("record_button")
+	if rb != null:
+		if int(rb.get("anomalies_recorded")) >= 4:
+			return sensitivity * 3.0
+		if bool(rb.get("recording")):
+			return sensitivity * 2.0
+	return sensitivity
 
 
 func _rebuild_line() -> void:

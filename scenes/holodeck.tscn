@@ -103,3 +103,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.10373473)
 stream = ExtResource("4_p1rtg")
 volume_db = -18.0
 unit_size = 4.72
+bus = &"Recordings"

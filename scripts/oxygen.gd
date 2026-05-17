@@ -70,6 +70,7 @@ func pump() -> void:
 	if online == true: return
 	if tween: tween.stop()
 	tween = create_tween()
+	$PumpAudio.pitch_scale = randf_range(0.95, 1.05)
 	$PumpAudio.play()
 	tween.tween_property(oxygen_meter, "scale:y", clampf(oxygen_meter.scale.y + .2, .5, 1), 0.5)
 	tween.tween_property(light, "light_energy", clampf(light.light_energy + .2, 0, 1), 0.1)

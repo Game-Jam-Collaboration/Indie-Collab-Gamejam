@@ -109,11 +109,19 @@ func _process(delta: float) -> void:
 		_shader_material.set_shader_parameter("current_time", t)
 		_shader_material.set_shader_parameter("lidar_origin_world", global_position)
 		_shader_material.set_shader_parameter("clip_min_local_y", 0.0)
+		_shader_material.set_shader_parameter("recording_progress", _current_recording_progress())
 	if ship_icon and ship_icon.material_override is ShaderMaterial:
 		(ship_icon.material_override as ShaderMaterial).set_shader_parameter("current_time", t)
 	_update_glitch_burst(delta)
 	update_lidar()
 	_update_radar_retrigger(delta)
+
+
+func _current_recording_progress() -> float:
+	var rb: Node = get_tree().get_first_node_in_group("record_button")
+	if rb != null and rb.has_method("get_recording_progress"):
+		return float(rb.get_recording_progress())
+	return 0.0
 
 
 func trigger_glitch_burst(duration: float = 3.5) -> void:
@@ -262,7 +270,11 @@ func _update_anomaly_clouds(now:float) -> void:
 		seen[a] = true
 		a.discovered = true
 		var world_points: PackedVector3Array = a.get_lidar_points()
-		var kind: float = 13.0 if a.recorded else 12.0
+		var kind: float = 12.0
+		if a.recorded:
+			kind = 13.0
+		elif a.get("being_recorded"):
+			kind = 14.0
 		var n: int = min(world_points.size(), ANOMALY_DOTS_PER_NODE)
 		for i in n:
 			var sim_coords: Vector3 = sim_pos + (world_points[i] - ship_pos)

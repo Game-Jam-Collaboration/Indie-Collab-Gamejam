@@ -31,6 +31,7 @@ uniform float front_fade_min : hint_range(0.0, 1.0) = 0.0;
 uniform float clip_min_local_y = -1.0e9;
 uniform float anomaly_flash_speed = 4.0;
 uniform float anomaly_alpha : hint_range(0.0, 1.0) = 0.4;
+uniform float recording_progress : hint_range(0.0, 1.0) = 0.0;
 
 varying float v_life;
 varying float v_seed;
@@ -40,6 +41,7 @@ varying float v_effective_age;
 varying float v_is_hit;
 varying float v_is_anomaly;
 varying float v_is_full_object;
+varying float v_is_recording;
 varying float v_arrived;
 varying float v_front_fade;
 
@@ -52,6 +54,7 @@ void vertex() {
 	float kind = raw_kind - no_anim * 10.0;
 	v_is_anomaly = step(1.5, kind) - step(2.5, kind);
 	v_is_full_object = step(1.5, kind);
+	v_is_recording = step(3.5, kind) - step(4.5, kind);
 	v_is_hit = step(0.5, kind);
 	float age = current_time - spawn_time;
 	float launch_delay = mix(v_seed * max_launch_delay, 0.0, no_anim);
@@ -120,7 +123,9 @@ void fragment() {
 
 	float anomaly_flash = 0.08 + 0.08 * sin(current_time * anomaly_flash_speed);
 	vec3 anomaly_render_color = mix(anomaly_color, vec3(1.0), anomaly_flash);
+	vec3 transitioning_color = mix(anomaly_color, base_color, recording_progress);
 	vec3 hit_color = mix(base_color, anomaly_render_color, v_is_anomaly);
+	hit_color = mix(hit_color, transitioning_color, v_is_recording);
 	if (glitch_burst > 0.0) {
 		float color_jitter = fract(sin((floor(current_time * 12.0) + v_seed * 100.0) * 91.713) * 51234.123);
 		hit_color = mix(hit_color, vec3(color_jitter, 1.0 - color_jitter, 0.5 + 0.5 * sin(current_time * 30.0)), glitch_burst);

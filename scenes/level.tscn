@@ -35,5 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, 0)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9310845, 6.731868)
 stream = ExtResource("5_ppgk2")
-volume_db = 24.182
+volume_db = 0.0
+max_db = -9.0
 bus = &"ShipMovement"
